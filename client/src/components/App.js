@@ -1,21 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import GlobalStyles from "./GlobalStyles";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import { requestItems, receiveItems } from "../actions";
+
 import LandingPage from "./LandingPage";
 import Shop from "./Shop";
 import ItemDetails from "./ItemDetails";
 
 function App() {
-  const [bacon, setBacon] = useState(null);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    fetch("/bacon")
+  const handleItems = () => {
+    dispatch(requestItems());
+    fetch("/items")
       .then((res) => res.json())
-      .then((data) => setBacon(data));
+      .then((json) => {
+        dispatch(receiveItems(json));
+      })
+      .catch((err) => console.error(err));
+  };
+  useEffect(() => {
+    handleItems();
   }, []);
 
   return (
-    // <div>{bacon ? bacon : `...where's my stuff?...`}</div>
     <Router>
       <Switch>
         <Route exact path="/">
