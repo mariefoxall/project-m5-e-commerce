@@ -33,5 +33,6 @@ express()
 
   //ITEMS
   .get("/items", handleItems)
+  // .get("/items/item:id")
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
