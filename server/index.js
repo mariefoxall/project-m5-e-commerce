@@ -6,7 +6,7 @@ const morgan = require("morgan");
 
 const PORT = 4000;
 
-const { handleItems } = require("./handlers");
+const { handleItems, handleItem } = require("./handlers");
 
 express()
   .use(function (req, res, next) {
@@ -32,9 +32,10 @@ express()
   .get("/bacon", (req, res) => res.status(200).json("🥓"))
 
   //GENERIC
-  .get("/", (req, res) => res.status(200).send("Try /bacon or /items"))
+  .get("/", (req, res) => res.status(200).json("Try /bacon or /items"))
 
   //ITEMS
   .get("/items", handleItems)
+  .get("/items/:id", handleItem)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
