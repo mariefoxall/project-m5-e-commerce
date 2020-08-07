@@ -31,6 +31,9 @@ express()
   //TEST
   .get("/bacon", (req, res) => res.status(200).json("🥓"))
 
+  //GENERIC
+  .get("/", (req, res) => res.status(200).send("Try /bacon or /items"))
+
   //ITEMS
   .get("/items", handleItems)
 
