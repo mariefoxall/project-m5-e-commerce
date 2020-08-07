@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import GlobalStyles from "./GlobalStyles";
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import LandingPage from "./LandingPage";
 import Shop from "./Shop";
