@@ -4,5 +4,5 @@ export const requestItems = () => ({
 
 export const receiveItems = (items) => ({
   type: "RECEIVE_ITEMS",
-  items: items,
+  items,
 });
