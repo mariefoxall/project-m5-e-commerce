@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import GlobalStyles from "./GlobalStyles";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { requestItems, receiveItems } from "../actions";
+import { receiveItems, receiveCompanies } from "../actions";
 
 import LandingPage from "./LandingPage";
 import Shop from "./Shop";
@@ -20,8 +20,19 @@ function App() {
       })
       .catch((err) => console.error(err));
   };
+
+  const handleCompanies = () => {
+    fetch("/companies")
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch(receiveCompanies(json));
+      })
+      .catch((err) => console.error(err));
+  };
+
   useEffect(() => {
     handleItems();
+    handleCompanies();
   }, []);
 
   return (

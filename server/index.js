@@ -6,7 +6,12 @@ const morgan = require("morgan");
 
 const PORT = 4000;
 
-const { handleItems, handleItem, handleCompanies } = require("./handlers");
+const {
+  handleItems,
+  handleItem,
+  handleCompanies,
+  handleCompany,
+} = require("./handlers");
 
 express()
   .use(function (req, res, next) {
@@ -42,6 +47,6 @@ express()
 
   //COMPANIES
   .get("/companies", handleCompanies)
-  //.get("/companies/:id", handleCompany)
+  .get("/companies/:id", handleCompany)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));

@@ -1,5 +1,5 @@
 const initialState = {
-  items: null,
+  item: null,
   status: "loading",
 };
 
@@ -8,8 +8,8 @@ export default function itemReducer(state = initialState, action) {
     // case "REQUEST_ITEMS": {
     //   return { ...state, status: "loading" };
     // }
-    case "RECEIVE_ITEMS": {
-      return { ...state, items: action.items, status: "idle" };
+    case "RECEIVE_ITEM": {
+      return { ...state, item: action.item, status: "idle" };
     }
     default: {
       return state;
@@ -17,7 +17,6 @@ export default function itemReducer(state = initialState, action) {
   }
 }
 
-export const getStoreItemArray = (state) => {
-  console.log(typeof state.items.items);
-  return state.items.items;
+export const getStoreItem = (state) => {
+  return state;
 };

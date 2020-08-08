@@ -10,24 +10,25 @@ const Shop = () => {
   console.log(shopItemsArray);
   //GETITEMSARRAY
   return (
-    <div>
-      <label for="category">Choose a category:</label>
-      <select id="category" name="category">
-        <option value="fitness">Fitness</option>
-        <option value="medical">Medical</option>
-        <option value="lifestyle">Lifestyle</option>
-      </select>
-    </div>
-    // <ItemList>
-    //   {shopItemsArray.map((item) => {
-    //     return (
-    //       <Link to={`/items${item.id}`}>
-    //         <ShopItem item={item} />
-    //       </Link>
-    //     );
-    //   })}
-
-    // </ItemList>
+    <>
+      <div>
+        <label for="category">Choose a category:</label>
+        <select id="category" name="category">
+          <option value="fitness">Fitness</option>
+          <option value="medical">Medical</option>
+          <option value="lifestyle">Lifestyle</option>
+        </select>
+      </div>
+      <ItemList>
+        {shopItemsArray.map((item) => {
+          return (
+            <Link to={`/items${item.id}`}>
+              <ShopItem item={item} />
+            </Link>
+          );
+        })}
+      </ItemList>
+    </>
   );
 };
 

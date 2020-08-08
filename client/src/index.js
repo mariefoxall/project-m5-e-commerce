@@ -8,7 +8,6 @@ import reducer from "./components/reducers";
 import configureStore from "./store";
 
 import App from "./components/App";
-const store = configureStore();
 
 const store = configureStore();
 
