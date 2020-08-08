@@ -13,7 +13,6 @@ function App() {
   const dispatch = useDispatch();
 
   const handleItems = () => {
-    dispatch(requestItems());
     fetch("/items")
       .then((res) => res.json())
       .then((json) => {

@@ -1,4 +1,5 @@
 const items = require("./data/items.json");
+const companies = require("./data/companies.json");
 
 const handleItems = (req, res) => {
   res.status(200).json({ items });
@@ -20,4 +21,10 @@ const handleItem = (req, res) => {
   }
 };
 
-module.exports = { handleItems, handleItem };
+const handleCompanies = (req, res) => {
+  res.status(200).json({ companies });
+};
+
+const handleCompany = (req, res) => {};
+
+module.exports = { handleItems, handleItem, handleCompanies, handleCompany };
