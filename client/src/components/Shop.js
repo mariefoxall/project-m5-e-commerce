@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ShopItem from "./ShopItem";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { getStoreItemArray } from "./reducers/item.reducer";
+import { getStoreItemArray } from "./reducers/items.reducer";
 
 const Shop = () => {
   const shopItems = useSelector(getStoreItemArray);
