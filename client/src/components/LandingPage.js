@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { getStoreItemArray } from "./reducers/items.reducer";
-import { getCompaniesArray } from "./reducers/companies.reducer";
+import { getStoreItems } from "./reducers/items.reducer";
+import { getCompanies } from "./reducers/companies.reducer";
 
 const LandingPage = () => {
-  const companies = useSelector(getCompaniesArray);
-  const storeItems = useSelector(getStoreItemArray);
+  const companies = useSelector(getCompanies);
+  const storeItems = useSelector(getStoreItems);
   console.log(companies);
   console.log(storeItems);
 

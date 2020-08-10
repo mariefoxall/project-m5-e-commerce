@@ -16,3 +16,13 @@ export const receiveItem = (item) => ({
   type: "RECEIVE_ITEM",
   item,
 });
+
+export const updateCategory = (category) => ({
+  type: "UPDATE_CATEGORY",
+  category,
+});
+
+export const updateBodyLocation = (bodyLocation) => ({
+  type: "UPDATE_BODYLOCATION",
+  bodyLocation,
+});

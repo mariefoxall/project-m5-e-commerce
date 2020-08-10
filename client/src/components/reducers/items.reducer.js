@@ -17,6 +17,7 @@ export default function itemsReducer(state = initialState, action) {
   }
 }
 
-export const getStoreItemArray = (state) => {
-  return state.items.items;
+export const getStoreItems = (state) => {
+  console.log(state);
+  return state.items;
 };
