@@ -26,37 +26,53 @@ const ItemDetails = () => {
   }, []);
 
   const item = useSelector(getStoreItem);
-  console.log(item);
+  console.log(item, "item");
+  // const itemArray = item !== null ? Object.values(item) : [];
 
-  const stateObject = useSelector((state) => state);
-  //console.log(stateObject, "state object");
+  // console.log(itemArray, "item array");
 
-  if (stateObject)
+  if (item.status === "loading") {
+    return <>LOADING</>;
+  } else {
     return (
       <ItemDiv>
-        <ImageDiv>
-          <SoldOut>SOLD OUT</SoldOut>
-          <ItemImage />
-        </ImageDiv>
+        {item.item.numInStock === 0 ? (
+          <ImageDiv>
+            <SoldOut>SOLD OUT</SoldOut>
+            <ItemImage
+              src={item.item.imageSrc}
+              alt={`${item.item.name} product`}
+            />
+          </ImageDiv>
+        ) : (
+          <ItemImage
+            src={item.item.imageSrc}
+            alt={`${item.item.name} product`}
+          />
+        )}
         <ItemInfo>
-          <ItemName>name</ItemName>
-          <ItemPrice>price</ItemPrice>
-          <ItemCompany>company</ItemCompany>
+          <ItemName>{item.item.name}</ItemName>
+          <ItemPrice>{item.item.price}</ItemPrice>
+          <ItemCompany>Company Name</ItemCompany>
+          {item.item.numInStock === 0 ? null : (
+            <PurchaseButton>ADD TO CART</PurchaseButton>
+          )}
         </ItemInfo>
       </ItemDiv>
     );
+  }
 };
 
 const ItemDiv = styled.div`
-  margin: 50px;
+  font-family: sans-serif;
+  width: 100vh;
+  height: 100vh;
   display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-const ImageDiv = styled.div`
-  width: 500px;
-  height: 500px;
-  background-color: lightblue;
-`;
+const ImageDiv = styled.div``;
 
 const SoldOut = styled.div`
   width: 100px;
@@ -66,13 +82,17 @@ const SoldOut = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 400px;
 `;
 
-const ItemImage = styled.img``;
+const ItemImage = styled.img`
+  min-height: 400px;
+  min-width: 400px;
+  overflow: hidden;
+`;
 
 const ItemInfo = styled.div`
   margin-left: 30px;
+  width: 400px;
 `;
 
 const ItemName = styled.h1``;
@@ -80,5 +100,16 @@ const ItemName = styled.h1``;
 const ItemPrice = styled.p``;
 
 const ItemCompany = styled.p``;
+
+const PurchaseButton = styled.button`
+  background-color: #aa80ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  &:hover {
+    cursor: pointer;
+    background-color: #443366;
+  }
+`;
 
 export default ItemDetails;
