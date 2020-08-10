@@ -18,5 +18,5 @@ export default function itemReducer(state = initialState, action) {
 }
 
 export const getStoreItem = (state) => {
-  return state;
+  return state.item.item;
 };
