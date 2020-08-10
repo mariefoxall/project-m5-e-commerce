@@ -11,6 +11,7 @@ const {
   handleItem,
   handleCompanies,
   handleCompany,
+  handleItemUpdate,
 } = require("./handlers");
 
 express()
@@ -44,6 +45,7 @@ express()
   //ITEMS
   .get("/items", handleItems)
   .get("/items/:id", handleItem)
+  .put("/items/:id", handleItemUpdate)
 
   //COMPANIES
   .get("/companies", handleCompanies)

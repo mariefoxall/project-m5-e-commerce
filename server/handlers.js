@@ -41,4 +41,35 @@ const handleCompany = (req, res) => {
   }
 };
 
-module.exports = { handleItems, handleItem, handleCompanies, handleCompany };
+const handleItemUpdate = (req, res) => {
+  const update = req.body;
+  const itemId = Number(req.params.id);
+
+  const getItemIndexById = (id) => {
+    return items.findIndex((item) => item.id === id);
+  };
+
+  const itemIndex = getItemIndexById(itemId);
+
+  const updateItems = (num) => {
+    const numInStockBefore = items[itemIndex].numInStock;
+    return (items[itemIndex].numInStock = numInStockBefore - num);
+  };
+
+  const item = items[itemIndex];
+
+  if (itemIndex !== -1) {
+    updateItems(update.quantityBought, itemId);
+    res.status(200).json(item);
+  } else {
+    res.status(404).json("Item not found, 404");
+  }
+};
+
+module.exports = {
+  handleItems,
+  handleItem,
+  handleCompanies,
+  handleCompany,
+  handleItemUpdate,
+};

@@ -22,7 +22,6 @@ const Shop = () => {
   // if (shopItems !== null) {
   //   console.log("shopItemsArray", shopItemsArray);
   // }
-  //console.log("stateObject", stateObject);
   //console.log("status", status);
 
   const activeCategory = useSelector(getFilterCategory);
