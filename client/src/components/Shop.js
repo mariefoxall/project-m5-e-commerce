@@ -1,35 +1,40 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ShopItem from "./ShopItem";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { getStoreItemArray } from "./reducers/items.reducer";
+import { getStoreItems } from "./reducers/items.reducer";
+import {
+  getFilterCategory,
+  getFilterbodyLocation,
+} from "./reducers/filter.reducer";
+import { updateCategory, updateBodyLocation } from "../actions";
 
 const Shop = () => {
-  const shopItems = useSelector(getStoreItemArray);
-  const shopItemsArray =
-    shopItems !== null ? Object.values(shopItems.items) : [];
-  const stateObject = useSelector((state) => state);
-  const status = useSelector((state) => state.items.status);
-  if (shopItems !== null) {
-    console.log("shopItemsArray", shopItemsArray);
-  }
-  console.log("stateObject", stateObject);
-  console.log("status", status);
+  const dispatch = useDispatch();
 
-  const [activeCategory, setActiveCategory] = React.useState("All");
+  const shopItems = useSelector(getStoreItems);
+  const shopItemsArray =
+    shopItems.items !== null ? Object.values(shopItems.items.items) : [];
+
+  const status = shopItems.status;
+
+  // if (shopItems !== null) {
+  //   console.log("shopItemsArray", shopItemsArray);
+  // }
+  //console.log("stateObject", stateObject);
+  //console.log("status", status);
+
+  const activeCategory = useSelector(getFilterCategory);
+  const activeBodyLocation = useSelector(getFilterbodyLocation);
 
   const toggleCategory = (ev) => {
-    setActiveCategory(ev.target.value);
+    dispatch(updateCategory(ev.target.value));
   };
-
-  const [activeBodyLocation, setActiveBodyLocation] = React.useState("All");
 
   const toggleBodyLocation = (ev) => {
-    setActiveBodyLocation(ev.target.value);
+    dispatch(updateBodyLocation(ev.target.value));
   };
-
-  console.log(activeCategory);
 
   const categoryFilterArray =
     activeCategory === "All"
@@ -94,7 +99,7 @@ const Shop = () => {
       ) : (
         <ItemList>
           {mapShopItemsArray.map((item) => {
-            console.log(item.category);
+            //console.log(item.category);
             return (
               <Link key={item.id} to={`/items/${item.id}`}>
                 <ShopItem item={item} />
