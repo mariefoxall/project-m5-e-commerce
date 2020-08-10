@@ -1,16 +1,27 @@
 import { createGlobalStyle } from "styled-components";
 
-export default createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
+/* @import url('https://fonts.googleapis.com/css2?family=Spartan&wght@600&display=swap'); */
+
+@import url("https://fonts.googleapis.com/css?family=Notable");
+body {
+  font-family: "Spartan", sans-serif;
+}
+
+
   *,
   *:before,
   *:after {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
-    font-family: 'Roboto'
+    /* font-family: 'sans-serif'; */
   }
 
   html, body {
+    /* font-family: 'Notable',"Comic Sans MS", sans-serif; */
     max-width: 100vw;
+
+    
   }
 
 
@@ -36,6 +47,7 @@ export default createGlobalStyle`
     padding: 0;
     border: 0;
     vertical-align: baseline;
+
   }
   /* HTML5 display-role reset for older browsers */
   article, aside, details, figcaption, figure,
@@ -58,6 +70,11 @@ export default createGlobalStyle`
   body {
     line-height: 1.25;
     color: white;
+
   }
 
+  a{text-decoration: none;}
+
 `;
+
+export default GlobalStyles;
