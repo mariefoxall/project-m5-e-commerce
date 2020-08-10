@@ -27,3 +27,13 @@ export const updateBodyLocation = (bodyLocation) => ({
   type: "UPDATE_BODYLOCATION",
   bodyLocation,
 });
+
+export const addCart = (item) => ({
+  type: "ADD_ITEM",
+  item,
+});
+
+export const removeCart = (item) => ({
+  type: "REMOVE_ITEM",
+  item,
+});
