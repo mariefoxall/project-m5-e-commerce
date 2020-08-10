@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { getStoreItem } from "./reducers/item.reducer";
 import { useParams } from "react-router-dom";
 import { receiveItem } from "../actions";
+import { Link } from "react-router-dom";
 
 const ItemDetails = () => {
   const params = useParams();
@@ -53,7 +54,13 @@ const ItemDetails = () => {
         <ItemInfo>
           <ItemName>{item.item.name}</ItemName>
           <ItemPrice>{item.item.price}</ItemPrice>
-          <ItemCompany>Company Name</ItemCompany>
+          <StyledLink key={item.item.category} to="/shop">
+            {item.item.category}
+          </StyledLink>
+          <StyledLink key={item.item.companyId} to="/company:id">
+            {item.item.companyId}
+          </StyledLink>
+
           {item.item.numInStock === 0 ? null : (
             <PurchaseButton>ADD TO CART</PurchaseButton>
           )}
@@ -91,6 +98,8 @@ const ItemImage = styled.img`
 `;
 
 const ItemInfo = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-left: 30px;
   width: 400px;
 `;
@@ -99,7 +108,10 @@ const ItemName = styled.h1``;
 
 const ItemPrice = styled.p``;
 
-const ItemCompany = styled.p``;
+const StyledLink = styled(Link)`
+  margin-bottom: 20px;
+  text-decoration: none;
+`;
 
 const PurchaseButton = styled.button`
   background-color: #aa80ff;
