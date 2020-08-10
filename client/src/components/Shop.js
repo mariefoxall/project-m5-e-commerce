@@ -108,7 +108,7 @@ const Shop = () => {
 };
 const ShopDiv = styled.div`
   /* background-color: #6694ff; /* For browsers that do not support gradients */
-  /* background-image: linear-gradient(to right, #52d7e0, #0036b3); */ */
+  /* background-image: linear-gradient(to right, #52d7e0, #0036b3); */
   min-height: 100vh;
 `;
 

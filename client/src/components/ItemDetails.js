@@ -1,16 +1,35 @@
-import React from "react";
 import styled from "styled-components";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getStoreItem } from "./reducers/item.reducer";
 import { useParams } from "react-router-dom";
+import { receiveItem } from "../actions";
 
 const ItemDetails = () => {
-  const { itemId } = useParams();
-  console.log(itemId, "item");
-  const ItemDetailsArray = useSelector(getStoreItem);
+  const params = useParams();
+  const id = params.itemId;
+
+  const dispatch = useDispatch();
+
+  const handleItem = (id) => {
+    fetch(`/items/${id}`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch(receiveItem(json));
+      })
+      .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
+    handleItem(id);
+  }, []);
+
+  const item = useSelector(getStoreItem);
+  console.log(item);
+
   const stateObject = useSelector((state) => state);
-  console.log(stateObject, "state object");
-  console.log(ItemDetailsArray, "item array");
+  //console.log(stateObject, "state object");
 
   if (stateObject)
     return (
