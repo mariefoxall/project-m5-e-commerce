@@ -3,8 +3,9 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getStoreItem } from "./reducers/item.reducer";
+import { getCompany } from "./reducers/company.reducer";
 import { useParams } from "react-router-dom";
-import { receiveItem } from "../actions";
+import { receiveItem, receiveCompany } from "../actions";
 
 const ItemDetails = () => {
   const params = useParams();
@@ -21,15 +22,28 @@ const ItemDetails = () => {
       .catch((err) => console.error(err));
   };
 
-  useEffect(() => {
-    handleItem(id);
-  }, []);
+  const handleCompany = (id) => {
+    fetch(`/companies/${id}`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch(receiveCompany(json));
+      })
+      .catch((err) => console.error(err));
+  };
 
   const item = useSelector(getStoreItem);
-  console.log(item, "item");
-  // const itemArray = item !== null ? Object.values(item) : [];
 
-  // console.log(itemArray, "item array");
+  useEffect(() => {
+    handleItem(id);
+    if (item.status === "idle") {
+      handleCompany(item.item.companyId);
+    }
+  }, [item.status]);
+
+  const company = useSelector(getCompany);
+
+  console.log(item, "item");
+  console.log(company, "company");
 
   if (item.status === "loading") {
     return <>LOADING</>;

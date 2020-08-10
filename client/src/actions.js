@@ -1,7 +1,3 @@
-// export const requestItems = () => ({
-//   type: "REQUEST_ITEMS",
-// });
-
 export const receiveItems = (items) => ({
   type: "RECEIVE_ITEMS",
   items,
@@ -10,6 +6,11 @@ export const receiveItems = (items) => ({
 export const receiveCompanies = (companies) => ({
   type: "RECEIVE_COMPANIES",
   companies,
+});
+
+export const receiveCompany = (company) => ({
+  type: "RECEIVE_COMPANY",
+  company,
 });
 
 export const receiveItem = (item) => ({
