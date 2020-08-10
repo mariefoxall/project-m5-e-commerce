@@ -36,19 +36,22 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <LandingPage />
-        </Route>
-        <Route path="/shop">
-          <Shop />
-        </Route>
-        <Route path="/items/:itemId">
-          <ItemDetails />
-        </Route>
-      </Switch>
-    </Router>
+    <>
+      <GlobalStyles />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <LandingPage />
+          </Route>
+          <Route path="/shop">
+            <Shop />
+          </Route>
+          <Route path="/items/:itemId">
+            <ItemDetails />
+          </Route>
+        </Switch>
+      </Router>
+    </>
   );
 }
 

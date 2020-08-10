@@ -54,7 +54,7 @@ const Shop = () => {
         <Title>WEARABLES SHOP</Title>
         <FilterDiv>
           <Category>
-            <label htmlFor="category">Category:</label>
+            <label htmlFor="category">WHAT:</label>
             <Dropdown
               onChange={(ev) => toggleCategory(ev)}
               id="category"
@@ -73,7 +73,7 @@ const Shop = () => {
             </Dropdown>
           </Category>
           <BodyLocation>
-            <label htmlFor="bodylocation">Body Location:</label>
+            <label htmlFor="bodylocation">WHERE:</label>
             <Dropdown
               onChange={(ev) => toggleBodyLocation(ev)}
               id="bodylocation"
