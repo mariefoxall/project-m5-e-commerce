@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { getStoreItem } from "./reducers/item.reducer";
 import { getCompany } from "./reducers/company.reducer";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { receiveItem, receiveCompany } from "../actions";
 
 const ItemDetails = () => {
@@ -67,7 +68,13 @@ const ItemDetails = () => {
         <ItemInfo>
           <ItemName>{item.item.name}</ItemName>
           <ItemPrice>{item.item.price}</ItemPrice>
-          <ItemCompany>Company Name</ItemCompany>
+          <StyledLink key={item.item.category} to="/shop">
+            {item.item.category}
+          </StyledLink>
+          {company.status === "idle" && (
+            <a href={company.company.url}>{company.company.name}</a>
+          )}
+
           {item.item.numInStock === 0 ? null : (
             <PurchaseButton>ADD TO CART</PurchaseButton>
           )}
@@ -78,12 +85,16 @@ const ItemDetails = () => {
 };
 
 const ItemDiv = styled.div`
+  color: black;
   font-family: sans-serif;
   width: 100vh;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
+  position: relative;
+  left: 50vh;
 `;
 
 const ImageDiv = styled.div``;
@@ -105,17 +116,28 @@ const ItemImage = styled.img`
 `;
 
 const ItemInfo = styled.div`
-  margin-left: 30px;
+  height: 400px;
   width: 400px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
 `;
 
-const ItemName = styled.h1``;
+const ItemName = styled.h1`
+  margin-bottom: 20px;
+`;
 
-const ItemPrice = styled.p``;
+const ItemPrice = styled.p`
+  margin-bottom: 20px;
+`;
 
-const ItemCompany = styled.p``;
+const StyledLink = styled(Link)`
+  margin-bottom: 20px;
+  text-decoration: none;
+`;
 
 const PurchaseButton = styled.button`
+  margin-top: 30px;
   background-color: #aa80ff;
   color: white;
   border: none;

@@ -8,6 +8,7 @@ import { receiveItems, receiveCompanies } from "../actions";
 import LandingPage from "./LandingPage";
 import Shop from "./Shop";
 import ItemDetails from "./ItemDetails";
+import Header from "./Header";
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ function App() {
             <Shop />
           </Route>
           <Route path="/items/:itemId">
+            <Header />
             <ItemDetails />
           </Route>
         </Switch>
