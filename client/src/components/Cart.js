@@ -1,21 +1,24 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCartItemArray } from "./reducers/cart.reducer";
-import { removeCart, addCart } from "../actions";
+import { beginPurchaseProcess } from "../actions";
 
 import styled from "styled-components";
 import CartItem from "./CartItem";
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const cartItems = useSelector(getCartItemArray);
   console.log(cartItems);
 
   let total = 0;
+  let numCartItems = 0;
 
   cartItems.forEach((item) => {
     console.log(item.price);
     console.log(item.quantity);
     total = total + Number(item.price.slice(1)) * Number(item.quantity);
+    numCartItems = numCartItems + item.quantity;
   });
 
   return (
@@ -23,7 +26,7 @@ const Cart = () => {
       <CartDiv>
         <CartTitle>
           <h3> Your Cart:</h3>
-          <p>{cartItems.length} item(s)</p>
+          <p>{numCartItems} item(s)</p>
         </CartTitle>
         <ListDiv>
           {cartItems.map((item) => {
@@ -42,7 +45,11 @@ const Cart = () => {
         </ListDiv>
         <BottomPart>
           <Total>Total: ${total.toFixed(2)}</Total>
-          <PurchaseButton>Purchase</PurchaseButton>
+          <PurchaseButton
+            onClick={dispatch(beginPurchaseProcess({ cartItems, total }))}
+          >
+            Purchase
+          </PurchaseButton>
         </BottomPart>
       </CartDiv>
     </RightSide>
@@ -56,13 +63,13 @@ const RightSide = styled.div`
 `;
 
 const CartDiv = styled.div`
-  height: 100vh;
+  /* height: 100vh; */
   position: fixed;
   width: 25%;
   right: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding: 20px;
 `;
 
