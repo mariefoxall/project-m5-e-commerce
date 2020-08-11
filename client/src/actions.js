@@ -65,3 +65,7 @@ export const purchaseItemsSuccess = (data) => ({
   type: "PURCHASE-ITEMS-SUCCESS",
   data,
 });
+
+export const NumInStockUpdateSuccess = () => ({
+  type: "NUM-IN-STOCK-UPDATE-SUCCESS",
+});

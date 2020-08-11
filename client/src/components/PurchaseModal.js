@@ -8,22 +8,32 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import styled from "styled-components";
 import CartItem from "./CartItem";
-import { cancelPurchaseProcess } from "../actions";
+import { cancelPurchaseProcess, NumInStockUpdateSuccess } from "../actions";
 import { getCartItemArray } from "./reducers/cart.reducer";
 
 const PurchaseModal = () => {
   const [creditCard, setCreditCard] = React.useState("");
   const [expiration, setExpiration] = React.useState("");
   const purchaseInfo = useSelector((state) => state.purchase);
+  console.log("purchaseInfo", purchaseInfo);
   //   const purchaseItems = purchaseInfo.selectedItems;
   const dispatch = useDispatch();
   const cartItems = useSelector(getCartItemArray);
   const purchaseStatus = purchaseInfo && purchaseInfo.status;
+  console.log(purchaseStatus);
 
   const handleUpdateNumInStock = (cartItemArray) => {
+    console.log(cartItemArray);
     fetch(`/items`, {
       method: "PUT",
-      body: JSON.stringify(cartItemArray),
+      body: JSON.stringify({ cartItemArray }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      dispatch(NumInStockUpdateSuccess());
+      console.log(res);
     });
   };
 
@@ -45,23 +55,23 @@ const PurchaseModal = () => {
       >
         <DialogTitle id="purchase-form-dialog">Purchase Items</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            <h2>Please verify the contents of your cart:</h2>
-            {cartItems.map((item) => {
-              return (
-                <div key={item.id}>
-                  <CartItem
-                    price={item.price}
-                    quantity={item.quantity}
-                    name={item.name}
-                    id={item.id}
-                    item={item}
-                  />
-                </div>
-              );
-            })}
-            <div>Total: ${total.toFixed(2)}</div>
-          </DialogContentText>
+          <h2>Please verify the contents of your cart:</h2>
+          {/* <DialogContentText> */}
+          {cartItems.map((item) => {
+            return (
+              <div key={item.id}>
+                <CartItem
+                  price={item.price}
+                  quantity={item.quantity}
+                  name={item.name}
+                  id={item.id}
+                  item={item}
+                />
+              </div>
+            );
+          })}
+          <div>Total: ${total.toFixed(2)}</div>
+          {/* </DialogContentText> */}
         </DialogContent>
         <DialogContent>
           <h3>Enter Payment Details:</h3>
@@ -71,7 +81,7 @@ const PurchaseModal = () => {
             margin="dense"
             label="Credit Card"
             type="text"
-            fulLWidth
+            fullWidth
           />
           <TextField
             onChange={(ev) => setExpiration(ev.target.value)}
@@ -79,18 +89,16 @@ const PurchaseModal = () => {
             margin="dense"
             label="Expiration"
             type="text"
-            fulLWidth
+            fullWidth
           />
           <DialogActions>
             <button
-              onClick={(ev) =>
-                dispatch(
-                  handleUpdateNumInStock(
-                    cartItems,
-                    creditCard,
-                    expiration,
-                    total
-                  )
+              onClick={() =>
+                handleUpdateNumInStock(
+                  cartItems
+                  // creditCard,
+                  // expiration,
+                  // total
                 )
               }
             >

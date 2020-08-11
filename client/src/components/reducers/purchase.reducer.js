@@ -36,6 +36,12 @@ export default function purchaseReducer(state = initialState, action) {
         totalPrice: null,
       };
     }
+    case "NUM-IN-STOCK-UPDATE-SUCCESS": {
+      return {
+        ...state,
+        status: "waiting-to-confirm-order",
+      };
+    }
     default: {
       return state;
     }

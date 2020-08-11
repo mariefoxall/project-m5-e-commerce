@@ -6,6 +6,7 @@ import companies from "./companies.reducer";
 import company from "./company.reducer";
 import filter from "./filter.reducer";
 import cart from "./cart.reducer";
+import purchase from "./purchase.reducer";
 
 export default combineReducers({
   items,
@@ -14,4 +15,5 @@ export default combineReducers({
   item,
   filter,
   cart,
+  purchase,
 });
