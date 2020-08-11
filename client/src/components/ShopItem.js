@@ -1,8 +1,11 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
+import { addCart } from "../actions";
 
 const ShopItem = (item) => {
+  const dispatch = useDispatch();
   // console.log(item);
   return (
     <ItemDiv
