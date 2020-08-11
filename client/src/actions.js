@@ -13,6 +13,10 @@ export const receiveCompany = (company) => ({
   company,
 });
 
+export const requestItem = () => ({
+  type: "REQUEST_ITEM",
+});
+
 export const receiveItem = (item) => ({
   type: "RECEIVE_ITEM",
   item,

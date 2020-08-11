@@ -7,6 +7,7 @@ import { getCompany } from "./reducers/company.reducer";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import {
+  requestItem,
   receiveItem,
   receiveCompany,
   updateCategory,
@@ -20,6 +21,7 @@ const ItemDetails = () => {
   const dispatch = useDispatch();
 
   const handleItem = (id) => {
+    dispatch(requestItem());
     fetch(`/items/${id}`)
       .then((res) => res.json())
       .then((json) => {
@@ -41,6 +43,9 @@ const ItemDetails = () => {
 
   useEffect(() => {
     handleItem(id);
+  }, []);
+
+  useEffect(() => {
     if (item.status === "idle") {
       handleCompany(item.item.companyId);
     }
