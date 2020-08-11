@@ -54,7 +54,7 @@ const handleItemUpdate = (req, res) => {
 
     updateArray.forEach((item) => {
       const itemId = item.id;
-      const quantity = item.quantityPurchased;
+      const quantity = item.quantity;
       const itemIndex = getItemIndexById(itemId);
       const itemPurchased = items[itemIndex];
       returnArray.push(itemPurchased);

@@ -23,18 +23,17 @@ const PurchaseModal = () => {
   console.log(purchaseStatus);
 
   const handleUpdateNumInStock = (cartItemArray) => {
-    console.log(cartItemArray);
+    console.log({ update: cartItemArray });
     fetch(`/items`, {
       method: "PUT",
-      body: JSON.stringify({ cartItemArray }),
+      body: JSON.stringify({ update: cartItemArray }),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-    }).then((res) => {
-      dispatch(NumInStockUpdateSuccess());
-      console.log(res);
-    });
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   };
 
   const handleClose = () => {
@@ -93,7 +92,7 @@ const PurchaseModal = () => {
           />
           <DialogActions>
             <button
-              onClick={() =>
+              onClick={(ev) =>
                 handleUpdateNumInStock(
                   cartItems
                   // creditCard,
