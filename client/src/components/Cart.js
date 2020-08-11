@@ -46,7 +46,7 @@ const Cart = () => {
         <BottomPart>
           <Total>Total: ${total.toFixed(2)}</Total>
           <PurchaseButton
-            onClick={dispatch(beginPurchaseProcess({ cartItems, total }))}
+            onClick={() => dispatch(beginPurchaseProcess({ cartItems, total }))}
           >
             Purchase
           </PurchaseButton>
