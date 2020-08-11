@@ -63,15 +63,54 @@ const Shop = () => {
                 name="category"
                 placeholder="Category"
               >
-                {/* <option id="default-option">Category</option> */}
-                <option value="All">Show All</option>
-                <option value="Entertainment">Entertainment</option>
-                <option value="Fitness">Fitness</option>
-                <option value="Gaming">Gaming</option>
-                <option value="Industrial">Industrial</option>
-                <option value="Lifestyle">Lifestyle</option>
-                <option value="Medical">Medical</option>
-                <option value="Pets and Animals">Pets and Animals</option>
+                <option
+                  selected={activeCategory === "All" && "selected"}
+                  value="All"
+                >
+                  Show All
+                </option>
+                <option
+                  selected={activeCategory === "Entertainment" && "selected"}
+                  value="Entertainment"
+                >
+                  Entertainment
+                </option>
+                <option
+                  selected={activeCategory === "Fitness" && "selected"}
+                  value="Fitness"
+                >
+                  Fitness
+                </option>
+                <option
+                  selected={activeCategory === "Gaming" && "selected"}
+                  value="Gaming"
+                >
+                  Gaming
+                </option>
+                <option
+                  selected={activeCategory === "Industrial" && "selected"}
+                  value="Industrial"
+                >
+                  Industrial
+                </option>
+                <option
+                  selected={activeCategory === "Lifestyle" && "selected"}
+                  value="Lifestyle"
+                >
+                  Lifestyle
+                </option>
+                <option
+                  selected={activeCategory === "Medical" && "selected"}
+                  value="Medical"
+                >
+                  Medical
+                </option>
+                <option
+                  selected={activeCategory === "Pets and Animals" && "selected"}
+                  value="Pets and Animals"
+                >
+                  Pets and Animals
+                </option>
               </Dropdown>
             </Category>
             <BodyLocation>
@@ -82,16 +121,63 @@ const Shop = () => {
                 name="bodylocation"
               >
                 {" "}
-                {/* <option id="default-option">Body Location</option> */}
-                <option value="All">Show All</option>
-                <option value="Arms">Arms</option>
-                <option value="Chest">Chest</option>
-                <option value="Feet">Feet</option>
-                <option value="Hands">Hands</option>
-                <option value="Head">Head</option>
-                <option value="Neck">Neck</option>
-                <option value="Waist">Waist</option>
-                <option value="Wrist">Wrist</option>
+                {/* <option id="default-option" value={activeBodyLocation}>
+                  {activeBodyLocation}
+                </option> */}
+                <option
+                  selected={activeBodyLocation === "All" && "selected"}
+                  value="All"
+                >
+                  Show All
+                </option>
+                <option
+                  selected={activeBodyLocation === "Arms" && "selected"}
+                  value="Arms"
+                >
+                  Arms
+                </option>
+                <option
+                  selected={activeBodyLocation === "Chest" && "selected"}
+                  value="Chest"
+                >
+                  Chest
+                </option>
+                <option
+                  selected={activeBodyLocation === "Feet" && "selected"}
+                  value="Feet"
+                >
+                  Feet
+                </option>
+                <option
+                  selected={activeBodyLocation === "Hands" && "selected"}
+                  value="Hands"
+                >
+                  Hands
+                </option>
+                <option
+                  selected={activeBodyLocation === "Head" && "selected"}
+                  value="Head"
+                >
+                  Head
+                </option>
+                <option
+                  selected={activeBodyLocation === "Neck" && "selected"}
+                  value="Neck"
+                >
+                  Neck
+                </option>
+                <option
+                  selected={activeBodyLocation === "Waist" && "selected"}
+                  value="Waist"
+                >
+                  Waist
+                </option>
+                <option
+                  selected={activeBodyLocation === "Wrist" && "selected"}
+                  value="Wrist"
+                >
+                  Wrist
+                </option>
               </Dropdown>
             </BodyLocation>
           </FilterDiv>

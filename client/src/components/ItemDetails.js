@@ -6,7 +6,12 @@ import { getStoreItem } from "./reducers/item.reducer";
 import { getCompany } from "./reducers/company.reducer";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { receiveItem, receiveCompany } from "../actions";
+import {
+  receiveItem,
+  receiveCompany,
+  updateCategory,
+  updateBodyLocation,
+} from "../actions";
 
 const ItemDetails = () => {
   const params = useParams();
@@ -46,6 +51,14 @@ const ItemDetails = () => {
   console.log(item, "item");
   console.log(company, "company");
 
+  const toggleCategory = (target) => {
+    dispatch(updateCategory(target));
+  };
+
+  const toggleBodyLocation = (target) => {
+    dispatch(updateBodyLocation(target));
+  };
+
   if (item.status === "loading") {
     return <>LOADING</>;
   } else {
@@ -68,13 +81,35 @@ const ItemDetails = () => {
         <ItemInfo>
           <ItemName>{item.item.name}</ItemName>
           <ItemPrice>{item.item.price}</ItemPrice>
-          <StyledLink key={item.item.category} to="/shop">
+          <StyledLink
+            key={item.item.category}
+            to="/shop"
+            onClick={() => {
+              toggleCategory(item.item.category);
+              toggleBodyLocation("All");
+            }}
+          >
             {item.item.category}
           </StyledLink>
+          <StyledLink
+            key={item.item.body_location}
+            to="/shop"
+            onClick={() => {
+              toggleBodyLocation(item.item.body_location);
+              toggleCategory("All");
+            }}
+          >
+            {item.item.body_location}
+          </StyledLink>
+          made by{" "}
           {company.status === "idle" && (
-            <a href={company.company.url}>{company.company.name}</a>
+            <>
+              <a target="_blank" href={company.company.url}>
+                {company.company.name}
+              </a>
+              <span>in {company.company.country}</span>
+            </>
           )}
-
           {item.item.numInStock === 0 ? null : (
             <PurchaseButton>ADD TO CART</PurchaseButton>
           )}
