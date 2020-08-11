@@ -18,6 +18,16 @@ export default function cartReducer(state = initialState, action) {
       delete stateCopy[action.item.id];
       return stateCopy;
     }
+    case "UPDATE_QUANTITY": {
+      console.log(action);
+      return {
+        ...state,
+        [action.item.id]: {
+          ...state[action.item.id],
+          quantity: action.item.quantity,
+        },
+      };
+    }
     default: {
       return state;
     }

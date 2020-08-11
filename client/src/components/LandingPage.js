@@ -15,12 +15,11 @@ const LandingPage = () => {
   return (
     <LandingDiv>
       <div>
-        <Welcome>WELCOME TO GO-GO-GADGETS</Welcome>
+        <Welcome>GO-GO-GADGETS</Welcome>
         <WelcomeNav>
-          <Link to="/shop">
-            <NavSection>SHOP</NavSection>
-          </Link>
-          <NavSection>ABOUT</NavSection>
+          <NavSection>
+            <Link to="/shop">SHOP</Link>
+          </NavSection>
           <NavSection>CONTACT</NavSection>
         </WelcomeNav>
       </div>
@@ -58,7 +57,7 @@ const NavSection = styled.h2`
   padding: 20px;
   background-color: #ccccff;
   opacity: 0.7;
-  flex: 1;
+  width: 50%;
   &:hover {
     opacity: 0.9;
   }

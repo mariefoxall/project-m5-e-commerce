@@ -9,6 +9,8 @@ import {
   getFilterbodyLocation,
 } from "./reducers/filter.reducer";
 import { updateCategory, updateBodyLocation } from "../actions";
+import Cart from "./Cart";
+import { addCart } from "../actions";
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -48,72 +50,81 @@ const Shop = () => {
         );
 
   return (
-    <ShopDiv>
-      <Header>
-        <Title>WEARABLES SHOP</Title>
-        <FilterDiv>
-          <Category>
-            <label htmlFor="category">WHAT:</label>
-            <Dropdown
-              onChange={(ev) => toggleCategory(ev)}
-              id="category"
-              name="category"
-              placeholder="Category"
-            >
-              {/* <option id="default-option">Category</option> */}
-              <option value="All">Show All</option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Fitness">Fitness</option>
-              <option value="Gaming">Gaming</option>
-              <option value="Industrial">Industrial</option>
-              <option value="Lifestyle">Lifestyle</option>
-              <option value="Medical">Medical</option>
-              <option value="Pets and Animals">Pets and Animals</option>
-            </Dropdown>
-          </Category>
-          <BodyLocation>
-            <label htmlFor="bodylocation">WHERE:</label>
-            <Dropdown
-              onChange={(ev) => toggleBodyLocation(ev)}
-              id="bodylocation"
-              name="bodylocation"
-            >
-              {" "}
-              {/* <option id="default-option">Body Location</option> */}
-              <option value="All">Show All</option>
-              <option value="Arms">Arms</option>
-              <option value="Chest">Chest</option>
-              <option value="Feet">Feet</option>
-              <option value="Hands">Hands</option>
-              <option value="Head">Head</option>
-              <option value="Neck">Neck</option>
-              <option value="Waist">Waist</option>
-              <option value="Wrist">Wrist</option>
-            </Dropdown>
-          </BodyLocation>
-        </FilterDiv>
-      </Header>
-      {status && status === "loading" ? (
-        <div>LOADING</div>
-      ) : (
-        <ItemList>
-          {mapShopItemsArray.map((item) => {
-            //console.log(item.category);
-            return (
-              <Link key={item.id} to={`/items/${item.id}`}>
-                <ShopItem item={item} />
-              </Link>
-            );
-          })}
-        </ItemList>
-      )}
-    </ShopDiv>
+    <ShopPageAll>
+      <ShopDiv>
+        <Header>
+          <Title>WEARABLES SHOP</Title>
+          <FilterDiv>
+            <Category>
+              <label htmlFor="category">WHAT:</label>
+              <Dropdown
+                onChange={(ev) => toggleCategory(ev)}
+                id="category"
+                name="category"
+                placeholder="Category"
+              >
+                {/* <option id="default-option">Category</option> */}
+                <option value="All">Show All</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Industrial">Industrial</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Medical">Medical</option>
+                <option value="Pets and Animals">Pets and Animals</option>
+              </Dropdown>
+            </Category>
+            <BodyLocation>
+              <label htmlFor="bodylocation">WHERE:</label>
+              <Dropdown
+                onChange={(ev) => toggleBodyLocation(ev)}
+                id="bodylocation"
+                name="bodylocation"
+              >
+                {" "}
+                {/* <option id="default-option">Body Location</option> */}
+                <option value="All">Show All</option>
+                <option value="Arms">Arms</option>
+                <option value="Chest">Chest</option>
+                <option value="Feet">Feet</option>
+                <option value="Hands">Hands</option>
+                <option value="Head">Head</option>
+                <option value="Neck">Neck</option>
+                <option value="Waist">Waist</option>
+                <option value="Wrist">Wrist</option>
+              </Dropdown>
+            </BodyLocation>
+          </FilterDiv>
+        </Header>
+        {status && status === "loading" ? (
+          <div>LOADING</div>
+        ) : (
+          <ItemList>
+            {mapShopItemsArray.map((item) => {
+              //console.log(item.category);
+              return (
+                <div key={item.id}>
+                  <Link to={`/items/${item.id}`}>
+                    <ShopItem item={item} />
+                  </Link>
+                  <button onClick={() => dispatch(addCart(item))}>
+                    Add to Cart - {item.price}
+                  </button>
+                </div>
+              );
+            })}
+          </ItemList>
+        )}
+      </ShopDiv>
+      <Cart />
+    </ShopPageAll>
   );
 };
 const ShopDiv = styled.div`
   /* background-color: #6694ff; /* For browsers that do not support gradients */
   /* background-image: linear-gradient(to right, #52d7e0, #0036b3); */
   min-height: 100vh;
+  flex: 3;
 `;
 
 const Header = styled.div`
@@ -158,6 +169,12 @@ const ItemList = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+`;
+
+const ShopPageAll = styled.div`
+  display: flex;
+  flex-basis: 100vw;
+  position: relative;
 `;
 
 export default Shop;
