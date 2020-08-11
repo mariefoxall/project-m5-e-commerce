@@ -5,9 +5,6 @@ const initialState = {
 
 export default function itemsReducer(state = initialState, action) {
   switch (action.type) {
-    // case "REQUEST_ITEMS": {
-    //   return { ...state, status: "loading" };
-    // }
     case "RECEIVE_ITEMS": {
       return { ...state, items: action.items, status: "idle" };
     }
@@ -18,6 +15,5 @@ export default function itemsReducer(state = initialState, action) {
 }
 
 export const getStoreItems = (state) => {
-  console.log(state);
   return state.items;
 };

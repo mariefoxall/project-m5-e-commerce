@@ -1,7 +1,3 @@
-// export const requestItems = () => ({
-//   type: "REQUEST_ITEMS",
-// });
-
 export const receiveItems = (items) => ({
   type: "RECEIVE_ITEMS",
   items,
@@ -10,6 +6,11 @@ export const receiveItems = (items) => ({
 export const receiveCompanies = (companies) => ({
   type: "RECEIVE_COMPANIES",
   companies,
+});
+
+export const receiveCompany = (company) => ({
+  type: "RECEIVE_COMPANY",
+  company,
 });
 
 export const receiveItem = (item) => ({
@@ -25,4 +26,14 @@ export const updateCategory = (category) => ({
 export const updateBodyLocation = (bodyLocation) => ({
   type: "UPDATE_BODYLOCATION",
   bodyLocation,
+});
+
+export const addCart = (item) => ({
+  type: "ADD_ITEM",
+  item,
+});
+
+export const removeCart = (item) => ({
+  type: "REMOVE_ITEM",
+  item,
 });

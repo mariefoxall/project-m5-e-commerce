@@ -36,8 +36,8 @@ const ItemDiv = styled.div`
 
 const ItemInfoHover = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -10px;
+  left: -10px;
   height: 300px;
   width: 300px;
   opacity: 0;
@@ -48,7 +48,7 @@ const ItemInfoHover = styled.div`
   justify-content: space-between;
   align-items: space-between;
   z-index: 2;
-  padding: 10px;
+  padding: 20px;
   box-sizing: border-box;
 
   &:hover {

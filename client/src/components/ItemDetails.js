@@ -3,9 +3,10 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { getStoreItem } from "./reducers/item.reducer";
+import { getCompany } from "./reducers/company.reducer";
 import { useParams } from "react-router-dom";
-import { receiveItem } from "../actions";
 import { Link } from "react-router-dom";
+import { receiveItem, receiveCompany } from "../actions";
 
 const ItemDetails = () => {
   const params = useParams();
@@ -22,15 +23,28 @@ const ItemDetails = () => {
       .catch((err) => console.error(err));
   };
 
-  useEffect(() => {
-    handleItem(id);
-  }, []);
+  const handleCompany = (id) => {
+    fetch(`/companies/${id}`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch(receiveCompany(json));
+      })
+      .catch((err) => console.error(err));
+  };
 
   const item = useSelector(getStoreItem);
-  console.log(item, "item");
-  // const itemArray = item !== null ? Object.values(item) : [];
 
-  // console.log(itemArray, "item array");
+  useEffect(() => {
+    handleItem(id);
+    if (item.status === "idle") {
+      handleCompany(item.item.companyId);
+    }
+  }, [item.status]);
+
+  const company = useSelector(getCompany);
+
+  console.log(item, "item");
+  console.log(company, "company");
 
   if (item.status === "loading") {
     return <>LOADING</>;
@@ -57,9 +71,9 @@ const ItemDetails = () => {
           <StyledLink key={item.item.category} to="/shop">
             {item.item.category}
           </StyledLink>
-          <StyledLink key={item.item.companyId} to="/company:id">
-            {item.item.companyId}
-          </StyledLink>
+          {company.status === "idle" && (
+            <a href={company.company.url}>{company.company.name}</a>
+          )}
 
           {item.item.numInStock === 0 ? null : (
             <PurchaseButton>ADD TO CART</PurchaseButton>
@@ -71,12 +85,16 @@ const ItemDetails = () => {
 };
 
 const ItemDiv = styled.div`
+  color: black;
   font-family: sans-serif;
   width: 100vh;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
+  position: relative;
+  left: 50vh;
 `;
 
 const ImageDiv = styled.div``;
@@ -98,15 +116,20 @@ const ItemImage = styled.img`
 `;
 
 const ItemInfo = styled.div`
+  height: 400px;
+  width: 400px;
   display: flex;
   flex-direction: column;
   margin-left: 30px;
-  width: 400px;
 `;
 
-const ItemName = styled.h1``;
+const ItemName = styled.h1`
+  margin-bottom: 20px;
+`;
 
-const ItemPrice = styled.p``;
+const ItemPrice = styled.p`
+  margin-bottom: 20px;
+`;
 
 const StyledLink = styled(Link)`
   margin-bottom: 20px;
@@ -114,6 +137,7 @@ const StyledLink = styled(Link)`
 `;
 
 const PurchaseButton = styled.button`
+  margin-top: 30px;
   background-color: #aa80ff;
   color: white;
   border: none;

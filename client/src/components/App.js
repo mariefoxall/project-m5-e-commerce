@@ -8,6 +8,7 @@ import { receiveItems, receiveCompanies } from "../actions";
 import LandingPage from "./LandingPage";
 import Shop from "./Shop";
 import ItemDetails from "./ItemDetails";
+import Header from "./Header";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,19 +37,23 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <LandingPage />
-        </Route>
-        <Route path="/shop">
-          <Shop />
-        </Route>
-        <Route path="/items/:itemId">
-          <ItemDetails />
-        </Route>
-      </Switch>
-    </Router>
+    <>
+      <GlobalStyles />
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <LandingPage />
+          </Route>
+          <Route path="/shop">
+            <Shop />
+          </Route>
+          <Route path="/items/:itemId">
+            <Header />
+            <ItemDetails />
+          </Route>
+        </Switch>
+      </Router>
+    </>
   );
 }
 
