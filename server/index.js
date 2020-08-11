@@ -45,7 +45,7 @@ express()
   //ITEMS
   .get("/items", handleItems)
   .get("/items/:id", handleItem)
-  .put("/items/:id", handleItemUpdate) // <----- THIS ONE YOU CALL WITH {"quantityBought": 1}
+  .put("/items", handleItemUpdate) // <----- THIS ONE YOU CALL WITH {"quantityPurchased": 1}
 
   //COMPANIES
   .get("/companies", handleCompanies)

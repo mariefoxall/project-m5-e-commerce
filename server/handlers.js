@@ -43,27 +43,29 @@ const handleCompany = (req, res) => {
 
 const handleItemUpdate = (req, res) => {
   const update = req.body;
-  const itemId = Number(req.params.id);
 
-  const getItemIndexById = (id) => {
-    return items.findIndex((item) => item.id === id);
+  const updateArray = Object.values(update)[0];
+
+  const applyUpdate = () => {
+    const getItemIndexById = (id) => {
+      return items.findIndex((item) => item.id === id);
+    };
+    const returnArray = [];
+
+    updateArray.forEach((item) => {
+      const itemId = item.id;
+      const quantity = item.quantityPurchased;
+      const itemIndex = getItemIndexById(itemId);
+      const itemPurchased = items[itemIndex];
+      returnArray.push(itemPurchased);
+      const numInStockBefore = items[itemIndex].numInStock;
+      return (items[itemIndex].numInStock = numInStockBefore - quantity);
+    });
+    return returnArray;
   };
 
-  const itemIndex = getItemIndexById(itemId);
-
-  const updateItems = (num) => {
-    const numInStockBefore = items[itemIndex].numInStock;
-    return (items[itemIndex].numInStock = numInStockBefore - num);
-  };
-
-  const item = items[itemIndex];
-
-  if (itemIndex !== -1) {
-    updateItems(update.quantityBought, itemId);
-    res.status(200).json(item);
-  } else {
-    res.status(404).json("Item not found, 404");
-  }
+  purchasedItems = applyUpdate();
+  res.status(200).json(purchasedItems);
 };
 
 module.exports = {
