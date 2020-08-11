@@ -46,3 +46,22 @@ export const updateQuantity = (item) => ({
   type: "UPDATE_QUANTITY",
   item,
 });
+
+export const beginPurchaseProcess = (data) => ({
+  type: "BEGIN-PURCHASE-PROCESS",
+  data,
+});
+
+export const cancelPurchaseProcess = () => ({
+  type: "CANCEL-PURCHASE-PROCESS",
+});
+
+export const purchaseItemsFailure = (data) => ({
+  type: "PURCHASE-ITEMS-FAILURE",
+  data,
+});
+
+export const purchaseItemsSuccess = (data) => ({
+  type: "PURCHASE-ITEMS-SUCCESS",
+  data,
+});

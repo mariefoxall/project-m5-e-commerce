@@ -11,6 +11,8 @@ import {
 import { updateCategory, updateBodyLocation } from "../actions";
 import Cart from "./Cart";
 import { addCart } from "../actions";
+import Header from "./Header";
+import PurchaseModal from "./PurchaseModal";
 
 const Shop = () => {
   const dispatch = useDispatch();
@@ -50,10 +52,10 @@ const Shop = () => {
         );
 
   return (
-    <ShopPageAll>
-      <ShopDiv>
-        <Header>
-          <Title>WEARABLES SHOP</Title>
+    <>
+      <Header />
+      <ShopPageAll>
+        <ShopDiv>
           <FilterDiv>
             <Category>
               <label htmlFor="category">WHAT:</label>
@@ -181,45 +183,48 @@ const Shop = () => {
               </Dropdown>
             </BodyLocation>
           </FilterDiv>
-        </Header>
-        {status && status === "loading" ? (
-          <div>LOADING</div>
-        ) : (
-          <ItemList>
-            {mapShopItemsArray.map((item) => {
-              //console.log(item.category);
-              return (
-                <div key={item.id}>
-                  <Link to={`/items/${item.id}`}>
-                    <ShopItem item={item} />
-                  </Link>
-                  <button onClick={() => dispatch(addCart(item))}>
-                    Add to Cart - {item.price}
-                  </button>
-                </div>
-              );
-            })}
-          </ItemList>
-        )}
-      </ShopDiv>
-      <Cart />
-    </ShopPageAll>
+          <ItemsDiv>
+            {status && status === "loading" ? (
+              <div>LOADING</div>
+            ) : (
+              <ItemList>
+                {mapShopItemsArray.map((item) => {
+                  //console.log(item.category);
+                  return (
+                    <div key={item.id}>
+                      {/* <Link to={`/items/${item.id}`}> */}
+                      <ShopItem item={item} />
+                      {/* </Link> */}
+                    </div>
+                  );
+                })}
+              </ItemList>
+            )}
+          </ItemsDiv>
+        </ShopDiv>
+        <Cart />
+        <PurchaseModal />
+      </ShopPageAll>
+    </>
   );
 };
+
+const ItemsDiv = styled.div``;
 const ShopDiv = styled.div`
   /* background-color: #6694ff; /* For browsers that do not support gradients */
   /* background-image: linear-gradient(to right, #52d7e0, #0036b3); */
   min-height: 100vh;
   flex: 3;
+  display: flex;
 `;
 
-const Header = styled.div`
-  background-image: linear-gradient(to right, #52d7e0, #0036b3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-`;
+// const Header = styled.div`
+//   background-image: linear-gradient(to right, #52d7e0, #0036b3);
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   color: white;
+// `;
 
 const Title = styled.h1`
   color: white;
@@ -228,19 +233,22 @@ const Title = styled.h1`
 
 const FilterDiv = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  /* justify-content: flex-start; */
 `;
 
 const Category = styled.div`
   margin: 10px;
-  padding: 10px 0;
+  padding: 10px;
   font-family: sans-serif;
+  color: #8080ff;
 `;
 
 const BodyLocation = styled.div`
   margin: 10px;
-  padding: 10px 0;
+  padding: 10px;
   font-family: sans-serif;
+  color: #8080ff;
 `;
 
 const Dropdown = styled.select`

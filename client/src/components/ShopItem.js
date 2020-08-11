@@ -3,10 +3,16 @@ import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
 import { addCart } from "../actions";
+import { Link, useHistory } from "react-router-dom";
 
 const ShopItem = (item) => {
   const dispatch = useDispatch();
   // console.log(item);
+
+  let history = useHistory();
+  const handleClick = () => {
+    history.push(`/items/${item.item.id}`);
+  };
   return (
     <ItemDiv
       style={{
@@ -18,11 +24,22 @@ const ShopItem = (item) => {
       }}
     >
       <img src={item.item.imageSrc} alt={`${item.item.name} product`} />
-      <ItemInfoHover>
+      {/* <Link to={`/items/${item.item.id}`}> */}
+      <ItemInfoHover onClick={() => handleClick()}>
         <Name>{item.item.name}</Name>
         <SoldOut>{item.item.numInStock === 0 && <p>SOLD OUT</p>}</SoldOut>
-        <Price>{item.item.price}</Price>
+        <AddCartButton
+          disabled={item.item.numInStock === 0 ? true : false}
+          onClick={(ev) => {
+            ev.stopPropagation();
+            dispatch(addCart(item.item));
+          }}
+        >
+          Add to Cart - {item.item.price}
+        </AddCartButton>
+        {/* <Price>{item.item.price}</Price> */}
       </ItemInfoHover>
+      {/* </Link> */}
     </ItemDiv>
   );
 };
@@ -50,12 +67,13 @@ const ItemInfoHover = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: space-between;
-  z-index: 2;
+  /* z-index: 2; */
   padding: 20px;
   box-sizing: border-box;
 
   &:hover {
     opacity: 0.7;
+    cursor: pointer;
   }
 `;
 
@@ -74,5 +92,21 @@ const SoldOut = styled.h2`
   text-align: center;
   padding: 5px;
   color: red;
+`;
+
+const AddCartButton = styled.button`
+  z-index: 3;
+  background-color: #8080ff;
+  color: white;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  font-family: "Spartan";
+  font-size: 16px;
+  &:hover {
+    cursor: pointer;
+    background-color: white;
+    color: #8080ff;
+  }
 `;
 export default ShopItem;
