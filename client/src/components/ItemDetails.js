@@ -85,27 +85,29 @@ const ItemDetails = () => {
         )}
         <ItemInfo>
           <ItemName>{item.item.name}</ItemName>
+          <LinkDiv>
+            <StyledLink
+              key={item.item.category}
+              to="/shop"
+              onClick={() => {
+                toggleCategory(item.item.category);
+                toggleBodyLocation("All");
+              }}
+            >
+              {item.item.category}
+            </StyledLink>
+            <StyledLink
+              key={item.item.body_location}
+              to="/shop"
+              onClick={() => {
+                toggleBodyLocation(item.item.body_location);
+                toggleCategory("All");
+              }}
+            >
+              {item.item.body_location}
+            </StyledLink>
+          </LinkDiv>
           <ItemPrice>{item.item.price}</ItemPrice>
-          <StyledLink
-            key={item.item.category}
-            to="/shop"
-            onClick={() => {
-              toggleCategory(item.item.category);
-              toggleBodyLocation("All");
-            }}
-          >
-            {item.item.category}
-          </StyledLink>
-          <StyledLink
-            key={item.item.body_location}
-            to="/shop"
-            onClick={() => {
-              toggleBodyLocation(item.item.body_location);
-              toggleCategory("All");
-            }}
-          >
-            {item.item.body_location}
-          </StyledLink>
           made by{" "}
           {company.status === "idle" && (
             <>
@@ -167,13 +169,25 @@ const ItemName = styled.h1`
   margin-bottom: 20px;
 `;
 
-const ItemPrice = styled.p`
-  margin-bottom: 20px;
+const LinkDiv = styled.div`
+  display: flex;
 `;
 
 const StyledLink = styled(Link)`
+  font-size: 0.75em;
   margin-bottom: 20px;
+  margin-right: 5px;
+  padding: 3px;
   text-decoration: none;
+  border: solid 1px grey;
+  color: grey;
+  &:hover {
+    background-color: #aa80ff;
+  }
+`;
+
+const ItemPrice = styled.p`
+  margin-bottom: 20px;
 `;
 
 const PurchaseButton = styled.button`
