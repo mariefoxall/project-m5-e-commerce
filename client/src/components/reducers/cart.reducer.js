@@ -25,5 +25,5 @@ export default function cartReducer(state = initialState, action) {
 }
 
 export const getCartItemArray = (state) => {
-  return Object.values(state);
+  return Object.values(state.cart);
 };

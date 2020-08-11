@@ -9,9 +9,9 @@ const Cart = () => {
   //   // to be used in CartItem =
   //   //ADDING ITEM
   //   dispatch = useDispatch();
-  //   dispatch(addCart)
+  //   dispatch(addCart(item))
   //   //REMOVING ITEM
-  //   dispatch(removeCart)
+  //   dispatch(removeCart(item))
 };
 
 export default Cart;
