@@ -15,11 +15,29 @@ const Cart = () => {
   let numCartItems = 0;
 
   cartItems.forEach((item) => {
-    console.log(item.price);
-    console.log(item.quantity);
     total = total + Number(item.price.slice(1)) * Number(item.quantity);
     numCartItems = numCartItems + item.quantity;
   });
+
+  const orderInStock = cartItems.every(
+    (item) => item.quantity <= item.numInStock
+  );
+  console.log("orderInStock", orderInStock);
+
+  const orderInCart = cartItems.length > 0;
+  console.log("orderInCart", orderInCart);
+
+  const okayToPurchase = orderInCart && orderInStock;
+
+  let purchaseButtonStyle = {};
+
+  if (okayToPurchase === false) {
+    purchaseButtonStyle = {
+      cursor: "auto",
+      color: "lightgrey",
+      backgroundColor: "grey",
+    };
+  }
 
   return (
     <RightSide>
@@ -46,7 +64,9 @@ const Cart = () => {
         <BottomPart>
           <Total>Total: ${total.toFixed(2)}</Total>
           <PurchaseButton
+            disabled={okayToPurchase ? false : true}
             onClick={() => dispatch(beginPurchaseProcess({ cartItems, total }))}
+            style={purchaseButtonStyle}
           >
             Purchase
           </PurchaseButton>
@@ -60,17 +80,20 @@ const RightSide = styled.div`
   flex: 1;
   background-color: #ccccff;
   border-left: 2px dotted #8080ff;
+  border: 2px solid green;
+  display: flex;
 `;
 
 const CartDiv = styled.div`
-  /* height: 100vh; */
+  height: calc(100vh - 120px);
   position: fixed;
-  width: 25%;
+  width: inherit;
   right: 0;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   padding: 20px;
+  border: 2px solid red;
 `;
 
 const CartTitle = styled.div`
@@ -81,6 +104,7 @@ const CartTitle = styled.div`
 
 const ListDiv = styled.div`
   /* flex-grow: 3; */
+  overflow-y: scroll;
 `;
 const ItemDiv = styled.div`
   border: 1px dashed white;
@@ -89,11 +113,13 @@ const ItemDiv = styled.div`
 
 const BottomPart = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  width: 100%;
   margin-bottom: 20px;
+  position: fixed;
+  bottom: 0;
+  justify-content: space-between;
+  width: inherit;
 `;
 
 const Total = styled.div`

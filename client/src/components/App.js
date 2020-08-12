@@ -9,6 +9,8 @@ import LandingPage from "./LandingPage";
 import Shop from "./Shop";
 import ItemDetails from "./ItemDetails";
 import Header from "./Header";
+import CartPage from "./CartPage";
+import PurchaseModal from "./PurchaseModal";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,7 +53,11 @@ function App() {
             <Header />
             <ItemDetails />
           </Route>
+          <Route path="/cart">
+            <CartPage />
+          </Route>
         </Switch>
+        <PurchaseModal />
       </Router>
     </>
   );

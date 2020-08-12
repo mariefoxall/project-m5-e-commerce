@@ -56,7 +56,7 @@ const Shop = ({ handleItems }) => {
     <>
       <Header />
       <ShopPageAll>
-        <ShopDiv>
+        <SpacerDiv>
           <FilterDiv>
             <Category>
               <label htmlFor="category">WHAT:</label>
@@ -182,49 +182,43 @@ const Shop = ({ handleItems }) => {
                 </option>
               </Dropdown>
             </BodyLocation>
-          </FilterDiv>
-          <ItemsDiv>
-            {status && status === "loading" ? (
-              <div>LOADING</div>
-            ) : (
-              <ItemList>
-                {mapShopItemsArray.map((item) => {
-                  //console.log(item.category);
-                  return (
-                    <div key={item.id}>
-                      {/* <Link to={`/items/${item.id}`}> */}
-                      <ShopItem item={item} />
-                      {/* </Link> */}
-                    </div>
-                  );
-                })}
-              </ItemList>
-            )}
-          </ItemsDiv>
+          </FilterDiv>{" "}
+        </SpacerDiv>
+        <ShopDiv>
+          {status && status === "loading" ? (
+            <div>LOADING</div>
+          ) : (
+            <ItemList>
+              {mapShopItemsArray.map((item) => {
+                //console.log(item.category);
+                return (
+                  <div key={item.id}>
+                    {/* <Link to={`/items/${item.id}`}> */}
+                    <ShopItem item={item} />
+                    {/* </Link> */}
+                  </div>
+                );
+              })}
+            </ItemList>
+          )}
         </ShopDiv>
+        {/* <CartDiv></CartDiv> */}
         <Cart />
-        <PurchaseModal handleItems={handleItems} />
       </ShopPageAll>
     </>
   );
 };
+const SpacerDiv = styled.div`
+  height: calc(100vh-120px);
+  position: relative;
+  flex: 1;
+`;
 
-const ItemsDiv = styled.div``;
 const ShopDiv = styled.div`
-  /* background-color: #6694ff; /* For browsers that do not support gradients */
-  /* background-image: linear-gradient(to right, #52d7e0, #0036b3); */
   min-height: 100vh;
   flex: 3;
   display: flex;
 `;
-
-// const Header = styled.div`
-//   background-image: linear-gradient(to right, #52d7e0, #0036b3);
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   color: white;
-// `;
 
 const Title = styled.h1`
   color: white;
@@ -234,6 +228,7 @@ const Title = styled.h1`
 const FilterDiv = styled.div`
   display: flex;
   flex-direction: column;
+  position: fixed;
   /* justify-content: flex-start; */
 `;
 

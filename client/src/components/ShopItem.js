@@ -67,7 +67,6 @@ const ItemInfoHover = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: space-between;
-  /* z-index: 2; */
   padding: 20px;
   box-sizing: border-box;
 
