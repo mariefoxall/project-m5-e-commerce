@@ -9,6 +9,7 @@ import LandingPage from "./LandingPage";
 import Shop from "./Shop";
 import ItemDetails from "./ItemDetails";
 import Header from "./Header";
+import Contact from "./Contact";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,11 +46,16 @@ function App() {
             <LandingPage />
           </Route>
           <Route path="/shop">
+            <Header />
             <Shop handleItems={handleItems} />
           </Route>
           <Route path="/items/:itemId">
             <Header />
             <ItemDetails />
+          </Route>
+          <Route path="/contact">
+            <Header />
+            <Contact />
           </Route>
         </Switch>
       </Router>

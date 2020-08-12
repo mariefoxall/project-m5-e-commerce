@@ -49,7 +49,7 @@ const ItemDetails = () => {
     if (item.status === "idle") {
       handleCompany(item.item.companyId);
     }
-  }, [item.status]);
+  }, [item.status, id]);
 
   const company = useSelector(getCompany);
 
