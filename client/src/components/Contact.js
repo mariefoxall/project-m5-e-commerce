@@ -8,6 +8,25 @@ const Contact = () => {
   const [subject, setSubject] = React.useState("");
   const [message, setMessage] = React.useState("");
 
+  const handleContact = (firstName, lastName, email, subject, message) => {
+    fetch(`/contact`, {
+      method: "POST",
+      body: JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        subject: subject,
+        message: message,
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  };
+
   return (
     <Wrapper>
       <h1>Contact Us</h1>
@@ -68,6 +87,11 @@ const Contact = () => {
             required
           ></TextArea>
         </MessageWrapper>
+        <button
+          onClick={(ev) => {
+            handleContact(firstName, lastName, email, subject, message);
+          }}
+        ></button>
       </FormWrapper>
     </Wrapper>
   );
