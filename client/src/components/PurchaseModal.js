@@ -36,6 +36,22 @@ const PurchaseModal = ({ handleItems }) => {
       .then((data) => console.log(data));
   };
 
+  const handleNewOrder = (cartItemArray, someMoreInfos) => {
+    fetch(`/orders`, {
+      method: "POST",
+      body: JSON.stringify({
+        orderInfo: someMoreInfos,
+        cartItems: cartItemArray,
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  };
+
   const handleClose = () => {
     dispatch(cancelPurchaseProcess());
   };

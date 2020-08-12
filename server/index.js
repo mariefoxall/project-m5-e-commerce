@@ -12,7 +12,8 @@ const {
   handleCompanies,
   handleCompany,
   handleItemUpdate,
-  handleOrder,
+  handleOrders,
+  handleNewOrder,
 } = require("./handlers");
 
 express()
@@ -53,6 +54,7 @@ express()
   .get("/companies/:id", handleCompany)
 
   //ORDER
-  .post("/order", handleOrder)
+  .get("/orders", handleOrders)
+  .post("/orders", handleNewOrder)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
