@@ -52,6 +52,7 @@ const ItemDiv = styled.div`
   margin: 10px;
   background-color: white;
   position: relative;
+  box-sizing: border-box;
 `;
 
 const ItemInfoHover = styled.div`

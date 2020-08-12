@@ -42,25 +42,27 @@ const Cart = () => {
   return (
     <RightSide>
       <CartDiv>
-        <CartTitle>
-          <h3> Your Cart:</h3>
-          <p>{numCartItems} item(s)</p>
-        </CartTitle>
-        <ListDiv>
-          {cartItems.map((item) => {
-            return (
-              <ItemDiv key={item.id}>
-                <CartItem
-                  price={item.price}
-                  quantity={item.quantity}
-                  name={item.name}
-                  id={item.id}
-                  item={item}
-                />
-              </ItemDiv>
-            );
-          })}
-        </ListDiv>
+        <TopPart>
+          <CartTitle>
+            <h3> Your Cart:</h3>
+            <p>{numCartItems} item(s)</p>
+          </CartTitle>
+          <ListDiv>
+            {cartItems.map((item) => {
+              return (
+                <ItemDiv key={item.id}>
+                  <CartItem
+                    price={item.price}
+                    quantity={item.quantity}
+                    name={item.name}
+                    id={item.id}
+                    item={item}
+                  />
+                </ItemDiv>
+              );
+            })}
+          </ListDiv>
+        </TopPart>
         <BottomPart>
           <Total>Total: ${total.toFixed(2)}</Total>
           <PurchaseButton
@@ -75,36 +77,45 @@ const Cart = () => {
     </RightSide>
   );
 };
+const TopPart = styled.div`
+  /* max-height: calc(100vh-240px); */
+  position: fixed;
+  top: 140px;
+  display: flex;
+  flex-direction: column;
+`;
 
 const RightSide = styled.div`
-  flex: 1;
-  background-color: #ccccff;
-  border-left: 2px dotted #8080ff;
   border: 2px solid green;
-  display: flex;
+  /* display: flex; */
+  flex: 1;
+  border-left: 2px dotted #8080ff;
 `;
 
 const CartDiv = styled.div`
   height: calc(100vh - 120px);
+  background-color: #ccccff;
   position: fixed;
-  width: inherit;
-  right: 0;
+  right: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px;
   border: 2px solid red;
+  /* flex: 1; */
+  width: calc(20% - 20px);
 `;
 
 const CartTitle = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  width: 100%;
 `;
 
 const ListDiv = styled.div`
   /* flex-grow: 3; */
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 `;
 const ItemDiv = styled.div`
   border: 1px dashed white;
@@ -118,8 +129,10 @@ const BottomPart = styled.div`
   margin-bottom: 20px;
   position: fixed;
   bottom: 0;
+  right: 20px;
   justify-content: space-between;
   width: inherit;
+  padding: 20px;
 `;
 
 const Total = styled.div`

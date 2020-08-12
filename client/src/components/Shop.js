@@ -10,12 +10,11 @@ import {
 } from "./reducers/filter.reducer";
 import { updateCategory, updateBodyLocation } from "../actions";
 import Cart from "./Cart";
-import { addCart } from "../actions";
+
 import Header from "./Header";
 import PurchaseModal from "./PurchaseModal";
 
 const Shop = ({ handleItems }) => {
-  console.log(handleItems);
   const dispatch = useDispatch();
 
   const shopItems = useSelector(getStoreItems);
@@ -23,21 +22,17 @@ const Shop = ({ handleItems }) => {
     shopItems.items !== null ? Object.values(shopItems.items.items) : [];
 
   const status = shopItems.status;
-
-  // if (shopItems !== null) {
-  //   console.log("shopItemsArray", shopItemsArray);
-  // }
-  //console.log("status", status);
-
   const activeCategory = useSelector(getFilterCategory);
   const activeBodyLocation = useSelector(getFilterbodyLocation);
 
   const toggleCategory = (ev) => {
     dispatch(updateCategory(ev.target.value));
+    setCurrentPage(1);
   };
 
   const toggleBodyLocation = (ev) => {
     dispatch(updateBodyLocation(ev.target.value));
+    setCurrentPage(1);
   };
 
   const categoryFilterArray =
@@ -52,9 +47,36 @@ const Shop = ({ handleItems }) => {
           (item) => item.body_location === activeBodyLocation
         );
 
+  const totalItemCount = mapShopItemsArray.length;
+  console.log(totalItemCount);
+  const maxNumItemsPerPage = 30;
+
+  const numOfPages = Math.ceil(totalItemCount / maxNumItemsPerPage);
+
+  let pagesArray = [];
+
+  for (let i = 1; i <= numOfPages; i++) {
+    pagesArray.push(i);
+    console.log("pagesArray: ", pagesArray);
+  }
+
+  const [currentPage, setCurrentPage] = React.useState(1);
+
+  const goToPage = (pageNum) => {
+    setCurrentPage(pageNum);
+  };
+
+  console.log(currentPage);
+
+  const currentPageArray = mapShopItemsArray.slice(
+    30 * (currentPage - 1),
+    30 * currentPage
+  );
+
+  const activePageStyle = { backgroundColor: "blue" };
+
   return (
     <>
-      <Header />
       <ShopPageAll>
         <SpacerDiv>
           <FilterDiv>
@@ -123,9 +145,6 @@ const Shop = ({ handleItems }) => {
                 id="bodylocation"
                 name="bodylocation"
               >
-                {/* <option id="default-option" value={activeBodyLocation}>
-                  {activeBodyLocation}
-                </option> */}
                 <option
                   selected={activeBodyLocation === "All" && "selected"}
                   value="All"
@@ -188,26 +207,88 @@ const Shop = ({ handleItems }) => {
           {status && status === "loading" ? (
             <div>LOADING</div>
           ) : (
-            <ItemList>
-              {mapShopItemsArray.map((item) => {
-                //console.log(item.category);
-                return (
-                  <div key={item.id}>
-                    {/* <Link to={`/items/${item.id}`}> */}
-                    <ShopItem item={item} />
-                    {/* </Link> */}
-                  </div>
-                );
-              })}
-            </ItemList>
+            <Display>
+              <ItemList>
+                {currentPageArray.map((item) => {
+                  //console.log(item.category);
+                  return (
+                    <div key={item.id}>
+                      {/* <Link to={`/items/${item.id}`}> */}
+                      <ShopItem item={item} />
+                      {/* </Link> */}
+                    </div>
+                  );
+                })}
+              </ItemList>
+              {mapShopItemsArray.length > 30 && (
+                <>
+                  <NumItems>{maxNumItemsPerPage} items per page</NumItems>
+                  <PagesList>
+                    <PageNav
+                      onClick={() => {
+                        currentPage > 1 && goToPage(currentPage - 1);
+                      }}
+                    >
+                      PREV
+                    </PageNav>
+                    {pagesArray.map((pageNum) => {
+                      return (
+                        <PageNav
+                          style={{
+                            backgroundColor:
+                              currentPage === pageNum ? "blue" : "#ccccff",
+                          }}
+                          key={pageNum}
+                          onClick={() => goToPage(pageNum)}
+                        >
+                          {pageNum}
+                        </PageNav>
+                      );
+                    })}
+                    <PageNav
+                      onClick={() => {
+                        currentPage < pagesArray.length &&
+                          goToPage(currentPage + 1);
+                      }}
+                    >
+                      NEXT
+                    </PageNav>
+                  </PagesList>
+                </>
+              )}
+            </Display>
           )}
         </ShopDiv>
-        {/* <CartDiv></CartDiv> */}
         <Cart />
+        <PurchaseModal handleItems={handleItems} />
       </ShopPageAll>
     </>
   );
 };
+
+const NumItems = styled.div`
+  background: #ccccff;
+  padding: 5px;
+  margin-bottom: 10px;
+`;
+const PageNav = styled.li`
+  padding: 5px;
+  &:hover {
+    cursor: pointer;
+    background-color: #8080ff;
+  }
+`;
+const Display = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const PagesList = styled.ul`
+  background: #ccccff;
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+`;
 const SpacerDiv = styled.div`
   height: calc(100vh-120px);
   position: relative;
@@ -229,25 +310,26 @@ const FilterDiv = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
+  /* width: calc(20% - 20px); */
   /* justify-content: flex-start; */
 `;
 
 const Category = styled.div`
   margin: 10px;
   padding: 10px;
-  font-family: sans-serif;
+  font-family: "Spartan";
   color: #8080ff;
 `;
 
 const BodyLocation = styled.div`
   margin: 10px;
   padding: 10px;
-  font-family: sans-serif;
+  font-family: "Spartan";
   color: #8080ff;
 `;
 
 const Dropdown = styled.select`
-  font-family: sans-serif;
+  font-family: "Spartan";
   padding: 5px;
   margin: 10px;
   background-color: #aa80ff;
@@ -264,6 +346,8 @@ const ShopPageAll = styled.div`
   display: flex;
   flex-basis: 100vw;
   position: relative;
+  margin: 0;
+  padding: 0;
 `;
 
 export default Shop;

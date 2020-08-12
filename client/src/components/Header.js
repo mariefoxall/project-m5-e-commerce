@@ -4,6 +4,8 @@ import { NavLink, Link } from "react-router-dom";
 import { getCartItemArray } from "./reducers/cart.reducer";
 import { useSelector } from "react-redux";
 
+import SearchBar from "./SearchBar";
+
 const Header = () => {
   const cartItems = useSelector(getCartItemArray);
   let numCartItems = 0;
@@ -13,21 +15,16 @@ const Header = () => {
   });
 
   return (
-    <Spacer>
-      <HeaderDiv>
-        <Link to="/shop">
-          <Title>STORE NAME</Title>
-        </Link>
-        <HeaderLinks>
-          <StyledNavLink to="/companies">COMPANIES</StyledNavLink>
-          <StyledNavLink to="/about">ABOUT</StyledNavLink>
-          <StyledNavLink to="/profile">PROFILE</StyledNavLink>
-          <StyledNavLink to="/cart">
-            VIEW CART {numCartItems > 0 && `(${numCartItems})`}
-          </StyledNavLink>
-        </HeaderLinks>
-      </HeaderDiv>
-    </Spacer>
+    <HeaderDiv>
+      <ShopLink to="/shop">STORE NAME</ShopLink>
+      <HeaderLinks>
+        <StyledNavLink to="/companies">COMPANIES</StyledNavLink>
+        <StyledNavLink to="/about">ABOUT</StyledNavLink>
+        <StyledNavLink to="/profile">PROFILE</StyledNavLink>
+        <StyledNavLink to="/cart">VIEW CART</StyledNavLink>
+        <SearchBar />
+      </HeaderLinks>
+    </HeaderDiv>
   );
 };
 const Spacer = styled.div`
@@ -47,10 +44,11 @@ const HeaderDiv = styled.div`
   background-color: white;
 `;
 
-const Title = styled.h1`
+const ShopLink = styled(Link)`
   background-image: linear-gradient(to right, #52d7e0, #0036b3);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-size: 50px;
 `;
 
 const StyledNavLink = styled(NavLink)`
@@ -62,6 +60,9 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-const HeaderLinks = styled.div``;
+const HeaderLinks = styled.div`
+  display: flex;
+  height: 18px;
+`;
 
 export default Header;

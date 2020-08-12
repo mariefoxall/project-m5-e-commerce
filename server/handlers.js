@@ -1,6 +1,7 @@
 const items = require("./data/items.json");
 const companies = require("./data/companies.json");
 const orders = require("./data/orders.json");
+const contact = require("./data/contact.json");
 const { v4: uuidv4 } = require("uuid");
 
 const handleItems = (req, res) => {
@@ -77,11 +78,10 @@ const handleOrders = (req, res) => {
 
 const handleNewOrder = (req, res) => {
   const orderInfo = req.body;
-  console.log(orderInfo);
 
   const newOrder = {
     id: uuidv4(),
-    fistName: orderInfo.firstName,
+    firstName: orderInfo.firstName,
     lastName: orderInfo.lastName,
     email: orderInfo.email,
     order: orderInfo.cartItems,
@@ -93,6 +93,26 @@ const handleNewOrder = (req, res) => {
   res.status(201).json(newOrder);
 };
 
+const handleContact = (req, res) => {
+  res.status(200).json({ contact });
+};
+
+const handleNewContact = (req, res) => {
+  const messageInfo = req.body;
+
+  const newContact = {
+    firstName: messageInfo.firstName,
+    lastName: messageInfo.lastName,
+    email: messageInfo.email,
+    subject: messageInfo.subject,
+    message: messageInfo.message,
+  };
+
+  contact.push(newContact);
+
+  res.status(201).json(newContact);
+};
+
 module.exports = {
   handleItems,
   handleItem,
@@ -101,4 +121,6 @@ module.exports = {
   handleItemUpdate,
   handleOrders,
   handleNewOrder,
+  handleContact,
+  handleNewContact,
 };

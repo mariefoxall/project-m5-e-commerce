@@ -33,7 +33,7 @@ const CartItem = ({ item, price, quantity, name, id }) => {
           type="text"
           id="quantity"
           name="quantity"
-          value={quantityValue}
+          value={item.quantity}
           style={quantityStyle}
         ></QuantityInput>
 

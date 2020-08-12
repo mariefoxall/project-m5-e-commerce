@@ -41,12 +41,15 @@ const PurchaseModal = ({ handleItems }) => {
       .then((data) => console.log(data));
   };
 
-  const handleNewOrder = (cartItemArray, someMoreInfos) => {
+  const handleNewOrder = (cartItemArray, total) => {
     fetch(`/orders`, {
       method: "POST",
       body: JSON.stringify({
-        orderInfo: someMoreInfos,
+        firstName: "marc",
+        lastName: "piantone",
+        email: "marc_piantone@live.fr",
         cartItems: cartItemArray,
+        total: total,
       }),
       headers: {
         Accept: "application/json",
@@ -145,6 +148,7 @@ const PurchaseModal = ({ handleItems }) => {
                   // total
                 );
                 handleItems();
+                handleNewOrder(cartItems, total);
               }}
             >
               Confirm Purchase

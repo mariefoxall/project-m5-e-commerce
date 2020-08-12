@@ -14,6 +14,8 @@ const {
   handleItemUpdate,
   handleOrders,
   handleNewOrder,
+  handleContact,
+  handleNewContact,
 } = require("./handlers");
 
 express()
@@ -56,5 +58,9 @@ express()
   //ORDER
   .get("/orders", handleOrders)
   .post("/orders", handleNewOrder)
+
+  //CONTACT
+  .get("/contact", handleContact)
+  .post("/contact", handleNewContact)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
