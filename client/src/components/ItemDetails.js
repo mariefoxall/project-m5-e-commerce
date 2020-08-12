@@ -108,15 +108,17 @@ const ItemDetails = () => {
             </StyledLink>
           </LinkDiv>
           <ItemPrice>{item.item.price}</ItemPrice>
-          made by{" "}
-          {company.status === "idle" && (
-            <>
-              <a target="_blank" href={company.company.url}>
-                {company.company.name}
-              </a>
-              <span>in {company.company.country}</span>
-            </>
-          )}
+          <OriginDiv>
+            made by
+            {company.status === "idle" && (
+              <>
+                <a target="_blank" href={company.company.url}>
+                  {company.company.name}
+                </a>
+                <span>in {company.company.country}</span>
+              </>
+            )}
+          </OriginDiv>
           {item.item.numInStock === 0 ? null : (
             <PurchaseButton>ADD TO CART</PurchaseButton>
           )}
@@ -189,6 +191,8 @@ const StyledLink = styled(Link)`
 const ItemPrice = styled.p`
   margin-bottom: 20px;
 `;
+
+const OriginDiv = styled.div``;
 
 const PurchaseButton = styled.button`
   margin-top: 30px;
