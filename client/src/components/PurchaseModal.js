@@ -11,7 +11,7 @@ import CartItem from "./CartItem";
 import { cancelPurchaseProcess, NumInStockUpdateSuccess } from "../actions";
 import { getCartItemArray } from "./reducers/cart.reducer";
 
-const PurchaseModal = () => {
+const PurchaseModal = ({ handleItems }) => {
   const [creditCard, setCreditCard] = React.useState("");
   const [expiration, setExpiration] = React.useState("");
   const purchaseInfo = useSelector((state) => state.purchase);
@@ -92,14 +92,15 @@ const PurchaseModal = () => {
           />
           <DialogActions>
             <button
-              onClick={(ev) =>
+              onClick={(ev) => {
                 handleUpdateNumInStock(
                   cartItems
                   // creditCard,
                   // expiration,
                   // total
-                )
-              }
+                );
+                handleItems();
+              }}
             >
               Confirm Purchase
             </button>

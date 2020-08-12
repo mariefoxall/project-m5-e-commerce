@@ -14,7 +14,8 @@ import { addCart } from "../actions";
 import Header from "./Header";
 import PurchaseModal from "./PurchaseModal";
 
-const Shop = () => {
+const Shop = ({ handleItems }) => {
+  console.log(handleItems);
   const dispatch = useDispatch();
 
   const shopItems = useSelector(getStoreItems);
@@ -122,7 +123,6 @@ const Shop = () => {
                 id="bodylocation"
                 name="bodylocation"
               >
-                {" "}
                 {/* <option id="default-option" value={activeBodyLocation}>
                   {activeBodyLocation}
                 </option> */}
@@ -203,7 +203,7 @@ const Shop = () => {
           </ItemsDiv>
         </ShopDiv>
         <Cart />
-        <PurchaseModal />
+        <PurchaseModal handleItems={handleItems} />
       </ShopPageAll>
     </>
   );
