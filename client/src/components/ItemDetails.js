@@ -51,7 +51,7 @@ const ItemDetails = () => {
     if (item.status === "idle") {
       handleCompany(item.item.companyId);
     }
-  }, [item.status]);
+  }, [item.status, id]);
 
   const company = useSelector(getCompany);
 
@@ -110,15 +110,17 @@ const ItemDetails = () => {
             </StyledLink>
           </LinkDiv>
           <ItemPrice>{item.item.price}</ItemPrice>
-          made by{" "}
-          {company.status === "idle" && (
-            <>
-              <a target="_blank" href={company.company.url}>
-                {company.company.name}
-              </a>
-              <span>in {company.company.country}</span>
-            </>
-          )}
+          <OriginDiv>
+            made by
+            {company.status === "idle" && (
+              <>
+                <a target="_blank" href={company.company.url}>
+                  {company.company.name}
+                </a>
+                <span>in {company.company.country}</span>
+              </>
+            )}
+          </OriginDiv>
           {item.item.numInStock === 0 ? null : (
             <PurchaseButton onClick={() => dispatch(addCart(item.item))}>
               ADD TO CART
@@ -193,6 +195,8 @@ const StyledLink = styled(Link)`
 const ItemPrice = styled.p`
   margin-bottom: 20px;
 `;
+
+const OriginDiv = styled.div``;
 
 const PurchaseButton = styled.button`
   margin-top: 30px;
