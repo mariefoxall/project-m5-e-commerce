@@ -57,6 +57,7 @@ function App() {
           </Route>
           <Route path="/cart">
             <CartPage />
+          </Route>
           <Route path="/contact">
             <Header />
             <Contact />

@@ -15,20 +15,22 @@ const Header = () => {
   });
 
   return (
-    <HeaderDiv>
-      <ShopLink to="/shop">STORE NAME</ShopLink>
-      <HeaderLinks>
-        <StyledNavLink to="/companies">COMPANIES</StyledNavLink>
-        <StyledNavLink to="/about">ABOUT</StyledNavLink>
-        <StyledNavLink to="/profile">PROFILE</StyledNavLink>
-        <StyledNavLink to="/cart">VIEW CART</StyledNavLink>
-        <SearchBar />
-      </HeaderLinks>
-    </HeaderDiv>
+    <Spacer>
+      <HeaderDiv>
+        <ShopLink to="/shop">STORE NAME</ShopLink>
+        <HeaderLinks>
+          <StyledNavLink to="/companies">COMPANIES</StyledNavLink>
+          <StyledNavLink to="/about">ABOUT</StyledNavLink>
+          <StyledNavLink to="/profile">PROFILE</StyledNavLink>
+          <StyledNavLink to="/cart">VIEW CART</StyledNavLink>
+          <SearchBar />
+        </HeaderLinks>
+      </HeaderDiv>
+    </Spacer>
   );
 };
 const Spacer = styled.div`
-  height: 120px;
+  height: 140px;
   width: 100vw;
   background-color: red;
   z-index: 4;
@@ -37,7 +39,7 @@ const HeaderDiv = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 40px 50px;
-  height: 120px;
+  height: 140px;
   width: 100%;
   position: fixed;
   z-index: 5;
