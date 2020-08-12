@@ -10,12 +10,11 @@ import {
 } from "./reducers/filter.reducer";
 import { updateCategory, updateBodyLocation } from "../actions";
 import Cart from "./Cart";
-import { addCart } from "../actions";
+
 import Header from "./Header";
 import PurchaseModal from "./PurchaseModal";
 
 const Shop = ({ handleItems }) => {
-  console.log(handleItems);
   const dispatch = useDispatch();
 
   const shopItems = useSelector(getStoreItems);
@@ -23,11 +22,6 @@ const Shop = ({ handleItems }) => {
     shopItems.items !== null ? Object.values(shopItems.items.items) : [];
 
   const status = shopItems.status;
-
-  // if (shopItems !== null) {
-  //   console.log("shopItemsArray", shopItemsArray);
-  // }
-  //console.log("status", status);
 
   const activeCategory = useSelector(getFilterCategory);
   const activeBodyLocation = useSelector(getFilterbodyLocation);
@@ -62,124 +56,38 @@ const Shop = ({ handleItems }) => {
               <label htmlFor="category">WHAT:</label>
               <Dropdown
                 onChange={(ev) => toggleCategory(ev)}
+                defaultValue={activeCategory}
                 id="category"
                 name="category"
                 placeholder="Category"
               >
-                <option
-                  selected={activeCategory === "All" && "selected"}
-                  value="All"
-                >
-                  Show All
-                </option>
-                <option
-                  selected={activeCategory === "Entertainment" && "selected"}
-                  value="Entertainment"
-                >
-                  Entertainment
-                </option>
-                <option
-                  selected={activeCategory === "Fitness" && "selected"}
-                  value="Fitness"
-                >
-                  Fitness
-                </option>
-                <option
-                  selected={activeCategory === "Gaming" && "selected"}
-                  value="Gaming"
-                >
-                  Gaming
-                </option>
-                <option
-                  selected={activeCategory === "Industrial" && "selected"}
-                  value="Industrial"
-                >
-                  Industrial
-                </option>
-                <option
-                  selected={activeCategory === "Lifestyle" && "selected"}
-                  value="Lifestyle"
-                >
-                  Lifestyle
-                </option>
-                <option
-                  selected={activeCategory === "Medical" && "selected"}
-                  value="Medical"
-                >
-                  Medical
-                </option>
-                <option
-                  selected={activeCategory === "Pets and Animals" && "selected"}
-                  value="Pets and Animals"
-                >
-                  Pets and Animals
-                </option>
+                <option value="All">Show All</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Industrial">Industrial</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Medical">Medical</option>
+                <option value="Pets and Animals">Pets and Animals</option>
               </Dropdown>
             </Category>
             <BodyLocation>
               <label htmlFor="bodylocation">WHERE:</label>
               <Dropdown
                 onChange={(ev) => toggleBodyLocation(ev)}
+                defaultValue={activeBodyLocation}
                 id="bodylocation"
                 name="bodylocation"
               >
-                {/* <option id="default-option" value={activeBodyLocation}>
-                  {activeBodyLocation}
-                </option> */}
-                <option
-                  selected={activeBodyLocation === "All" && "selected"}
-                  value="All"
-                >
-                  Show All
-                </option>
-                <option
-                  selected={activeBodyLocation === "Arms" && "selected"}
-                  value="Arms"
-                >
-                  Arms
-                </option>
-                <option
-                  selected={activeBodyLocation === "Chest" && "selected"}
-                  value="Chest"
-                >
-                  Chest
-                </option>
-                <option
-                  selected={activeBodyLocation === "Feet" && "selected"}
-                  value="Feet"
-                >
-                  Feet
-                </option>
-                <option
-                  selected={activeBodyLocation === "Hands" && "selected"}
-                  value="Hands"
-                >
-                  Hands
-                </option>
-                <option
-                  selected={activeBodyLocation === "Head" && "selected"}
-                  value="Head"
-                >
-                  Head
-                </option>
-                <option
-                  selected={activeBodyLocation === "Neck" && "selected"}
-                  value="Neck"
-                >
-                  Neck
-                </option>
-                <option
-                  selected={activeBodyLocation === "Waist" && "selected"}
-                  value="Waist"
-                >
-                  Waist
-                </option>
-                <option
-                  selected={activeBodyLocation === "Wrist" && "selected"}
-                  value="Wrist"
-                >
-                  Wrist
-                </option>
+                <option value="All">Show All</option>
+                <option value="Arms">Arms</option>
+                <option value="Chest">Chest</option>
+                <option value="Feet">Feet</option>
+                <option value="Hands">Hands</option>
+                <option value="Head">Head</option>
+                <option value="Neck">Neck</option>
+                <option value="Waist">Waist</option>
+                <option value="Wrist">Wrist</option>
               </Dropdown>
             </BodyLocation>
           </FilterDiv>
@@ -189,7 +97,6 @@ const Shop = ({ handleItems }) => {
             ) : (
               <ItemList>
                 {mapShopItemsArray.map((item) => {
-                  //console.log(item.category);
                   return (
                     <div key={item.id}>
                       {/* <Link to={`/items/${item.id}`}> */}
