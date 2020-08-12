@@ -1,5 +1,6 @@
 const items = require("./data/items.json");
 const companies = require("./data/companies.json");
+const { uuidv4 } = require("uuid");
 
 const handleItems = (req, res) => {
   res.status(200).json({ items });
@@ -68,10 +69,19 @@ const handleItemUpdate = (req, res) => {
   res.status(200).json(purchasedItems);
 };
 
+const handleOrder = (req, res) => {
+  const orderInfo = req.body;
+  const id = uuidv4();
+  console.log(id);
+
+  res.status(200).json(orderConfirmed);
+};
+
 module.exports = {
   handleItems,
   handleItem,
   handleCompanies,
   handleCompany,
   handleItemUpdate,
+  handleOrder,
 };

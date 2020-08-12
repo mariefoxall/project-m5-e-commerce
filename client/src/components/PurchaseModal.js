@@ -15,15 +15,15 @@ const PurchaseModal = ({ handleItems }) => {
   const [creditCard, setCreditCard] = React.useState("");
   const [expiration, setExpiration] = React.useState("");
   const purchaseInfo = useSelector((state) => state.purchase);
-  console.log("purchaseInfo", purchaseInfo);
+  //console.log("purchaseInfo", purchaseInfo);
   //   const purchaseItems = purchaseInfo.selectedItems;
   const dispatch = useDispatch();
   const cartItems = useSelector(getCartItemArray);
   const purchaseStatus = purchaseInfo && purchaseInfo.status;
-  console.log(purchaseStatus);
+  //console.log(purchaseStatus);
 
   const handleUpdateNumInStock = (cartItemArray) => {
-    console.log({ update: cartItemArray });
+    //console.log({ update: cartItemArray });
     fetch(`/items`, {
       method: "PUT",
       body: JSON.stringify({ update: cartItemArray }),
@@ -41,8 +41,8 @@ const PurchaseModal = ({ handleItems }) => {
   };
   let total = 0;
   cartItems.forEach((item) => {
-    console.log(item.price);
-    console.log(item.quantity);
+    //console.log(item.price);
+    //console.log(item.quantity);
     total = total + Number(item.price.slice(1)) * Number(item.quantity);
   });
   return (
