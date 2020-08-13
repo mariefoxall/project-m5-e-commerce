@@ -80,7 +80,7 @@ const Cart = () => {
 const TopPart = styled.div`
   /* max-height: calc(100vh-240px); */
   position: fixed;
-  top: 140px;
+  top: 160px;
   display: flex;
   flex-direction: column;
 `;

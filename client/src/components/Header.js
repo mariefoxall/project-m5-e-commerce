@@ -19,10 +19,12 @@ const Header = () => {
       <HeaderDiv>
         <ShopLink to="/shop">STORE NAME</ShopLink>
         <HeaderLinks>
-          <StyledNavLink to="/companies">COMPANIES</StyledNavLink>
           <StyledNavLink to="/about">ABOUT</StyledNavLink>
+          <StyledNavLink to="/contact">CONTACT</StyledNavLink>
           <StyledNavLink to="/profile">PROFILE</StyledNavLink>
-          <StyledNavLink to="/cart">VIEW CART</StyledNavLink>
+          <StyledNavLink to="/cart">
+            VIEW CART{numCartItems > 0 && <span>({numCartItems})</span>}
+          </StyledNavLink>
           <SearchBar />
         </HeaderLinks>
       </HeaderDiv>
@@ -38,7 +40,8 @@ const Spacer = styled.div`
 const HeaderDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 40px 50px;
+  align-items: center;
+  padding: 40px 20px;
   height: 140px;
   width: 100%;
   position: fixed;

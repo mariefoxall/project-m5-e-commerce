@@ -56,6 +56,8 @@ function App() {
             <ItemDetails />
           </Route>
           <Route path="/cart">
+            <Header />
+
             <CartPage />
           </Route>
           <Route path="/contact">

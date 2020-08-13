@@ -22,7 +22,7 @@ const CartPage = () => {
   });
   return (
     <PageDiv>
-      <Header />
+      {/* <Header /> */}
       <DivBlock>
         <CartDiv>
           <CartTitle>
@@ -63,7 +63,7 @@ const CartPage = () => {
 
 const PageDiv = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 140px);
   display: flex;
   flex-direction: column;
 `;
@@ -77,11 +77,14 @@ const DivBlock = styled.div`
 
 const CartDiv = styled.div`
   /* flex: 3; */
+  position: fixed;
+  top: 140px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 30%;
   padding: 30px;
+  height: calc(100vh - 140px);
 `;
 
 const CartTitle = styled.div`
@@ -92,6 +95,7 @@ const CartTitle = styled.div`
 
 const ListDiv = styled.div`
   /* flex-grow: 3; */
+  overflow-y: scroll;
 `;
 const ItemDiv = styled.div`
   border: 1px dashed white;
