@@ -81,18 +81,25 @@ const PurchaseModal = ({ handleItems }) => {
     return <MuiAlert elevation={6} variant="filled" />;
   };
 
+  const allFieldsCompleted =
+    firstName.length > 0 &&
+    lastName.length > 0 &&
+    email.length > 0 &&
+    creditCard.length > 0 &&
+    expiration.length > 0;
+
+  let purchaseButtonStyle = {};
+
+  if (allFieldsCompleted === false) {
+    purchaseButtonStyle = {
+      cursor: "auto",
+      color: "lightgrey",
+      backgroundColor: "grey",
+    };
+  }
+
   return (
     <div>
-      {/* <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        open={purchaseStatus === "purchased"}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity="success">
-          Thanks for your purchase!
-        </Alert>
-      </Snackbar> */}
       {orderConfirmed && (
         <Dialog
           open={purchaseStatus === "purchased"}
@@ -140,10 +147,13 @@ const PurchaseModal = ({ handleItems }) => {
                   </ItemDiv>
                 );
               })}
-              <div>Total: ${total.toFixed(2)}</div>
             </ItemsList>
+            <TotalDiv>Total: ${total.toFixed(2)}</TotalDiv>
           </DialogContent>
           <DialogContent>
+            <CloseDiv>
+              <CloseButton onClick={handleClose}>X</CloseButton>
+            </CloseDiv>
             <h3>Enter Payment Details:</h3>
             <TextField
               autoComplete="on"
@@ -153,6 +163,7 @@ const PurchaseModal = ({ handleItems }) => {
               label="First Name"
               type="text"
               fullWidth
+              required
             />
             <TextField
               onChange={(ev) => setLastName(ev.target.value)}
@@ -161,6 +172,7 @@ const PurchaseModal = ({ handleItems }) => {
               label="Last Name"
               type="text"
               fullWidth
+              required
             />
             <TextField
               onChange={(ev) => setEmail(ev.target.value)}
@@ -169,6 +181,7 @@ const PurchaseModal = ({ handleItems }) => {
               label="Email"
               type="email"
               fullWidth
+              required
             />
             <TextField
               onChange={(ev) => setCreditCard(ev.target.value)}
@@ -177,6 +190,7 @@ const PurchaseModal = ({ handleItems }) => {
               label="Credit Card"
               type="text"
               fullWidth
+              required
             />
             <TextField
               onChange={(ev) => setExpiration(ev.target.value)}
@@ -185,9 +199,12 @@ const PurchaseModal = ({ handleItems }) => {
               label="Expiration"
               type="text"
               fullWidth
+              required
             />
             <DialogActions>
               <ConfirmButton
+                disabled={allFieldsCompleted ? false : true}
+                style={purchaseButtonStyle}
                 onClick={() => {
                   handleUpdateNumInStock(cartItems);
                   handleNewOrder(firstName, lastName, email, cartItems, total);
@@ -203,7 +220,18 @@ const PurchaseModal = ({ handleItems }) => {
     </div>
   );
 };
-const CloseButton = styled.button``;
+const CloseButton = styled.button`
+  border: none;
+  outline: none;
+  width: 30px;
+  height: 20px;
+  background-color: #006666;
+  color: white;
+  &:hover {
+    cursor: pointer;
+    background-color: #28bbbd;
+  }
+`;
 const CloseDiv = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -217,6 +245,7 @@ const All = styled.div`
 const ThankYou = styled.p`
   background-color: #8080ff;
   margin: 10px;
+  padding: 10px;
 `;
 
 const ConfirmText = styled.p`
@@ -247,7 +276,12 @@ const ItemDiv = styled.div`
 `;
 
 const ItemsList = styled.div`
+  height: 260px;
   overflow-y: scroll;
+`;
+
+const TotalDiv = styled.div`
+  margin-top: 10px;
 `;
 
 export default PurchaseModal;

@@ -127,6 +127,21 @@ const Shop = () => {
       <ShopPageAll>
         <SpacerDiv>
           <FilterDiv>
+            <BodyLocation>
+              <label htmlFor="bodylocation">WHO:</label>
+              <Dropdown
+                onChange={(ev) => toggleCompany(ev)}
+                defaultValue={activeCompany}
+                id="company"
+                name="company"
+              >
+                <option value="0">Show All</option>
+                {companies.status === "idle" &&
+                  companies.companies.companies.map((company) => {
+                    return <option value={company.id}>{company.name}</option>;
+                  })}
+              </Dropdown>
+            </BodyLocation>
             <Category>
               <label htmlFor="category">WHAT:</label>
               <Dropdown
@@ -163,21 +178,6 @@ const Shop = () => {
                 <option value="Neck">Neck</option>
                 <option value="Waist">Waist</option>
                 <option value="Wrist">Wrist</option>
-              </Dropdown>
-            </BodyLocation>
-            <BodyLocation>
-              <label htmlFor="bodylocation">WHO:</label>
-              <Dropdown
-                onChange={(ev) => toggleCompany(ev)}
-                defaultValue={activeCompany}
-                id="company"
-                name="company"
-              >
-                <option value="0">Show All</option>
-                {companies.status === "idle" &&
-                  companies.companies.companies.map((company) => {
-                    return <option value={company.id}>{company.name}</option>;
-                  })}
               </Dropdown>
             </BodyLocation>
           </FilterDiv>
@@ -249,7 +249,7 @@ const Shop = () => {
                           <PageNav
                             style={{
                               backgroundColor:
-                                currentPage === pageNum ? "#aa80ff" : "#ccccff",
+                                currentPage === pageNum ? "#006666" : "#28bbbd",
                             }}
                             key={pageNum}
                             onClick={() => goToPage(pageNum)}
@@ -289,13 +289,14 @@ const Pagination = styled.div`
 `;
 
 const NumItems = styled.div`
-  color: #8080ff;
+  color: #006666;
 `;
 const PageNav = styled.li`
   padding: 5px;
   &:hover {
     cursor: pointer;
-    background-color: #8080ff;
+    /* background-color: #006666; */
+    border: 1px solid #006666;
   }
 `;
 const Display = styled.div`
@@ -304,7 +305,7 @@ const Display = styled.div`
   align-items: center;
 `;
 const PagesList = styled.ul`
-  background: #ccccff;
+  background: #28bbbd;
   display: flex;
   justify-content: space-between;
   /* width: 40%; */
@@ -338,28 +339,28 @@ const Category = styled.div`
   margin: 10px;
   padding: 10px;
   font-family: "Spartan";
-  color: #8080ff;
+  color: #006666;
 `;
 
 const BodyLocation = styled.div`
   margin: 10px;
   padding: 10px;
   font-family: "Spartan";
-  color: #8080ff;
+  color: #006666;
 `;
 
 const Company = styled.div`
   margin: 10px;
   padding: 10px;
   font-family: sans-serif;
-  color: #8080ff;
+  color: #006666;
 `;
 
 const Dropdown = styled.select`
   font-family: "Spartan";
   padding: 5px;
   margin: 10px;
-  background-color: #aa80ff;
+  background-color: #006666;
   color: white;
 `;
 

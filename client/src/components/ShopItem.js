@@ -16,11 +16,9 @@ const ShopItem = (item) => {
   return (
     <ItemDiv
       style={{
-        border: `10px solid rgb(${Math.floor(
-          Math.random() * 50 + 120
-        )},${Math.floor(Math.random() * 155)},${Math.floor(
-          Math.random() * 20 + 235
-        )})`,
+        border: `5px solid rgb(${Math.floor(Math.random() * 80)},${Math.floor(
+          Math.random() * 75 + 150
+        )},${Math.floor(Math.random() * 55 + 200)})`,
       }}
     >
       <img src={item.item.imageSrc} alt={`${item.item.name} product`} />
@@ -57,8 +55,8 @@ const ItemDiv = styled.div`
 
 const ItemInfoHover = styled.div`
   position: absolute;
-  top: -10px;
-  left: -10px;
+  /* top: -10px;
+  left: -10px; */
   height: 300px;
   width: 300px;
   opacity: 0;
