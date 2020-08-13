@@ -32,6 +32,11 @@ export const updateBodyLocation = (bodyLocation) => ({
   bodyLocation,
 });
 
+export const updateCompany = (company) => ({
+  type: "UPDATE_COMPANY",
+  company,
+});
+
 export const addCart = (item) => ({
   type: "ADD_ITEM",
   item,

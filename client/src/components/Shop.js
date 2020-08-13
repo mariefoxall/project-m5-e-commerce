@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import ShopItem from "./ShopItem";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getStoreItems } from "./reducers/items.reducer";
+import { getCompanies } from "./reducers/companies.reducer";
 import {
   getFilterCategory,
   getFilterbodyLocation,
+  getFilterCompany,
 } from "./reducers/filter.reducer";
-import { updateCategory, updateBodyLocation } from "../actions";
+import {
+  updateCategory,
+  updateBodyLocation,
+  updateCompany,
+  receiveCompanies,
+} from "../actions";
 import Cart from "./Cart";
 
 import Header from "./Header";
@@ -21,9 +28,31 @@ const Shop = () => {
   const shopItemsArray =
     shopItems.items !== null ? Object.values(shopItems.items.items) : [];
 
+  console.log(shopItems, "items");
+  console.log(shopItemsArray, "item Array");
   const status = shopItems.status;
   const activeCategory = useSelector(getFilterCategory);
   const activeBodyLocation = useSelector(getFilterbodyLocation);
+  const activeCompany = useSelector(getFilterCompany);
+
+  const handleCompanies = () => {
+    fetch(`/companies`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch(receiveCompanies(json));
+      })
+      .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
+    if (status === "idle") {
+      handleCompanies(shopItemsArray.companyId);
+    }
+  }, [status]);
+
+  const companies = useSelector(getCompanies);
+
+  console.log(activeCompany, "company");
 
   const toggleCategory = (ev) => {
     dispatch(updateCategory(ev.target.value));
@@ -35,12 +64,16 @@ const Shop = () => {
     setCurrentPage(1);
   };
 
+  const toggleCompany = (ev) => {
+    dispatch(updateCompany(ev.target.value));
+  };
+
   const categoryFilterArray =
     activeCategory === "All"
       ? shopItemsArray
       : shopItemsArray.filter((item) => item.category === activeCategory);
 
-  const mapShopItemsArray =
+  const bodyLocationFilterArray =
     activeBodyLocation === "All"
       ? categoryFilterArray
       : categoryFilterArray.filter(
@@ -74,6 +107,12 @@ const Shop = () => {
   );
 
   const activePageStyle = { backgroundColor: "blue" };
+  const mapShopItemsArray =
+    activeCompany === "All"
+      ? bodyLocationFilterArray
+      : bodyLocationFilterArray.filter(
+          (item) => item.companyId === activeCompany
+        );
 
   const toggleNumItemsPerPage = (ev) => {
     setMaxNumItemsPerPage(ev.target.value);
@@ -270,6 +309,13 @@ const BodyLocation = styled.div`
   margin: 10px;
   padding: 10px;
   font-family: "Spartan";
+  color: #8080ff;
+`;
+
+const Company = styled.div`
+  margin: 10px;
+  padding: 10px;
+  font-family: sans-serif;
   color: #8080ff;
 `;
 
