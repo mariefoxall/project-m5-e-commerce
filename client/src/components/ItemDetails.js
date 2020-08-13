@@ -70,79 +70,87 @@ const ItemDetails = () => {
     return <>LOADING</>;
   } else {
     return (
-      <ItemDiv>
-        {item.item.numInStock === 0 ? (
-          <ImageDiv>
-            <SoldOut>SOLD OUT</SoldOut>
+      <Wrapper>
+        <ItemDiv>
+          {item.item.numInStock === 0 ? (
+            <ImageDiv>
+              <SoldOut>SOLD OUT</SoldOut>
+              <ItemImage
+                src={item.item.imageSrc}
+                alt={`${item.item.name} product`}
+              />
+            </ImageDiv>
+          ) : (
             <ItemImage
               src={item.item.imageSrc}
               alt={`${item.item.name} product`}
             />
-          </ImageDiv>
-        ) : (
-          <ItemImage
-            src={item.item.imageSrc}
-            alt={`${item.item.name} product`}
-          />
-        )}
-        <ItemInfo>
-          <ItemName>{item.item.name}</ItemName>
-          <LinkDiv>
-            <StyledLink
-              key={item.item.category}
-              to="/shop"
-              onClick={() => {
-                toggleCategory(item.item.category);
-                toggleBodyLocation("All");
-              }}
-            >
-              {item.item.category}
-            </StyledLink>
-            <StyledLink
-              key={item.item.body_location}
-              to="/shop"
-              onClick={() => {
-                toggleBodyLocation(item.item.body_location);
-                toggleCategory("All");
-              }}
-            >
-              {item.item.body_location}
-            </StyledLink>
-          </LinkDiv>
-          <ItemPrice>{item.item.price}</ItemPrice>
-          <OriginDiv>
-            made by
-            {company.status === "idle" && (
-              <>
-                <a target="_blank" href={company.company.url}>
-                  {company.company.name}
-                </a>
-                <span>in {company.company.country}</span>
-              </>
-            )}
-          </OriginDiv>
-          {item.item.numInStock === 0 ? null : (
-            <PurchaseButton onClick={() => dispatch(addCart(item.item))}>
-              ADD TO CART
-            </PurchaseButton>
           )}
-        </ItemInfo>
-      </ItemDiv>
+          <ItemInfo>
+            <ItemName>{item.item.name}</ItemName>
+            <LinkDiv>
+              <StyledLink
+                key={item.item.category}
+                to="/shop"
+                onClick={() => {
+                  toggleCategory(item.item.category);
+                  toggleBodyLocation("All");
+                }}
+              >
+                {item.item.category}
+              </StyledLink>
+              <StyledLink
+                key={item.item.body_location}
+                to="/shop"
+                onClick={() => {
+                  toggleBodyLocation(item.item.body_location);
+                  toggleCategory("All");
+                }}
+              >
+                {item.item.body_location}
+              </StyledLink>
+            </LinkDiv>
+            <ItemPrice>{item.item.price}</ItemPrice>
+            <OriginDiv>
+              made by
+              {company.status === "idle" && (
+                <>
+                  <a target="_blank" href={company.company.url}>
+                    {company.company.name}
+                  </a>
+                  <span>in {company.company.country}</span>
+                </>
+              )}
+            </OriginDiv>
+            {item.item.numInStock === 0 ? null : (
+              <PurchaseButton onClick={() => dispatch(addCart(item.item))}>
+                ADD TO CART
+              </PurchaseButton>
+            )}
+          </ItemInfo>
+        </ItemDiv>
+      </Wrapper>
     );
   }
 };
 
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 const ItemDiv = styled.div`
   color: black;
   font-family: sans-serif;
-  width: 100vh;
-  height: 100vh;
+  margin-top: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
   align-self: center;
   position: relative;
-  left: 50vh;
 `;
 
 const ImageDiv = styled.div``;

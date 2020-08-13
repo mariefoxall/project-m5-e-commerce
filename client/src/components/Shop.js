@@ -65,7 +65,7 @@ const Shop = () => {
   };
 
   const toggleCompany = (ev) => {
-    dispatch(updateCompany(ev.target.value));
+    dispatch(updateCompany(Number(ev.target.value)));
   };
 
   const categoryFilterArray =
@@ -81,7 +81,7 @@ const Shop = () => {
         );
 
   const mapShopItemsArray =
-    activeCompany === "All"
+    activeCompany === 0
       ? bodyLocationFilterArray
       : bodyLocationFilterArray.filter(
           (item) => item.companyId === activeCompany
@@ -163,7 +163,42 @@ const Shop = () => {
                 <option value="Wrist">Wrist</option>
               </Dropdown>
             </BodyLocation>
-          </FilterDiv>
+            <BodyLocation>
+              <label htmlFor="bodylocation">WHO:</label>
+              <Dropdown
+                onChange={(ev) => toggleCompany(ev)}
+                defaultValue={activeCompany}
+                id="company"
+                name="company"
+              >
+                <option value="0">Show All</option>
+                <option value="19962">Barska</option>
+                <option value="16384">Belkin</option>
+                <option value="11385">Bowflex</option>
+                <option value="13334">Casio</option>
+                <option value="18159">Coleman</option>
+                <option value="17748">Ekho</option>
+                <option value="10759">Fitbit</option>
+                <option value="19787">Mota</option>
+                <option value="10713">Garmin</option>
+                <option value="16478">Golf Buddy</option>
+                <option value="18834">Jawbone</option>
+                <option value="13305">Lifetrak</option>
+                <option value="16475">Maagellan</option>
+                <option value="18112">Martian</option>
+                <option value="17422">Mio</option>
+                <option value="11932">Misfit</option>
+                <option value="14902">Suunto</option>
+                <option value="11837">Polar</option>
+                <option value="19080">Pov</option>
+                <option value="18432">Samsung</option>
+                <option value="18287">Scosche</option>
+                <option value="14897">Smarthealth</option>
+                <option value="12911">Sportline</option>
+                <option value="18324">Tomtom</option>
+              </Dropdown>
+            </BodyLocation>
+          </FilterDiv>{" "}
         </SpacerDiv>
         <ShopDiv>
           {status && status === "loading" ? (
