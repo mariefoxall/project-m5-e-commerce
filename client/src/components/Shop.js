@@ -76,108 +76,111 @@ const Shop = ({ handleItems }) => {
   const activePageStyle = { backgroundColor: "blue" };
 
   return (
-    <ShopPageAll>
-      <SpacerDiv>
-        <FilterDiv>
-          <Category>
-            <label htmlFor="category">WHAT:</label>
-            <Dropdown
-              onChange={(ev) => toggleCategory(ev)}
-              defaultValue={activeCategory}
-              id="category"
-              name="category"
-              placeholder="Category"
-            >
-              <option value="All">Show All</option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Fitness">Fitness</option>
-              <option value="Gaming">Gaming</option>
-              <option value="Industrial">Industrial</option>
-              <option value="Lifestyle">Lifestyle</option>
-              <option value="Medical">Medical</option>
-              <option value="Pets and Animals">Pets and Animals</option>
-            </Dropdown>
-          </Category>
-          <BodyLocation>
-            <label htmlFor="bodylocation">WHERE:</label>
-            <Dropdown
-              onChange={(ev) => toggleBodyLocation(ev)}
-              defaultValue={activeBodyLocation}
-              id="bodylocation"
-              name="bodylocation"
-            >
-              <option value="All">Show All</option>
-              <option value="Arms">Arms</option>
-              <option value="Chest">Chest</option>
-              <option value="Feet">Feet</option>
-              <option value="Hands">Hands</option>
-              <option value="Head">Head</option>
-              <option value="Neck">Neck</option>
-              <option value="Waist">Waist</option>
-              <option value="Wrist">Wrist</option>
-            </Dropdown>
-          </BodyLocation>
-        </FilterDiv>{" "}
-      </SpacerDiv>
-      <ShopDiv>
-        {status && status === "loading" ? (
-          <div>LOADING</div>
-        ) : (
-          <Display>
-            <ItemList>
-              {currentPageArray.map((item) => {
-                //console.log(item.category);
-                return (
-                  <div key={item.id}>
-                    {/* <Link to={`/items/${item.id}`}> */}
-                    <ShopItem item={item} />
-                    {/* </Link> */}
-                  </div>
-                );
-              })}
-            </ItemList>
-            {mapShopItemsArray.length > 30 && (
-              <>
-                <NumItems>{maxNumItemsPerPage} items per page</NumItems>
-                <PagesList>
-                  <PageNav
-                    onClick={() => {
-                      currentPage > 1 && goToPage(currentPage - 1);
-                    }}
-                  >
-                    PREV
-                  </PageNav>
-                  {pagesArray.map((pageNum) => {
-                    return (
-                      <PageNav
-                        style={{
-                          backgroundColor:
-                            currentPage === pageNum ? "blue" : "#ccccff",
-                        }}
-                        key={pageNum}
-                        onClick={() => goToPage(pageNum)}
-                      >
-                        {pageNum}
-                      </PageNav>
-                    );
-                  })}
-                  <PageNav
-                    onClick={() => {
-                      currentPage < pagesArray.length &&
-                        goToPage(currentPage + 1);
-                    }}
-                  >
-                    NEXT
-                  </PageNav>
-                </PagesList>
-              </>
-            )}
-          </Display>
-        )}
-      </ShopDiv>
-      <Cart />
-      <PurchaseModal handleItems={handleItems} />
-    </ShopPageAll>
+    <>
+      <Header />
+      <ShopPageAll>
+        <SpacerDiv>
+          <FilterDiv>
+            <Category>
+              <label htmlFor="category">WHAT:</label>
+              <Dropdown
+                onChange={(ev) => toggleCategory(ev)}
+                defaultValue={activeCategory}
+                id="category"
+                name="category"
+                placeholder="Category"
+              >
+                <option value="All">Show All</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Industrial">Industrial</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Medical">Medical</option>
+                <option value="Pets and Animals">Pets and Animals</option>
+              </Dropdown>
+            </Category>
+            <BodyLocation>
+              <label htmlFor="bodylocation">WHERE:</label>
+              <Dropdown
+                onChange={(ev) => toggleBodyLocation(ev)}
+                defaultValue={activeBodyLocation}
+                id="bodylocation"
+                name="bodylocation"
+              >
+                <option value="All">Show All</option>
+                <option value="Arms">Arms</option>
+                <option value="Chest">Chest</option>
+                <option value="Feet">Feet</option>
+                <option value="Hands">Hands</option>
+                <option value="Head">Head</option>
+                <option value="Neck">Neck</option>
+                <option value="Waist">Waist</option>
+                <option value="Wrist">Wrist</option>
+              </Dropdown>
+            </BodyLocation>
+          </FilterDiv>{" "}
+        </SpacerDiv>
+        <ShopDiv>
+          {status && status === "loading" ? (
+            <div>LOADING</div>
+          ) : (
+            <Display>
+              <ItemList>
+                {currentPageArray.map((item) => {
+                  //console.log(item.category);
+                  return (
+                    <div key={item.id}>
+                      {/* <Link to={`/items/${item.id}`}> */}
+                      <ShopItem item={item} />
+                      {/* </Link> */}
+                    </div>
+                  );
+                })}
+              </ItemList>
+              {mapShopItemsArray.length > 30 && (
+                <>
+                  <NumItems>{maxNumItemsPerPage} items per page</NumItems>
+                  <PagesList>
+                    <PageNav
+                      onClick={() => {
+                        currentPage > 1 && goToPage(currentPage - 1);
+                      }}
+                    >
+                      PREV
+                    </PageNav>
+                    {pagesArray.map((pageNum) => {
+                      return (
+                        <PageNav
+                          style={{
+                            backgroundColor:
+                              currentPage === pageNum ? "blue" : "#ccccff",
+                          }}
+                          key={pageNum}
+                          onClick={() => goToPage(pageNum)}
+                        >
+                          {pageNum}
+                        </PageNav>
+                      );
+                    })}
+                    <PageNav
+                      onClick={() => {
+                        currentPage < pagesArray.length &&
+                          goToPage(currentPage + 1);
+                      }}
+                    >
+                      NEXT
+                    </PageNav>
+                  </PagesList>
+                </>
+              )}
+            </Display>
+          )}
+        </ShopDiv>
+        <Cart />
+        <PurchaseModal handleItems={handleItems} />
+      </ShopPageAll>
+    </>
   );
 };
 

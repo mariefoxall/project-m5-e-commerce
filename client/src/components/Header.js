@@ -33,7 +33,7 @@ const Header = () => {
 };
 const Spacer = styled.div`
   height: 140px;
-  width: 100vw;
+  /* width: 100vw; */
   background-color: red;
   z-index: 4;
 `;

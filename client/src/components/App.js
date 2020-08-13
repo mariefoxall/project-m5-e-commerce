@@ -48,7 +48,7 @@ function App() {
             <LandingPage />
           </Route>
           <Route path="/shop">
-            <Header />
+            {/* <Header /> */}
             <Shop handleItems={handleItems} />
           </Route>
           <Route path="/items/:itemId">
