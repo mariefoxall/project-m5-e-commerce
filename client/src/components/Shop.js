@@ -130,6 +130,24 @@ const Shop = () => {
             <div>LOADING</div>
           ) : (
             <Display>
+              <Pagination>
+                <NumItems>
+                  show
+                  <Dropdown
+                    onChange={(ev) => toggleNumItemsPerPage(ev)}
+                    defaultValue={15}
+                    id="numItemsPerPage"
+                    name="numItemsPerPage"
+                  >
+                    <option value={15}>15</option>
+                    <option value={30}>30</option>
+                    <option value={45}>45</option>
+                    <option value={60}>60</option>
+                    <option value={mapShopItemsArray.length}>all</option>
+                  </Dropdown>
+                  items per page
+                </NumItems>
+              </Pagination>
               <ItemList>
                 {currentPageArray.map((item) => {
                   //console.log(item.category);

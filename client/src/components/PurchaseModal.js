@@ -80,17 +80,43 @@ const PurchaseModal = ({ handleItems }) => {
   const Alert = () => {
     return <MuiAlert elevation={6} variant="filled" />;
   };
+
   return (
     <div>
-      <Snackbar
+      {/* <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={purchaseStatus === "purchased"}
         autoHideDuration={6000}
         onClose={handleClose}
       >
         <Alert onClose={handleClose} severity="success">
-          Thanks for your purchase! The following items are coming your way:
+          Thanks for your purchase!
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
+      {orderConfirmed && (
+        <Dialog
+          open={purchaseStatus === "purchased"}
+          onClose={handleClose}
+          autoHideDuration={6000}
+        >
+          <DialogContent>
+            <CloseDiv>
+              <CloseButton onClick={handleClose}>X</CloseButton>
+            </CloseDiv>
+            <ThankYou>
+              Thanks for your order, {orderConfirmed.firstName}!
+            </ThankYou>
+            <ConfirmText>We're looking forward to sending you:</ConfirmText>
+            {orderConfirmed.order.map((item) => {
+              return (
+                <ConfirmText>
+                  {item.name} ({item.quantity})
+                </ConfirmText>
+              );
+            })}
+          </DialogContent>
+        </Dialog>
+      )}
       <Dialog
         open={purchaseStatus === "begin-purchase"}
         onClose={handleClose}
@@ -177,9 +203,24 @@ const PurchaseModal = ({ handleItems }) => {
     </div>
   );
 };
+const CloseButton = styled.button``;
+const CloseDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  height: 20px;
+`;
 
 const All = styled.div`
   display: flex;
+`;
+
+const ThankYou = styled.p`
+  background-color: #8080ff;
+  margin: 10px;
+`;
+
+const ConfirmText = styled.p`
+  margin: 10px;
 `;
 
 const ConfirmButton = styled.button`

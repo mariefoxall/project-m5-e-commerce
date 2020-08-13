@@ -133,12 +133,13 @@ const CartTitle = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 10px;
   /* position: sticky; */
 `;
 
 const ListDiv = styled.div`
   overflow-y: auto;
-  height: 500px;
+  height: calc(100vh - 240px);
 `;
 const ItemDiv = styled.div`
   border: 1px dashed white;
