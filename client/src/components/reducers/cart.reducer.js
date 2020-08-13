@@ -1,30 +1,39 @@
-const initialState = {};
+const initialState = {
+  status: "hidden",
+  cartContent: {},
+};
 
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
     case "ADD_ITEM": {
       return {
         ...state,
-        [action.item.id]: {
-          ...action.item,
-          quantity: state[action.item.id]
-            ? state[action.item.id].quantity + 1
-            : 1,
+        status: "visible",
+        cartContent: {
+          ...state.cartContent,
+          [action.item.id]: {
+            ...action.item,
+            quantity: state.cartContent[action.item.id]
+              ? state.cartContent[action.item.id].quantity + 1
+              : 1,
+          },
         },
       };
     }
     case "REMOVE_ITEM": {
       const stateCopy = { ...state }; // New object we CAN mutate
-      delete stateCopy[action.item.id];
+      delete stateCopy.cartContent[action.item.id];
       return stateCopy;
     }
     case "UPDATE_QUANTITY": {
       console.log(action);
       return {
         ...state,
-        [action.item.id]: {
-          ...state[action.item.id],
-          quantity: action.item.quantity,
+        cartContent: {
+          [action.item.id]: {
+            ...state.cartContent[action.item.id],
+            quantity: action.item.quantity,
+          },
         },
       };
     }
@@ -35,5 +44,10 @@ export default function cartReducer(state = initialState, action) {
 }
 
 export const getCartItemArray = (state) => {
-  return Object.values(state.cart);
+  console.log(Object.values(state.cart.cartContent));
+  return Object.values(state.cart.cartContent);
+};
+
+export const getCartItemQuantity = (state, id) => {
+  return state.cart.cartContent.id.quantity;
 };
