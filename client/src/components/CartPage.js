@@ -94,7 +94,6 @@ const CartTitle = styled.div`
 `;
 
 const ListDiv = styled.div`
-  /* flex-grow: 3; */
   overflow-y: scroll;
 `;
 const ItemDiv = styled.div`

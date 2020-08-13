@@ -49,7 +49,7 @@ const Shop = () => {
 
   const totalItemCount = mapShopItemsArray.length;
   console.log(totalItemCount);
-  const maxNumItemsPerPage = 30;
+  const [maxNumItemsPerPage, setMaxNumItemsPerPage] = React.useState(15);
 
   const numOfPages = Math.ceil(totalItemCount / maxNumItemsPerPage);
 
@@ -69,11 +69,15 @@ const Shop = () => {
   console.log(currentPage);
 
   const currentPageArray = mapShopItemsArray.slice(
-    30 * (currentPage - 1),
-    30 * currentPage
+    maxNumItemsPerPage * (currentPage - 1),
+    maxNumItemsPerPage * currentPage
   );
 
   const activePageStyle = { backgroundColor: "blue" };
+
+  const toggleNumItemsPerPage = (ev) => {
+    setMaxNumItemsPerPage(ev.target.value);
+  };
 
   return (
     <>
@@ -138,42 +142,59 @@ const Shop = () => {
                   );
                 })}
               </ItemList>
-              {mapShopItemsArray.length > 30 && (
-                <>
-                  <NumItems>{maxNumItemsPerPage} items per page</NumItems>
-                  <PagesList>
-                    <PageNav
-                      onClick={() => {
-                        currentPage > 1 && goToPage(currentPage - 1);
-                      }}
-                    >
-                      PREV
-                    </PageNav>
-                    {pagesArray.map((pageNum) => {
-                      return (
-                        <PageNav
-                          style={{
-                            backgroundColor:
-                              currentPage === pageNum ? "blue" : "#ccccff",
-                          }}
-                          key={pageNum}
-                          onClick={() => goToPage(pageNum)}
-                        >
-                          {pageNum}
-                        </PageNav>
-                      );
-                    })}
-                    <PageNav
-                      onClick={() => {
-                        currentPage < pagesArray.length &&
-                          goToPage(currentPage + 1);
-                      }}
-                    >
-                      NEXT
-                    </PageNav>
-                  </PagesList>
-                </>
-              )}
+              <Pagination>
+                <NumItems>
+                  show
+                  <Dropdown
+                    onChange={(ev) => toggleNumItemsPerPage(ev)}
+                    defaultValue={15}
+                    id="numItemsPerPage"
+                    name="numItemsPerPage"
+                  >
+                    <option value={15}>15</option>
+                    <option value={30}>30</option>
+                    <option value={45}>45</option>
+                    <option value={60}>60</option>
+                    <option value={mapShopItemsArray.length}>all</option>
+                  </Dropdown>
+                  items per page
+                </NumItems>
+                {mapShopItemsArray.length > maxNumItemsPerPage && (
+                  <>
+                    <PagesList>
+                      <PageNav
+                        onClick={() => {
+                          currentPage > 1 && goToPage(currentPage - 1);
+                        }}
+                      >
+                        PREV
+                      </PageNav>
+                      {pagesArray.map((pageNum) => {
+                        return (
+                          <PageNav
+                            style={{
+                              backgroundColor:
+                                currentPage === pageNum ? "#aa80ff" : "#ccccff",
+                            }}
+                            key={pageNum}
+                            onClick={() => goToPage(pageNum)}
+                          >
+                            {pageNum}
+                          </PageNav>
+                        );
+                      })}
+                      <PageNav
+                        onClick={() => {
+                          currentPage < pagesArray.length &&
+                            goToPage(currentPage + 1);
+                        }}
+                      >
+                        NEXT
+                      </PageNav>
+                    </PagesList>
+                  </>
+                )}
+              </Pagination>
             </Display>
           )}
         </ShopDiv>
@@ -184,10 +205,16 @@ const Shop = () => {
   );
 };
 
-const NumItems = styled.div`
-  background: #ccccff;
+const Pagination = styled.div`
   padding: 5px;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const NumItems = styled.div`
+  color: #8080ff;
 `;
 const PageNav = styled.li`
   padding: 5px;
@@ -205,7 +232,7 @@ const PagesList = styled.ul`
   background: #ccccff;
   display: flex;
   justify-content: space-between;
-  width: 40%;
+  /* width: 40%; */
 `;
 const SpacerDiv = styled.div`
   height: calc(100vh-120px);

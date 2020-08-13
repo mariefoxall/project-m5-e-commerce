@@ -1,4 +1,17 @@
-conditional for cart if it has more items than in stock
+loading spinner
 styling cart
+snackbar for order
+snackbar for contact
 
-input is all fucky
+styling purchaseModal
+
+
+animate to slide cart in?
+
+overflow in cart (works in cart page, not side cart)
+
+
+
+currency?
+
+cart 
