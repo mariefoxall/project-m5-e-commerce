@@ -80,6 +80,13 @@ const Shop = () => {
           (item) => item.body_location === activeBodyLocation
         );
 
+  const mapShopItemsArray =
+    activeCompany === "All"
+      ? bodyLocationFilterArray
+      : bodyLocationFilterArray.filter(
+          (item) => item.companyId === activeCompany
+        );
+
   const totalItemCount = mapShopItemsArray.length;
   console.log(totalItemCount);
   const [maxNumItemsPerPage, setMaxNumItemsPerPage] = React.useState(15);
@@ -107,12 +114,6 @@ const Shop = () => {
   );
 
   const activePageStyle = { backgroundColor: "blue" };
-  const mapShopItemsArray =
-    activeCompany === "All"
-      ? bodyLocationFilterArray
-      : bodyLocationFilterArray.filter(
-          (item) => item.companyId === activeCompany
-        );
 
   const toggleNumItemsPerPage = (ev) => {
     setMaxNumItemsPerPage(ev.target.value);
@@ -161,8 +162,24 @@ const Shop = () => {
                 <option value="Waist">Waist</option>
                 <option value="Wrist">Wrist</option>
               </Dropdown>
+              <Dropdown
+                onChange={(ev) => toggleCompany(ev)}
+                defaultValue={activeCompany}
+                id="company"
+                name="company"
+              >
+                <option value="All">Show All</option>
+                <option value="1962">Berska</option>
+                <option value="Chest">Chest</option>
+                <option value="Feet">Feet</option>
+                <option value="Hands">Hands</option>
+                <option value="Head">Head</option>
+                <option value="Neck">Neck</option>
+                <option value="Waist">Waist</option>
+                <option value="Wrist">Wrist</option>
+              </Dropdown>
             </BodyLocation>
-          </FilterDiv>{" "}
+          </FilterDiv>
         </SpacerDiv>
         <ShopDiv>
           {status && status === "loading" ? (

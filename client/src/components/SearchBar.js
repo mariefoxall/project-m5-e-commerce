@@ -18,8 +18,6 @@ const SearchBar = () => {
     history.push(`/items/${id}`);
   };
 
-  const dispatch = useDispatch();
-
   const storeItems = useSelector(getStoreItems);
 
   const shopItemsArray =
@@ -45,6 +43,8 @@ const SearchBar = () => {
     return index === selectedSuggestion;
   };
 
+  const selection = filteredSuggestions[selectedSuggestion];
+
   return (
     <Wrapper>
       <InputDiv>
@@ -57,19 +57,29 @@ const SearchBar = () => {
             searchSuggestions(ev.target.value);
           }}
           onKeyDown={(ev) => {
+            console.log(ev.key);
+            console.log(selection);
             switch (ev.key) {
-              // case "Enter": {
-              //   itemDetails(filteredSuggestions[selectedSuggestion].id);
-              // }
-              case "ArrowUp": {
-                if (selectedSuggestion > 0)
-                  setSelectedSuggestion(selectedSuggestion - 1);
-              }
-              case "ArrowDown": {
-                if (selectedSuggestion < filteredSuggestions.length - 1)
-                  setSelectedSuggestion(selectedSuggestion + 1);
-              }
+              case "Enter":
+                {
+                  itemDetails(selection.id);
+                }
+                return;
+              case "ArrowUp":
+                {
+                  if (selectedSuggestion > 0)
+                    setSelectedSuggestion(selectedSuggestion - 1);
+                  console.log(selectedSuggestion);
+                }
+                return;
+              case "ArrowDown":
+                {
+                  if (selectedSuggestion < filteredSuggestions.length)
+                    setSelectedSuggestion(selectedSuggestion + 1);
+                }
+                return;
             }
+            return;
           }}
         />
       </InputDiv>
