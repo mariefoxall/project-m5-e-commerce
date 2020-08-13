@@ -11,6 +11,8 @@ const Cart = () => {
   const cartItems = useSelector(getCartItemArray);
   console.log(cartItems);
 
+  //this is just something extra
+
   let total = 0;
   let numCartItems = 0;
 
