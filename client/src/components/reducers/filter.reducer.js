@@ -1,7 +1,7 @@
 const initialState = {
   category: "All",
   bodyLocation: "All",
-  company: "All",
+  company: 0,
 };
 
 export default function filterReducer(state = initialState, action) {
