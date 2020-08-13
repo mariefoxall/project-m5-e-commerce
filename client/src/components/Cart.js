@@ -47,7 +47,7 @@ const Cart = () => {
     <RightSide>
       <CartDiv style={{ visibility: cartVisibility }}>
         <CloseDiv>
-          <CloseButton onClick={() => dispatch(closeCart())}>X</CloseButton>
+          <CloseButton onClick={() => dispatch(closeCart())}>></CloseButton>
         </CloseDiv>
         <CartItemsPurchase>
           <TopPart>
@@ -92,7 +92,19 @@ const Cart = () => {
   );
 };
 
-const CloseButton = styled.button``;
+const CloseButton = styled.button`
+  border: none;
+  outline: none;
+  width: 30px;
+  height: 20px;
+  background-color: #8080ff;
+  color: white;
+  &:hover {
+    cursor: pointer;
+    background-color: white;
+    color: #8080ff;
+  }
+`;
 const CloseDiv = styled.div`
   display: flex;
   justify-content: flex-end;
