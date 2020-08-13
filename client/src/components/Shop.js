@@ -14,7 +14,7 @@ import Cart from "./Cart";
 import Header from "./Header";
 import PurchaseModal from "./PurchaseModal";
 
-const Shop = ({ handleItems }) => {
+const Shop = () => {
   const dispatch = useDispatch();
 
   const shopItems = useSelector(getStoreItems);
@@ -178,7 +178,7 @@ const Shop = ({ handleItems }) => {
           )}
         </ShopDiv>
         <Cart />
-        <PurchaseModal handleItems={handleItems} />
+        <PurchaseModal />
       </ShopPageAll>
     </>
   );

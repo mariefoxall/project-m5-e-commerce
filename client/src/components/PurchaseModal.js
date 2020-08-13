@@ -20,15 +20,11 @@ const PurchaseModal = ({ handleItems }) => {
 
   const [email, setEmail] = React.useState("");
   const purchaseInfo = useSelector((state) => state.purchase);
-  //console.log("purchaseInfo", purchaseInfo);
-  //   const purchaseItems = purchaseInfo.selectedItems;
   const dispatch = useDispatch();
   const cartItems = useSelector(getCartItemArray);
   const purchaseStatus = purchaseInfo && purchaseInfo.status;
-  //console.log(purchaseStatus);
 
   const handleUpdateNumInStock = (cartItemArray) => {
-    //console.log({ update: cartItemArray });
     fetch(`/items`, {
       method: "PUT",
       body: JSON.stringify({ update: cartItemArray }),
@@ -41,14 +37,14 @@ const PurchaseModal = ({ handleItems }) => {
       .then((data) => console.log(data));
   };
 
-  const handleNewOrder = (cartItemArray, total) => {
+  const handleNewOrder = (firstName, lastName, email, cartItems, total) => {
     fetch(`/orders`, {
       method: "POST",
       body: JSON.stringify({
-        firstName: "marc",
-        lastName: "piantone",
-        email: "marc_piantone@live.fr",
-        cartItems: cartItemArray,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        cartItems: cartItems,
         total: total,
       }),
       headers: {
@@ -100,6 +96,7 @@ const PurchaseModal = ({ handleItems }) => {
           <DialogContent>
             <h3>Enter Payment Details:</h3>
             <TextField
+              autoComplete="on"
               onChange={(ev) => setFirstName(ev.target.value)}
               autoFocus
               margin="dense"
@@ -142,14 +139,9 @@ const PurchaseModal = ({ handleItems }) => {
             <DialogActions>
               <ConfirmButton
                 onClick={() => {
-                  handleUpdateNumInStock(
-                    cartItems
-                    // creditCard,
-                    // expiration,
-                    // total
-                  );
+                  handleUpdateNumInStock(cartItems);
+                  handleNewOrder(firstName, lastName, email, cartItems, total);
                   handleItems();
-                  handleNewOrder(cartItems, total);
                 }}
               >
                 Confirm Purchase

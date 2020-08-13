@@ -65,7 +65,7 @@ function App() {
             <Contact />
           </Route>
         </Switch>
-        <PurchaseModal />
+        <PurchaseModal handleItems={handleItems} />
       </Router>
     </>
   );
