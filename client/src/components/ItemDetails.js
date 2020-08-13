@@ -45,7 +45,7 @@ const ItemDetails = () => {
 
   useEffect(() => {
     handleItem(id);
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     if (item.status === "idle") {
