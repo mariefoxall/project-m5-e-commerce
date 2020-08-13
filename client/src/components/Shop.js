@@ -45,14 +45,16 @@ const Shop = () => {
   };
 
   useEffect(() => {
+    console.log(status);
     if (status === "idle") {
       handleCompanies(shopItemsArray.companyId);
     }
   }, [status]);
 
   const companies = useSelector(getCompanies);
+  console.log(companies);
 
-  console.log(activeCompany, "company");
+  //console.log(activeCompany, "company");
 
   const toggleCategory = (ev) => {
     dispatch(updateCategory(ev.target.value));
@@ -88,7 +90,7 @@ const Shop = () => {
         );
 
   const totalItemCount = mapShopItemsArray.length;
-  console.log(totalItemCount);
+  //console.log(totalItemCount);
   const [maxNumItemsPerPage, setMaxNumItemsPerPage] = React.useState(15);
 
   const numOfPages = Math.ceil(totalItemCount / maxNumItemsPerPage);
@@ -97,7 +99,7 @@ const Shop = () => {
 
   for (let i = 1; i <= numOfPages; i++) {
     pagesArray.push(i);
-    console.log("pagesArray: ", pagesArray);
+    //console.log("pagesArray: ", pagesArray);
   }
 
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -106,7 +108,7 @@ const Shop = () => {
     setCurrentPage(pageNum);
   };
 
-  console.log(currentPage);
+  //console.log(currentPage);
 
   const currentPageArray = mapShopItemsArray.slice(
     maxNumItemsPerPage * (currentPage - 1),
@@ -172,33 +174,13 @@ const Shop = () => {
                 name="company"
               >
                 <option value="0">Show All</option>
-                <option value="19962">Barska</option>
-                <option value="16384">Belkin</option>
-                <option value="11385">Bowflex</option>
-                <option value="13334">Casio</option>
-                <option value="18159">Coleman</option>
-                <option value="17748">Ekho</option>
-                <option value="10759">Fitbit</option>
-                <option value="19787">Mota</option>
-                <option value="10713">Garmin</option>
-                <option value="16478">Golf Buddy</option>
-                <option value="18834">Jawbone</option>
-                <option value="13305">Lifetrak</option>
-                <option value="16475">Maagellan</option>
-                <option value="18112">Martian</option>
-                <option value="17422">Mio</option>
-                <option value="11932">Misfit</option>
-                <option value="14902">Suunto</option>
-                <option value="11837">Polar</option>
-                <option value="19080">Pov</option>
-                <option value="18432">Samsung</option>
-                <option value="18287">Scosche</option>
-                <option value="14897">Smarthealth</option>
-                <option value="12911">Sportline</option>
-                <option value="18324">Tomtom</option>
+                {companies.status === "idle" &&
+                  companies.companies.companies.map((company) => {
+                    return <option value={company.id}>{company.name}</option>;
+                  })}
               </Dropdown>
             </BodyLocation>
-          </FilterDiv>{" "}
+          </FilterDiv>
         </SpacerDiv>
         <ShopDiv>
           {status && status === "loading" ? (
