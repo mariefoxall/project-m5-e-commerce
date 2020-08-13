@@ -1,31 +1,52 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLink, Link } from "react-router-dom";
+import { getCartItemArray } from "./reducers/cart.reducer";
+import { useSelector } from "react-redux";
 
 import SearchBar from "./SearchBar";
 
 const Header = () => {
+  const cartItems = useSelector(getCartItemArray);
+  let numCartItems = 0;
+
+  cartItems.forEach((item) => {
+    numCartItems = numCartItems + item.quantity;
+  });
+
   return (
-    <HeaderDiv>
-      <ShopLink to="/shop">STORE NAME</ShopLink>
-      <HeaderLinks>
-        <StyledNavLink to="/companies">COMPANIES</StyledNavLink>
-        <StyledNavLink to="/about">ABOUT</StyledNavLink>
-        <StyledNavLink to="/profile">PROFILE</StyledNavLink>
-        <StyledNavLink to="/cart">VIEW CART</StyledNavLink>
-        <SearchBar />
-      </HeaderLinks>
-    </HeaderDiv>
+    <Spacer>
+      <HeaderDiv>
+        <ShopLink to="/shop">STORE NAME</ShopLink>
+        <HeaderLinks>
+          <StyledNavLink to="/about">ABOUT</StyledNavLink>
+          <StyledNavLink to="/contact">CONTACT</StyledNavLink>
+          <StyledNavLink to="/profile">PROFILE</StyledNavLink>
+          <StyledNavLink to="/cart">
+            VIEW CART{numCartItems > 0 && <span>({numCartItems})</span>}
+          </StyledNavLink>
+          <SearchBar />
+        </HeaderLinks>
+      </HeaderDiv>
+    </Spacer>
   );
 };
-
+const Spacer = styled.div`
+  height: 140px;
+  /* width: 100vw; */
+  background-color: red;
+  z-index: 4;
+`;
 const HeaderDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 40px 50px;
+  align-items: center;
+  padding: 40px 20px;
+  height: 140px;
   width: 100%;
-  position: sticky;
-  z-index: 10;
+  position: fixed;
+  z-index: 5;
+  background-color: white;
 `;
 
 const ShopLink = styled(Link)`

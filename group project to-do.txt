@@ -1,0 +1,4 @@
+conditional for cart if it has more items than in stock
+styling cart
+
+input is all fucky

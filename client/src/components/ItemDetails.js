@@ -6,6 +6,8 @@ import { getStoreItem } from "./reducers/item.reducer";
 import { getCompany } from "./reducers/company.reducer";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { addCart } from "../actions";
+
 import {
   requestItem,
   receiveItem,
@@ -120,7 +122,9 @@ const ItemDetails = () => {
             )}
           </OriginDiv>
           {item.item.numInStock === 0 ? null : (
-            <PurchaseButton>ADD TO CART</PurchaseButton>
+            <PurchaseButton onClick={() => dispatch(addCart(item.item))}>
+              ADD TO CART
+            </PurchaseButton>
           )}
         </ItemInfo>
       </ItemDiv>

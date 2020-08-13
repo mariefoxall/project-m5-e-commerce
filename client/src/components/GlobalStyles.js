@@ -72,6 +72,9 @@ body {
     color: white;
 
   }
+  input{
+    font-family: 'Spartan', sans-serif;
+  }
 
   a{text-decoration: none;}
 

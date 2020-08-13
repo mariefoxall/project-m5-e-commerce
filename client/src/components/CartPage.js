@@ -1,12 +1,12 @@
 import React from "react";
+import CartItem from "./CartItem";
+import styled from "styled-components";
+import Header from "./Header";
 import { useSelector, useDispatch } from "react-redux";
 import { getCartItemArray } from "./reducers/cart.reducer";
 import { beginPurchaseProcess } from "../actions";
 
-import styled from "styled-components";
-import CartItem from "./CartItem";
-
-const Cart = () => {
+const CartPage = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector(getCartItemArray);
   console.log(cartItems);
@@ -15,34 +15,16 @@ const Cart = () => {
   let numCartItems = 0;
 
   cartItems.forEach((item) => {
+    console.log(item.price);
+    console.log(item.quantity);
     total = total + Number(item.price.slice(1)) * Number(item.quantity);
     numCartItems = numCartItems + item.quantity;
   });
-
-  const orderInStock = cartItems.every(
-    (item) => item.quantity <= item.numInStock
-  );
-  console.log("orderInStock", orderInStock);
-
-  const orderInCart = cartItems.length > 0;
-  console.log("orderInCart", orderInCart);
-
-  const okayToPurchase = orderInCart && orderInStock;
-
-  let purchaseButtonStyle = {};
-
-  if (okayToPurchase === false) {
-    purchaseButtonStyle = {
-      cursor: "auto",
-      color: "lightgrey",
-      backgroundColor: "grey",
-    };
-  }
-
   return (
-    <RightSide>
-      <CartDiv>
-        <TopPart>
+    <PageDiv>
+      {/* <Header /> */}
+      <DivBlock>
+        <CartDiv>
           <CartTitle>
             <h3> Your Cart:</h3>
             <p>{numCartItems} item(s)</p>
@@ -62,60 +44,58 @@ const Cart = () => {
               );
             })}
           </ListDiv>
-        </TopPart>
-        <BottomPart>
-          <Total>Total: ${total.toFixed(2)}</Total>
-          <PurchaseButton
-            disabled={okayToPurchase ? false : true}
-            onClick={() => dispatch(beginPurchaseProcess({ cartItems, total }))}
-            style={purchaseButtonStyle}
-          >
-            Purchase
-          </PurchaseButton>
-        </BottomPart>
-      </CartDiv>
-    </RightSide>
+          <BottomPart>
+            <Total>Total: ${total.toFixed(2)}</Total>
+            <PurchaseButton
+              disabled={cartItems.length > 0 ? false : true}
+              onClick={() =>
+                dispatch(beginPurchaseProcess({ cartItems, total }))
+              }
+            >
+              Purchase
+            </PurchaseButton>
+          </BottomPart>
+        </CartDiv>
+      </DivBlock>
+    </PageDiv>
   );
 };
-const TopPart = styled.div`
-  /* max-height: calc(100vh-240px); */
-  position: fixed;
-  top: 160px;
+
+const PageDiv = styled.div`
+  width: 100vw;
+  height: calc(100vh - 140px);
   display: flex;
   flex-direction: column;
 `;
 
-const RightSide = styled.div`
-  border: 2px solid green;
-  /* display: flex; */
-  flex: 1;
-  border-left: 2px dotted #8080ff;
+const DivBlock = styled.div`
+  display: flex;
+  justify-content: center;
+  background-image: linear-gradient(to right, #52d7e0, #0036b3);
+  flex: 3;
 `;
 
 const CartDiv = styled.div`
-  height: calc(100vh - 120px);
-  background-color: #ccccff;
+  /* flex: 3; */
   position: fixed;
-  right: 20px;
+  top: 140px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px;
-  border: 2px solid red;
-  /* flex: 1; */
-  width: calc(20% - 20px);
+  width: 30%;
+  padding: 30px;
+  height: calc(100vh - 140px);
 `;
 
 const CartTitle = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  width: 100%;
 `;
 
 const ListDiv = styled.div`
   /* flex-grow: 3; */
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
 `;
 const ItemDiv = styled.div`
   border: 1px dashed white;
@@ -124,15 +104,10 @@ const ItemDiv = styled.div`
 
 const BottomPart = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  margin-bottom: 20px;
-  position: fixed;
-  bottom: 0;
-  right: 20px;
-  justify-content: space-between;
-  width: inherit;
-  padding: 20px;
+  width: 100%;
 `;
 
 const Total = styled.div`
@@ -153,4 +128,4 @@ const PurchaseButton = styled.button`
     color: #8080ff;
   }
 `;
-export default Cart;
+export default CartPage;

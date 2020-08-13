@@ -114,7 +114,8 @@ const InputDiv = styled.div`
 `;
 
 const SearchInput = styled.input`
-  margin-right: 10px;
+  /* margin-right: 10px; */
+  /* margin-left: 10px; */
 `;
 
 const IconDiv = styled.div`

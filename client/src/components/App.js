@@ -9,6 +9,8 @@ import LandingPage from "./LandingPage";
 import Shop from "./Shop";
 import ItemDetails from "./ItemDetails";
 import Header from "./Header";
+import CartPage from "./CartPage";
+import PurchaseModal from "./PurchaseModal";
 import Contact from "./Contact";
 
 function App() {
@@ -46,18 +48,24 @@ function App() {
             <LandingPage />
           </Route>
           <Route path="/shop">
-            <Header />
+            {/* <Header /> */}
             <Shop handleItems={handleItems} />
           </Route>
           <Route path="/items/:itemId">
             <Header />
             <ItemDetails />
           </Route>
+          <Route path="/cart">
+            <Header />
+
+            <CartPage />
+          </Route>
           <Route path="/contact">
             <Header />
             <Contact />
           </Route>
         </Switch>
+        <PurchaseModal />
       </Router>
     </>
   );

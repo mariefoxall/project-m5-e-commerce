@@ -14,6 +14,11 @@ import { getCartItemArray } from "./reducers/cart.reducer";
 const PurchaseModal = ({ handleItems }) => {
   const [creditCard, setCreditCard] = React.useState("");
   const [expiration, setExpiration] = React.useState("");
+
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+
+  const [email, setEmail] = React.useState("");
   const purchaseInfo = useSelector((state) => state.purchase);
   //console.log("purchaseInfo", purchaseInfo);
   //   const purchaseItems = purchaseInfo.selectedItems;
@@ -71,63 +76,121 @@ const PurchaseModal = ({ handleItems }) => {
         onClose={handleClose}
         aria-labelledby="purchase-form-dialog"
       >
-        <DialogTitle id="purchase-form-dialog">Purchase Items</DialogTitle>
-        <DialogContent>
-          <h2>Please verify the contents of your cart:</h2>
-          {/* <DialogContentText> */}
-          {cartItems.map((item) => {
-            return (
-              <div key={item.id}>
-                <CartItem
-                  price={item.price}
-                  quantity={item.quantity}
-                  name={item.name}
-                  id={item.id}
-                  item={item}
-                />
-              </div>
-            );
-          })}
-          <div>Total: ${total.toFixed(2)}</div>
-          {/* </DialogContentText> */}
-        </DialogContent>
-        <DialogContent>
-          <h3>Enter Payment Details:</h3>
-          <TextField
-            onChange={(ev) => setCreditCard(ev.target.value)}
-            autoFocus
-            margin="dense"
-            label="Credit Card"
-            type="text"
-            fullWidth
-          />
-          <TextField
-            onChange={(ev) => setExpiration(ev.target.value)}
-            autoFocus
-            margin="dense"
-            label="Expiration"
-            type="text"
-            fullWidth
-          />
-          <DialogActions>
-            <button
-              onClick={(ev) => {
-                handleUpdateNumInStock(
-                  cartItems
-                  // creditCard,
-                  // expiration,
-                  // total
+        <DialogTitle id="purchase-form-dialog" />
+        <All>
+          <DialogContent>
+            <CartTitle>Please verify the contents of your cart:</CartTitle>
+            <ItemsList>
+              {cartItems.map((item) => {
+                return (
+                  <ItemDiv key={item.id}>
+                    <CartItem
+                      price={item.price}
+                      quantity={item.quantity}
+                      name={item.name}
+                      id={item.id}
+                      item={item}
+                    />
+                  </ItemDiv>
                 );
-                handleItems();
-                handleNewOrder(cartItems, total);
-              }}
-            >
-              Confirm Purchase
-            </button>
-          </DialogActions>
-        </DialogContent>
+              })}
+              <div>Total: ${total.toFixed(2)}</div>
+            </ItemsList>
+          </DialogContent>
+          <DialogContent>
+            <h3>Enter Payment Details:</h3>
+            <TextField
+              onChange={(ev) => setFirstName(ev.target.value)}
+              autoFocus
+              margin="dense"
+              label="First Name"
+              type="text"
+              fullWidth
+            />
+            <TextField
+              onChange={(ev) => setLastName(ev.target.value)}
+              autoFocus
+              margin="dense"
+              label="Last Name"
+              type="text"
+              fullWidth
+            />
+            <TextField
+              onChange={(ev) => setEmail(ev.target.value)}
+              autoFocus
+              margin="dense"
+              label="Email"
+              type="email"
+              fullWidth
+            />
+            <TextField
+              onChange={(ev) => setCreditCard(ev.target.value)}
+              autoFocus
+              margin="dense"
+              label="Credit Card"
+              type="text"
+              fullWidth
+            />
+            <TextField
+              onChange={(ev) => setExpiration(ev.target.value)}
+              autoFocus
+              margin="dense"
+              label="Expiration"
+              type="text"
+              fullWidth
+            />
+            <DialogActions>
+              <ConfirmButton
+                onClick={() => {
+                  handleUpdateNumInStock(
+                    cartItems
+                    // creditCard,
+                    // expiration,
+                    // total
+                  );
+                  handleItems();
+                  handleNewOrder(cartItems, total);
+                }}
+              >
+                Confirm Purchase
+              </ConfirmButton>
+            </DialogActions>
+          </DialogContent>
+        </All>
       </Dialog>
     </div>
   );
 };
+
+const All = styled.div`
+  display: flex;
+`;
+
+const ConfirmButton = styled.button`
+  background-color: #8080ff;
+  color: white;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  font-family: "Spartan";
+  font-size: 16px;
+  &:hover {
+    cursor: pointer;
+    background-color: #ccccff;
+    /* border: 1px solid #8080ff; */
+    color: #8080ff;
+  }
+`;
+const CartTitle = styled.h3`
+  margin-bottom: 20px;
+`;
+const ItemDiv = styled.div`
+  border: 1px dashed #8080ff;
+  padding: 10px;
+`;
+
+const ItemsList = styled.div`
+  overflow-y: scroll;
+`;
+
 export default PurchaseModal;
