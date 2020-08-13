@@ -30,11 +30,18 @@ export default function cartReducer(state = initialState, action) {
       return {
         ...state,
         cartContent: {
+          ...state.cartContent,
           [action.item.id]: {
             ...state.cartContent[action.item.id],
             quantity: action.item.quantity,
           },
         },
+      };
+    }
+    case "CLOSE_CART": {
+      return {
+        ...state,
+        status: "hidden",
       };
     }
     default: {

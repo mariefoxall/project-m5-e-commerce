@@ -15,6 +15,8 @@ import {
 } from "../actions";
 import { getCartItemArray } from "./reducers/cart.reducer";
 import { getOrderConfirmed } from "./reducers/purchase.reducer";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 const PurchaseModal = ({ handleItems }) => {
   const [creditCard, setCreditCard] = React.useState("");
@@ -75,8 +77,20 @@ const PurchaseModal = ({ handleItems }) => {
   const orderConfirmed = useSelector(getOrderConfirmed);
   console.log(orderConfirmed);
 
+  const Alert = () => {
+    return <MuiAlert elevation={6} variant="filled" />;
+  };
   return (
     <div>
+      <Snackbar
+        open={purchaseStatus === "purchased"}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="success">
+          Thanks for your purchase! The following items are coming your way:
+        </Alert>
+      </Snackbar>
       <Dialog
         open={purchaseStatus === "begin-purchase"}
         onClose={handleClose}

@@ -17,11 +17,11 @@ const Header = () => {
   return (
     <Spacer>
       <HeaderDiv>
-        <ShopLink to="/shop">STORE NAME</ShopLink>
+        <ShopLink to="/shop">GO-GO-GADGETS</ShopLink>
         <HeaderLinks>
           <StyledNavLink to="/about">ABOUT</StyledNavLink>
           <StyledNavLink to="/contact">CONTACT</StyledNavLink>
-          <StyledNavLink to="/profile">PROFILE</StyledNavLink>
+          <StyledNavLink to="/shop">SHOP</StyledNavLink>
           <StyledNavLink to="/cart">
             VIEW CART{numCartItems > 0 && <span>({numCartItems})</span>}
           </StyledNavLink>
