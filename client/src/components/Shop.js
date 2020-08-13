@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import ShopItem from "./ShopItem";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getStoreItems } from "./reducers/items.reducer";
+import { getCompanies } from "./reducers/companies.reducer";
 import {
   getFilterCategory,
   getFilterbodyLocation,
+  getFilterCompany,
 } from "./reducers/filter.reducer";
-import { updateCategory, updateBodyLocation } from "../actions";
+import {
+  updateCategory,
+  updateBodyLocation,
+  updateCompany,
+  receiveCompanies,
+} from "../actions";
 import Cart from "./Cart";
 
 import Header from "./Header";
@@ -21,9 +28,31 @@ const Shop = () => {
   const shopItemsArray =
     shopItems.items !== null ? Object.values(shopItems.items.items) : [];
 
+  console.log(shopItems, "items");
+  console.log(shopItemsArray, "item Array");
   const status = shopItems.status;
   const activeCategory = useSelector(getFilterCategory);
   const activeBodyLocation = useSelector(getFilterbodyLocation);
+  const activeCompany = useSelector(getFilterCompany);
+
+  const handleCompanies = () => {
+    fetch(`/companies`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch(receiveCompanies(json));
+      })
+      .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
+    if (status === "idle") {
+      handleCompanies(shopItemsArray.companyId);
+    }
+  }, [status]);
+
+  const companies = useSelector(getCompanies);
+
+  console.log(activeCompany, "company");
 
   const toggleCategory = (ev) => {
     dispatch(updateCategory(ev.target.value));
@@ -35,12 +64,16 @@ const Shop = () => {
     setCurrentPage(1);
   };
 
+  const toggleCompany = (ev) => {
+    dispatch(updateCompany(ev.target.value));
+  };
+
   const categoryFilterArray =
     activeCategory === "All"
       ? shopItemsArray
       : shopItemsArray.filter((item) => item.category === activeCategory);
 
-  const mapShopItemsArray =
+  const bodyLocationFilterArray =
     activeBodyLocation === "All"
       ? categoryFilterArray
       : categoryFilterArray.filter(
@@ -74,112 +107,16 @@ const Shop = () => {
   );
 
   const activePageStyle = { backgroundColor: "blue" };
+  const mapShopItemsArray =
+    activeCompany === "All"
+      ? bodyLocationFilterArray
+      : bodyLocationFilterArray.filter(
+          (item) => item.companyId === activeCompany
+        );
 
   return (
     <>
-      <Header />
-      <ShopPageAll>
-        <SpacerDiv>
-          <FilterDiv>
-            <Category>
-              <label htmlFor="category">WHAT:</label>
-              <Dropdown
-                onChange={(ev) => toggleCategory(ev)}
-                defaultValue={activeCategory}
-                id="category"
-                name="category"
-                placeholder="Category"
-              >
-                <option value="All">Show All</option>
-                <option value="Entertainment">Entertainment</option>
-                <option value="Fitness">Fitness</option>
-                <option value="Gaming">Gaming</option>
-                <option value="Industrial">Industrial</option>
-                <option value="Lifestyle">Lifestyle</option>
-                <option value="Medical">Medical</option>
-                <option value="Pets and Animals">Pets and Animals</option>
-              </Dropdown>
-            </Category>
-            <BodyLocation>
-              <label htmlFor="bodylocation">WHERE:</label>
-              <Dropdown
-                onChange={(ev) => toggleBodyLocation(ev)}
-                defaultValue={activeBodyLocation}
-                id="bodylocation"
-                name="bodylocation"
-              >
-                <option value="All">Show All</option>
-                <option value="Arms">Arms</option>
-                <option value="Chest">Chest</option>
-                <option value="Feet">Feet</option>
-                <option value="Hands">Hands</option>
-                <option value="Head">Head</option>
-                <option value="Neck">Neck</option>
-                <option value="Waist">Waist</option>
-                <option value="Wrist">Wrist</option>
-              </Dropdown>
-            </BodyLocation>
-          </FilterDiv>{" "}
-        </SpacerDiv>
-        <ShopDiv>
-          {status && status === "loading" ? (
-            <div>LOADING</div>
-          ) : (
-            <Display>
-              <ItemList>
-                {currentPageArray.map((item) => {
-                  //console.log(item.category);
-                  return (
-                    <div key={item.id}>
-                      {/* <Link to={`/items/${item.id}`}> */}
-                      <ShopItem item={item} />
-                      {/* </Link> */}
-                    </div>
-                  );
-                })}
-              </ItemList>
-              {mapShopItemsArray.length > 30 && (
-                <>
-                  <NumItems>{maxNumItemsPerPage} items per page</NumItems>
-                  <PagesList>
-                    <PageNav
-                      onClick={() => {
-                        currentPage > 1 && goToPage(currentPage - 1);
-                      }}
-                    >
-                      PREV
-                    </PageNav>
-                    {pagesArray.map((pageNum) => {
-                      return (
-                        <PageNav
-                          style={{
-                            backgroundColor:
-                              currentPage === pageNum ? "blue" : "#ccccff",
-                          }}
-                          key={pageNum}
-                          onClick={() => goToPage(pageNum)}
-                        >
-                          {pageNum}
-                        </PageNav>
-                      );
-                    })}
-                    <PageNav
-                      onClick={() => {
-                        currentPage < pagesArray.length &&
-                          goToPage(currentPage + 1);
-                      }}
-                    >
-                      NEXT
-                    </PageNav>
-                  </PagesList>
-                </>
-              )}
-            </Display>
-          )}
-        </ShopDiv>
-        <Cart />
-        <PurchaseModal />
-      </ShopPageAll>
+      
     </>
   );
 };
@@ -243,6 +180,13 @@ const BodyLocation = styled.div`
   margin: 10px;
   padding: 10px;
   font-family: "Spartan";
+  color: #8080ff;
+`;
+
+const Company = styled.div`
+  margin: 10px;
+  padding: 10px;
+  font-family: sans-serif;
   color: #8080ff;
 `;
 

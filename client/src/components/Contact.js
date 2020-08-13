@@ -87,11 +87,13 @@ const Contact = () => {
             required
           ></TextArea>
         </MessageWrapper>
-        <button
+        <SendButton
           onClick={(ev) => {
             handleContact(firstName, lastName, email, subject, message);
           }}
-        ></button>
+        >
+          SEND
+        </SendButton>
       </FormWrapper>
     </Wrapper>
   );
@@ -146,5 +148,19 @@ const MessageWrapper = styled.div`
 
 const TextArea = styled.textarea`
   height: 250px;
+`;
+
+const SendButton = styled.button`
+  width: 200px;
+  padding: 5px 0px;
+  align-self: center;
+  margin-top: 23px;
+  border: none;
+  background: black;
+  color: white;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 export default Contact;
