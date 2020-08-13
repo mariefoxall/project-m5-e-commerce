@@ -8,8 +8,13 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import styled from "styled-components";
 import CartItem from "./CartItem";
-import { cancelPurchaseProcess, NumInStockUpdateSuccess } from "../actions";
+import {
+  cancelPurchaseProcess,
+  NumInStockUpdateSuccess,
+  purchaseItemsSuccess,
+} from "../actions";
 import { getCartItemArray } from "./reducers/cart.reducer";
+import { getOrderConfirmed } from "./reducers/purchase.reducer";
 
 const PurchaseModal = ({ handleItems }) => {
   const [creditCard, setCreditCard] = React.useState("");
@@ -53,7 +58,8 @@ const PurchaseModal = ({ handleItems }) => {
       },
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => dispatch(purchaseItemsSuccess(data)))
+      .catch((err) => console.log(err));
   };
 
   const handleClose = () => {
@@ -65,6 +71,10 @@ const PurchaseModal = ({ handleItems }) => {
     //console.log(item.quantity);
     total = total + Number(item.price.slice(1)) * Number(item.quantity);
   });
+
+  const orderConfirmed = useSelector(getOrderConfirmed);
+  console.log(orderConfirmed);
+
   return (
     <div>
       <Dialog

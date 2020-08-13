@@ -3,6 +3,7 @@ const initialState = {
   error: null,
   selectedItems: [],
   totalPrice: null,
+  orderConfirmed: null,
 };
 
 export default function purchaseReducer(state = initialState, action) {
@@ -34,6 +35,7 @@ export default function purchaseReducer(state = initialState, action) {
         error: null,
         selectedItems: null,
         totalPrice: null,
+        orderConfirmed: action.data,
       };
     }
     case "NUM-IN-STOCK-UPDATE-SUCCESS": {
@@ -47,3 +49,7 @@ export default function purchaseReducer(state = initialState, action) {
     }
   }
 }
+
+export const getOrderConfirmed = (state) => {
+  return state.purchase.orderConfirmed;
+};
