@@ -1,18 +1,24 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartItemArray } from "./reducers/cart.reducer";
 import { removeCart, updateQuantity } from "../actions";
 
 const CartItem = ({ item, price, quantity, name, id }) => {
   const dispatch = useDispatch();
   console.log(item);
 
+  const cartItemsArray = useSelector(getCartItemArray);
+  console.log("cartItemsArray", cartItemsArray);
+  const currentItem = cartItemsArray.find((item) => item.id === id);
+  console.log("currentItem", currentItem);
+
   let quantityStyle = { color: "black" };
   let stockAlert = false;
 
-  const [quantityValue, setQuantityValue] = React.useState(1);
+  // const [quantityValue, setQuantityValue] = React.useState(1);
 
-  if (Number(quantityValue) > Number(item.numInStock)) {
+  if (Number(currentItem.quantity) > Number(item.numInStock)) {
     quantityStyle = { backgroundColor: "red" };
     stockAlert = true;
   }
@@ -27,13 +33,13 @@ const CartItem = ({ item, price, quantity, name, id }) => {
         <label htmlFor="quantity">Quantity:</label>
         <QuantityInput
           onChange={(ev) => {
-            setQuantityValue(Number(ev.target.value));
-            dispatch(updateQuantity({ id, quantity: quantityValue }));
+            // setQuantityValue(Number(ev.target.value));
+            dispatch(updateQuantity({ id, quantity: ev.target.value }));
           }}
           type="text"
           id="quantity"
           name="quantity"
-          value={item.quantity}
+          value={currentItem.quantity}
           style={quantityStyle}
         ></QuantityInput>
 

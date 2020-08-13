@@ -74,3 +74,5 @@ export const purchaseItemsSuccess = (data) => ({
 export const NumInStockUpdateSuccess = () => ({
   type: "NUM-IN-STOCK-UPDATE-SUCCESS",
 });
+
+export const closeCart = () => ({ type: "CLOSE_CART" });
