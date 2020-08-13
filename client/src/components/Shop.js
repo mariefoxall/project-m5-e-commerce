@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import ShopItem from "./ShopItem";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { getStoreItems } from "./reducers/items.reducer";
+import { getCompanies } from "./reducers/companies.reducer";
 import {
   getFilterCategory,
   getFilterbodyLocation,
+  getFilterCompany,
 } from "./reducers/filter.reducer";
-import { updateCategory, updateBodyLocation } from "../actions";
+import {
+  updateCategory,
+  updateBodyLocation,
+  updateCompany,
+  receiveCompanies,
+} from "../actions";
 import Cart from "./Cart";
 
 import Header from "./Header";
@@ -21,9 +28,33 @@ const Shop = () => {
   const shopItemsArray =
     shopItems.items !== null ? Object.values(shopItems.items.items) : [];
 
+  console.log(shopItems, "items");
+  console.log(shopItemsArray, "item Array");
   const status = shopItems.status;
   const activeCategory = useSelector(getFilterCategory);
   const activeBodyLocation = useSelector(getFilterbodyLocation);
+  const activeCompany = useSelector(getFilterCompany);
+
+  const handleCompanies = () => {
+    fetch(`/companies`)
+      .then((res) => res.json())
+      .then((json) => {
+        dispatch(receiveCompanies(json));
+      })
+      .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
+    console.log(status);
+    if (status === "idle") {
+      handleCompanies(shopItemsArray.companyId);
+    }
+  }, [status]);
+
+  const companies = useSelector(getCompanies);
+  console.log(companies);
+
+  //console.log(activeCompany, "company");
 
   const toggleCategory = (ev) => {
     dispatch(updateCategory(ev.target.value));
@@ -35,20 +66,31 @@ const Shop = () => {
     setCurrentPage(1);
   };
 
+  const toggleCompany = (ev) => {
+    dispatch(updateCompany(Number(ev.target.value)));
+  };
+
   const categoryFilterArray =
     activeCategory === "All"
       ? shopItemsArray
       : shopItemsArray.filter((item) => item.category === activeCategory);
 
-  const mapShopItemsArray =
+  const bodyLocationFilterArray =
     activeBodyLocation === "All"
       ? categoryFilterArray
       : categoryFilterArray.filter(
           (item) => item.body_location === activeBodyLocation
         );
 
+  const mapShopItemsArray =
+    activeCompany === 0
+      ? bodyLocationFilterArray
+      : bodyLocationFilterArray.filter(
+          (item) => item.companyId === activeCompany
+        );
+
   const totalItemCount = mapShopItemsArray.length;
-  console.log(totalItemCount);
+  //console.log(totalItemCount);
   const [maxNumItemsPerPage, setMaxNumItemsPerPage] = React.useState(15);
 
   const numOfPages = Math.ceil(totalItemCount / maxNumItemsPerPage);
@@ -57,7 +99,7 @@ const Shop = () => {
 
   for (let i = 1; i <= numOfPages; i++) {
     pagesArray.push(i);
-    console.log("pagesArray: ", pagesArray);
+    //console.log("pagesArray: ", pagesArray);
   }
 
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -66,7 +108,7 @@ const Shop = () => {
     setCurrentPage(pageNum);
   };
 
-  console.log(currentPage);
+  //console.log(currentPage);
 
   const currentPageArray = mapShopItemsArray.slice(
     maxNumItemsPerPage * (currentPage - 1),
@@ -123,7 +165,22 @@ const Shop = () => {
                 <option value="Wrist">Wrist</option>
               </Dropdown>
             </BodyLocation>
-          </FilterDiv>{" "}
+            <BodyLocation>
+              <label htmlFor="bodylocation">WHO:</label>
+              <Dropdown
+                onChange={(ev) => toggleCompany(ev)}
+                defaultValue={activeCompany}
+                id="company"
+                name="company"
+              >
+                <option value="0">Show All</option>
+                {companies.status === "idle" &&
+                  companies.companies.companies.map((company) => {
+                    return <option value={company.id}>{company.name}</option>;
+                  })}
+              </Dropdown>
+            </BodyLocation>
+          </FilterDiv>
         </SpacerDiv>
         <ShopDiv>
           {status && status === "loading" ? (
@@ -288,6 +345,13 @@ const BodyLocation = styled.div`
   margin: 10px;
   padding: 10px;
   font-family: "Spartan";
+  color: #8080ff;
+`;
+
+const Company = styled.div`
+  margin: 10px;
+  padding: 10px;
+  font-family: sans-serif;
   color: #8080ff;
 `;
 

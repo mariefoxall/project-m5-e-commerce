@@ -18,14 +18,10 @@ const SearchBar = () => {
     history.push(`/items/${id}`);
   };
 
-  const dispatch = useDispatch();
-
   const storeItems = useSelector(getStoreItems);
-  console.log(storeItems, "store items");
 
   const shopItemsArray =
     storeItems.status === "idle" ? storeItems.items.items : [];
-  console.log(shopItemsArray, "shop array");
 
   function searchSuggestions(inputValue) {
     const matchedSuggestions =
@@ -43,8 +39,11 @@ const SearchBar = () => {
     }
   }
 
-  const isSelected = (item) =>
-    filteredSuggestions.indexOf(item) === selectedSuggestion ? true : false;
+  const isSelected = (index) => {
+    return index === selectedSuggestion;
+  };
+
+  const selection = filteredSuggestions[selectedSuggestion];
 
   return (
     <Wrapper>
@@ -58,21 +57,34 @@ const SearchBar = () => {
             searchSuggestions(ev.target.value);
           }}
           onKeyDown={(ev) => {
+            console.log(ev.key);
+            console.log(selection);
             switch (ev.key) {
-              case "ArrowUp": {
-                if (filteredSuggestions > 0)
-                  setFilteredSuggestions(filteredSuggestions - 1);
-              }
-              case "ArrowDown": {
-                if (filteredSuggestions < 0)
-                  setFilteredSuggestions(filteredSuggestions + 1);
-              }
+              case "Enter":
+                {
+                  itemDetails(selection.id);
+                }
+                return;
+              case "ArrowUp":
+                {
+                  if (selectedSuggestion > 0)
+                    setSelectedSuggestion(selectedSuggestion - 1);
+                  console.log(selectedSuggestion);
+                }
+                return;
+              case "ArrowDown":
+                {
+                  if (selectedSuggestion < filteredSuggestions.length)
+                    setSelectedSuggestion(selectedSuggestion + 1);
+                }
+                return;
             }
+            return;
           }}
         />
       </InputDiv>
       <SearchWrapper>
-        {filteredSuggestions.map((item) => {
+        {filteredSuggestions.map((item, index) => {
           const suggestionTitle = item.name;
           const firstHalf = suggestionTitle.slice(
             0,
@@ -87,10 +99,11 @@ const SearchBar = () => {
               key={item.id}
               onClick={() => {
                 itemDetails(item.id);
+                setName("");
+                setFilteredSuggestions([]);
               }}
-              isSelected={isSelected(item.name)}
-              setSelectedSuggestion={setSelectedSuggestion}
-              index={filteredSuggestions.indexOf(item)}
+              active={isSelected(index)}
+              onMouseEnter={() => setSelectedSuggestion(index)}
             >
               <span>
                 {firstHalf}
@@ -137,8 +150,13 @@ const SearchList = styled.li`
   padding: 5px;
   &:hover {
     cursor: pointer;
-    color: red;
   }
+  ${({ active }) =>
+    active
+      ? `
+    color: red;
+  `
+      : `color: black`}
 `;
 
 const Prediction = styled.span`
