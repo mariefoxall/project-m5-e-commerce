@@ -13,6 +13,7 @@ const Loading = () => {
   );
 };
 
+
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -50,5 +51,6 @@ const IMG = styled.img`
   animation: ${scale} 5000ms infinite linear, ${fade} 5000ms infinite linear;
   /* animation: ${spin} 3000ms infinite linear, ${fade} 3000ms infinite linear; */
 `;
+
 
 export default Loading;

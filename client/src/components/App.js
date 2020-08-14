@@ -13,6 +13,7 @@ import CartPage from "./CartPage";
 import PurchaseModal from "./PurchaseModal";
 import Contact from "./Contact";
 import About from "./About";
+import ViewOrder from "./ViewOrder";
 
 function App() {
   const dispatch = useDispatch();
@@ -65,6 +66,12 @@ function App() {
 
             <CartPage />
           </Route>
+          <Route path="/order">
+            <Header />
+
+            <ViewOrder />
+          </Route>
+
           <Route path="/contact">
             <Header />
             <Contact />
