@@ -23,15 +23,9 @@ const ViewOrder = () => {
   });
 
   const [orderNumber, setOrderNumber] = React.useState("");
-  console.log(orderNumber);
-
-  // const handleGetOrderInfo = () => {
-  //   handleOrderById(orderNumber);
-  //   console.log("inside handlegetorderinfo");
-  // };
 
   const handleOrderById = (id) => {
-    console.log("inside handleOrderById");
+    console.log("inside handleOrderById" + id);
     dispatch(requestOrder());
     fetch(`/orders/${id}`)
       .then((res) => res.json())
@@ -58,8 +52,8 @@ const ViewOrder = () => {
           ></OrderNumberInput>
         </InputDiv>
         <SubmitButton
-          onClick={() => {
-            // preventDefault();
+          onClick={(ev) => {
+            ev.preventDefault();
             handleOrderById(orderNumber);
           }}
         >

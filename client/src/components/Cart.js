@@ -48,7 +48,7 @@ const Cart = () => {
     <RightSide>
       <CartDiv style={{ visibility: cartVisibility }}>
         <CloseDiv>
-          <CloseButton onClick={() => dispatch(closeCart())}></CloseButton>
+          <CloseButton onClick={() => dispatch(closeCart())}> > </CloseButton>
         </CloseDiv>
         <CartItemsPurchase>
           <TopPart>

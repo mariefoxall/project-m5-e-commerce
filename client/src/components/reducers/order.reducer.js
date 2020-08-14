@@ -1,5 +1,5 @@
 const initialState = {
-  item: null,
+  order: null,
   status: "loading",
 };
 
