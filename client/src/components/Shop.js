@@ -193,7 +193,7 @@ const Shop = () => {
         </SpacerDiv>
         <ShopDiv>
           {status && status === "loading" ? (
-            <div>LOADING</div>
+            <Loading />
           ) : (
             <>
               <>

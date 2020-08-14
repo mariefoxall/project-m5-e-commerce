@@ -103,6 +103,22 @@ const handleNewOrder = (req, res) => {
   res.status(201).json(newOrder);
 };
 
+const handleOrderById = (req, res) => {
+  const id = req.params.id;
+
+  const getOrderById = (id) => {
+    return orders.find((order) => order.id === id);
+  };
+
+  const order = getOrderById(id);
+
+  if (order !== undefined) {
+    res.status(200).json(order);
+  } else {
+    return res.status(404).json("Order not found, 404");
+  }
+};
+
 const handleContact = (req, res) => {
   res.status(200).json({ contact });
 };
@@ -133,4 +149,5 @@ module.exports = {
   handleNewOrder,
   handleContact,
   handleNewContact,
+  handleOrderById,
 };

@@ -80,3 +80,7 @@ export const clearCart = () => ({
 });
 
 export const closeCart = () => ({ type: "CLOSE_CART" });
+
+export const requestOrder = () => ({ type: "REQUEST_ORDER" });
+
+export const receiveOrder = (order) => ({ type: "RECEIVE_ORDER", order });

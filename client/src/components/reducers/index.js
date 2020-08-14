@@ -7,6 +7,7 @@ import company from "./company.reducer";
 import filter from "./filter.reducer";
 import cart from "./cart.reducer";
 import purchase from "./purchase.reducer";
+import order from "./order.reducer";
 
 export default combineReducers({
   items,
@@ -16,4 +17,5 @@ export default combineReducers({
   filter,
   cart,
   purchase,
+  order,
 });

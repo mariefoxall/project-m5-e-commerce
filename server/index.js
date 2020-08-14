@@ -16,6 +16,7 @@ const {
   handleNewOrder,
   handleContact,
   handleNewContact,
+  handleOrderById,
 } = require("./handlers");
 
 express()
@@ -58,6 +59,7 @@ express()
 
   //ORDER
   .get("/orders", handleOrders)
+  .get("/orders/:id", handleOrderById)
   .post("/orders", handleNewOrder)
 
   //CONTACT
