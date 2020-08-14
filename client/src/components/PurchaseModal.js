@@ -112,7 +112,8 @@ const PurchaseModal = ({ handleItems }) => {
               <CloseButton onClick={handleClose}>X</CloseButton>
             </CloseDiv>
             <ThankYou>
-              Thanks for your order, {orderConfirmed.firstName}!
+              <p>Thanks for your order, {orderConfirmed.firstName}!</p>
+              <p>Your order number is {orderConfirmed.id}</p>
             </ThankYou>
             <ConfirmText>We're looking forward to sending you:</ConfirmText>
             {orderConfirmed.order.map((item) => {
