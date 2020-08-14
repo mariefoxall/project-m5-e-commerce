@@ -18,7 +18,7 @@ const CartPage = () => {
     console.log(item.price);
     console.log(item.quantity);
     total = total + Number(item.price.slice(1)) * Number(item.quantity);
-    numCartItems = numCartItems + item.quantity;
+    numCartItems = Number(numCartItems) + Number(item.quantity);
   });
   return (
     <PageDiv>
