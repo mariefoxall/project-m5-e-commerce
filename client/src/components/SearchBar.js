@@ -57,12 +57,14 @@ const SearchBar = () => {
             searchSuggestions(ev.target.value);
           }}
           onKeyDown={(ev) => {
-            console.log(ev.key);
-            console.log(selection);
             switch (ev.key) {
               case "Enter":
                 {
-                  itemDetails(selection.id);
+                  selectedSuggestion
+                    ? itemDetails(selection.id)
+                    : alert(
+                        `There are currently no products available for '${name}'`
+                      );
                 }
                 return;
               case "ArrowUp":
