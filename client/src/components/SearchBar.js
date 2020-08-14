@@ -11,6 +11,7 @@ const SearchBar = () => {
   const [name, setName] = React.useState("");
   const [filteredSuggestions, setFilteredSuggestions] = React.useState([]);
   const [selectedSuggestion, setSelectedSuggestion] = React.useState(0);
+  const [notAvailable, setNotAvailable] = React.useState(false);
 
   let history = useHistory();
 
@@ -60,11 +61,9 @@ const SearchBar = () => {
             switch (ev.key) {
               case "Enter":
                 {
-                  selectedSuggestion
+                  filteredSuggestions.length > 0
                     ? itemDetails(selection.id)
-                    : alert(
-                        `There are currently no products available for '${name}'`
-                      );
+                    : setNotAvailable(true);
                 }
                 return;
               case "ArrowUp":
@@ -85,36 +84,48 @@ const SearchBar = () => {
           }}
         />
       </InputDiv>
-      <SearchWrapper>
-        {filteredSuggestions.map((item, index) => {
-          const suggestionTitle = item.name;
-          const firstHalf = suggestionTitle.slice(
-            0,
-            suggestionTitle.toLowerCase().indexOf(name) + name.length
-          );
-          const secondHalf = suggestionTitle.slice(
-            firstHalf.length,
-            suggestionTitle.length
-          );
-          return (
-            <SearchList
-              key={item.id}
-              onClick={() => {
-                itemDetails(item.id);
-                setName("");
-                setFilteredSuggestions([]);
-              }}
-              active={isSelected(index)}
-              onMouseEnter={() => setSelectedSuggestion(index)}
-            >
-              <span>
-                {firstHalf}
-                <Prediction>{secondHalf}</Prediction>
-              </span>
-            </SearchList>
-          );
-        })}
-      </SearchWrapper>
+      {filteredSuggestions.length !== 0 ? (
+        <SearchWrapper>
+          {filteredSuggestions.map((item, index) => {
+            const suggestionTitle = item.name;
+            const firstHalf = suggestionTitle.slice(
+              0,
+              suggestionTitle.toLowerCase().indexOf(name) + name.length
+            );
+            const secondHalf = suggestionTitle.slice(
+              firstHalf.length,
+              suggestionTitle.length
+            );
+            return (
+              <SearchList
+                key={item.id}
+                onClick={() => {
+                  itemDetails(item.id);
+                  setName("");
+                  setFilteredSuggestions([]);
+                }}
+                active={isSelected(index)}
+                onMouseEnter={() => setSelectedSuggestion(index)}
+              >
+                <span>
+                  {firstHalf}
+                  <Prediction>{secondHalf}</Prediction>
+                </span>
+              </SearchList>
+            );
+          })}
+        </SearchWrapper>
+      ) : (
+        <>
+          {name.length > 2 && notAvailable && (
+            <SearchWrapper>
+              <SearchList>
+                There are currently no products available for '{name}'
+              </SearchList>
+            </SearchWrapper>
+          )}
+        </>
+      )}
     </Wrapper>
   );
 };
