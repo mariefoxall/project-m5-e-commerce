@@ -4,8 +4,18 @@ const orders = require("./data/orders.json");
 const contact = require("./data/contact.json");
 const { v4: uuidv4 } = require("uuid");
 
+const delayRes = (res, data) => {
+  const delay = Math.random() * 5000;
+
+  setTimeout(() => {
+    console.log("Waited" + " " + delay / 1000);
+    res.status(200).json(data);
+  }, delay);
+};
+
 const handleItems = (req, res) => {
-  res.status(200).json({ items });
+  delayRes(res, { items });
+  //res.status(200).json({ items });
 };
 
 const handleItem = (req, res) => {

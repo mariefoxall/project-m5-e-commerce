@@ -20,6 +20,7 @@ import Cart from "./Cart";
 
 import Header from "./Header";
 import PurchaseModal from "./PurchaseModal";
+import Loading from "./Loading";
 
 const Shop = () => {
   const dispatch = useDispatch();
