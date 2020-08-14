@@ -10,6 +10,4 @@ const Loading = () => {
   return <img src={inspectorGadget} />;
 };
 
-const 
-
 export default Loading;
