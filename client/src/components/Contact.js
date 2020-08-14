@@ -152,9 +152,10 @@ const TextArea = styled.textarea`
 
 const SendButton = styled.button`
   width: 200px;
-  padding: 5px 0px;
+  padding: 10px 0px;
   align-self: center;
   margin-top: 23px;
+  margin-bottom: 20px;
   border: none;
   background: black;
   color: white;

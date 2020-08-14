@@ -44,6 +44,9 @@ export default function cartReducer(state = initialState, action) {
         status: "hidden",
       };
     }
+    case "CLEAR_CART": {
+      return initialState;
+    }
     default: {
       return state;
     }

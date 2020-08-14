@@ -11,7 +11,7 @@ const Header = () => {
   let numCartItems = 0;
 
   cartItems.forEach((item) => {
-    numCartItems = numCartItems + item.quantity;
+    numCartItems = Number(numCartItems) + Number(item.quantity);
   });
 
   return (

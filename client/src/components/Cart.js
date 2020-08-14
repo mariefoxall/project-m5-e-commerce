@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getCartItemArray } from "./reducers/cart.reducer";
 import { beginPurchaseProcess, closeCart } from "../actions";
 
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import CartItem from "./CartItem";
 
 const Cart = () => {
@@ -43,16 +43,17 @@ const Cart = () => {
   const cartVisibility = useSelector((state) => state.cart.status);
 
   console.log(cartVisibility);
+
   return (
     <RightSide>
       <CartDiv style={{ visibility: cartVisibility }}>
         <CloseDiv>
-          <CloseButton onClick={() => dispatch(closeCart())}>X</CloseButton>
+          <CloseButton onClick={() => dispatch(closeCart())}>></CloseButton>
         </CloseDiv>
         <CartItemsPurchase>
           <TopPart>
             <CartTitle>
-              <h3> Your Cart:</h3>
+              <h4> Your Cart:</h4>
               <p>{numCartItems} item(s)</p>
             </CartTitle>
             <ListDiv>
@@ -72,10 +73,7 @@ const Cart = () => {
             </ListDiv>
           </TopPart>
           <BottomPart>
-            <Total>
-              Total:
-              {/* ${total.toFixed(2)} */}
-            </Total>
+            <Total>Total: ${total.toFixed(2)}</Total>
             <PurchaseButton
               disabled={okayToPurchase ? false : true}
               onClick={() =>
@@ -92,18 +90,34 @@ const Cart = () => {
   );
 };
 
-const CloseButton = styled.button``;
+const CloseButton = styled.button`
+  border: none;
+  outline: none;
+  width: 20px;
+  height: 20px;
+  background-color: #006666;
+  color: white;
+  margin: 10px 0;
+  &:hover {
+    cursor: pointer;
+    background-color: #28bbbd;
+  }
+`;
 const CloseDiv = styled.div`
   display: flex;
   justify-content: flex-end;
   height: 20px;
+  position: fixed;
+  top: 150px;
+  /* right: 20px; */
+  right: calc(20% - 20px);
 `;
 const TopPart = styled.div`
   /* max-height: calc(100vh-240px); */
   /* position: absolute; */
-  top: 20px;
   display: flex;
   flex-direction: column;
+  margin-top: 10px;
   /* flex: 3; */
 `;
 
@@ -113,19 +127,32 @@ const RightSide = styled.div`
   /* border-left: 2px dotted #8080ff; */
 `;
 const CartItemsPurchase = styled.div`
-  height: calc(100vh - 180px);
+  height: calc(100vh - 200px);
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 const CartDiv = styled.div`
-  background-color: #ccccff;
+  background-color: #000066;
   position: fixed;
   right: 0;
   bottom: 0;
   padding: 20px;
   width: 20%;
+  display: flex;
+  flex-direction: column;
+
+  animation: ${fadeIn} 3000ms ease-in-out;
 `;
 
 const CartTitle = styled.div`
@@ -133,12 +160,13 @@ const CartTitle = styled.div`
   align-items: flex-end;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 10px;
   /* position: sticky; */
 `;
 
 const ListDiv = styled.div`
   overflow-y: auto;
-  height: 500px;
+  height: calc(100vh - 280px);
 `;
 const ItemDiv = styled.div`
   border: 1px dashed white;
@@ -151,6 +179,7 @@ const BottomPart = styled.div`
   box-sizing: border-box;
   margin-bottom: 20px;
   justify-content: space-between;
+  margin-top: 10px;
   /* flex: 1; */
 `;
 
@@ -159,7 +188,7 @@ const Total = styled.div`
 `;
 
 const PurchaseButton = styled.button`
-  background-color: #8080ff;
+  background-color: #006666;
   color: white;
   border: none;
   outline: none;
@@ -168,8 +197,7 @@ const PurchaseButton = styled.button`
   font-size: 16px;
   &:hover {
     cursor: pointer;
-    background-color: white;
-    color: #8080ff;
+    background-color: #28bbbd;
   }
 `;
 export default Cart;

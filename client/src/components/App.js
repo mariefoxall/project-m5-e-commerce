@@ -12,6 +12,7 @@ import Header from "./Header";
 import CartPage from "./CartPage";
 import PurchaseModal from "./PurchaseModal";
 import Contact from "./Contact";
+import About from "./About";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,6 +55,10 @@ function App() {
           <Route path="/items/:itemId">
             <Header />
             <ItemDetails />
+          </Route>
+          <Route path="/about">
+            {/* <Header /> */}
+            <About />
           </Route>
           <Route path="/cart">
             <Header />

@@ -107,6 +107,7 @@ const BottomPart = styled.div`
   align-items: center;
   box-sizing: border-box;
   width: 100%;
+  margin-top: 20px;
 `;
 
 const Total = styled.div`

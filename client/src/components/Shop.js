@@ -110,10 +110,13 @@ const Shop = () => {
 
   //console.log(currentPage);
 
-  const currentPageArray = mapShopItemsArray.slice(
-    maxNumItemsPerPage * (currentPage - 1),
-    maxNumItemsPerPage * currentPage
-  );
+  const currentPageArray =
+    mapShopItemsArray.length === maxNumItemsPerPage
+      ? mapShopItemsArray
+      : mapShopItemsArray.slice(
+          maxNumItemsPerPage * (currentPage - 1),
+          maxNumItemsPerPage * currentPage
+        );
 
   const activePageStyle = { backgroundColor: "blue" };
 
@@ -121,12 +124,32 @@ const Shop = () => {
     setMaxNumItemsPerPage(ev.target.value);
   };
 
+  const itemsPerPageDisplay =
+    mapShopItemsArray.length > 15
+      ? { visibility: "visible" }
+      : { visibility: "hidden" };
+
   return (
     <>
       <Header />
       <ShopPageAll>
         <SpacerDiv>
           <FilterDiv>
+            <BodyLocation>
+              <label htmlFor="bodylocation">WHO:</label>
+              <Dropdown
+                onChange={(ev) => toggleCompany(ev)}
+                defaultValue={activeCompany}
+                id="company"
+                name="company"
+              >
+                <option value="0">Show All</option>
+                {companies.status === "idle" &&
+                  companies.companies.companies.map((company) => {
+                    return <option value={company.id}>{company.name}</option>;
+                  })}
+              </Dropdown>
+            </BodyLocation>
             <Category>
               <label htmlFor="category">WHAT:</label>
               <Dropdown
@@ -165,94 +188,96 @@ const Shop = () => {
                 <option value="Wrist">Wrist</option>
               </Dropdown>
             </BodyLocation>
-            <BodyLocation>
-              <label htmlFor="bodylocation">WHO:</label>
-              <Dropdown
-                onChange={(ev) => toggleCompany(ev)}
-                defaultValue={activeCompany}
-                id="company"
-                name="company"
-              >
-                <option value="0">Show All</option>
-                {companies.status === "idle" &&
-                  companies.companies.companies.map((company) => {
-                    return <option value={company.id}>{company.name}</option>;
-                  })}
-              </Dropdown>
-            </BodyLocation>
           </FilterDiv>
         </SpacerDiv>
         <ShopDiv>
           {status && status === "loading" ? (
             <div>LOADING</div>
           ) : (
-            <Display>
-              <ItemList>
-                {currentPageArray.map((item) => {
-                  //console.log(item.category);
-                  return (
-                    <div key={item.id}>
-                      {/* <Link to={`/items/${item.id}`}> */}
-                      <ShopItem item={item} />
-                      {/* </Link> */}
-                    </div>
-                  );
-                })}
-              </ItemList>
-              <Pagination>
-                <NumItems>
-                  show
-                  <Dropdown
-                    onChange={(ev) => toggleNumItemsPerPage(ev)}
-                    defaultValue={15}
-                    id="numItemsPerPage"
-                    name="numItemsPerPage"
-                  >
-                    <option value={15}>15</option>
-                    <option value={30}>30</option>
-                    <option value={45}>45</option>
-                    <option value={60}>60</option>
-                    <option value={mapShopItemsArray.length}>all</option>
-                  </Dropdown>
-                  items per page
-                </NumItems>
-                {mapShopItemsArray.length > maxNumItemsPerPage && (
-                  <>
-                    <PagesList>
-                      <PageNav
-                        onClick={() => {
-                          currentPage > 1 && goToPage(currentPage - 1);
-                        }}
+            <>
+              <>
+                <Display>
+                  <Pagination style={itemsPerPageDisplay}>
+                    <NumItems>
+                      show
+                      <Dropdown
+                        onChange={(ev) => toggleNumItemsPerPage(ev)}
+                        defaultValue={maxNumItemsPerPage}
+                        id="numItemsPerPage"
+                        name="numItemsPerPage"
                       >
-                        PREV
-                      </PageNav>
-                      {pagesArray.map((pageNum) => {
-                        return (
-                          <PageNav
-                            style={{
-                              backgroundColor:
-                                currentPage === pageNum ? "#aa80ff" : "#ccccff",
-                            }}
-                            key={pageNum}
-                            onClick={() => goToPage(pageNum)}
-                          >
-                            {pageNum}
-                          </PageNav>
-                        );
-                      })}
-                      <PageNav
-                        onClick={() => {
-                          currentPage < pagesArray.length &&
-                            goToPage(currentPage + 1);
-                        }}
-                      >
-                        NEXT
-                      </PageNav>
-                    </PagesList>
-                  </>
-                )}
-              </Pagination>
-            </Display>
+                        <option value={15}>15</option>
+                        <option value={30}>30</option>
+                        <option value={45}>45</option>
+                        <option value={60}>60</option>
+                        <option value={mapShopItemsArray.length}>all</option>
+                      </Dropdown>
+                      items per page
+                    </NumItems>
+                  </Pagination>
+                  {mapShopItemsArray.length === 0 ? (
+                    <SorryMessage>
+                      Sorry, we couldn't find any products that match your
+                      selection.
+                    </SorryMessage>
+                  ) : (
+                    <>
+                      <ItemList>
+                        {currentPageArray.map((item) => {
+                          //console.log(item.category);
+                          return (
+                            <div key={item.id}>
+                              {/* <Link to={`/items/${item.id}`}> */}
+                              <ShopItem item={item} />
+                              {/* </Link> */}
+                            </div>
+                          );
+                        })}
+                      </ItemList>
+                      <Pagination>
+                        {mapShopItemsArray.length > maxNumItemsPerPage && (
+                          <>
+                            <PagesList>
+                              <PageNav
+                                onClick={() => {
+                                  currentPage > 1 && goToPage(currentPage - 1);
+                                }}
+                              >
+                                PREV
+                              </PageNav>
+                              {pagesArray.map((pageNum) => {
+                                return (
+                                  <PageNav
+                                    style={{
+                                      backgroundColor:
+                                        currentPage === pageNum
+                                          ? "#006666"
+                                          : "#28bbbd",
+                                    }}
+                                    key={pageNum}
+                                    onClick={() => goToPage(pageNum)}
+                                  >
+                                    {pageNum}
+                                  </PageNav>
+                                );
+                              })}
+                              <PageNav
+                                onClick={() => {
+                                  currentPage < pagesArray.length &&
+                                    goToPage(currentPage + 1);
+                                }}
+                              >
+                                NEXT
+                              </PageNav>
+                            </PagesList>
+                          </>
+                        )}
+                      </Pagination>
+                    </>
+                  )}
+                </Display>
+              </>
+            </>
           )}
         </ShopDiv>
         <Cart />
@@ -271,13 +296,13 @@ const Pagination = styled.div`
 `;
 
 const NumItems = styled.div`
-  color: #8080ff;
+  color: #006666;
 `;
 const PageNav = styled.li`
   padding: 5px;
   &:hover {
     cursor: pointer;
-    background-color: #8080ff;
+    border: 1px solid #006666;
   }
 `;
 const Display = styled.div`
@@ -286,21 +311,20 @@ const Display = styled.div`
   align-items: center;
 `;
 const PagesList = styled.ul`
-  background: #ccccff;
+  background: #28bbbd;
   display: flex;
   justify-content: space-between;
-  /* width: 40%; */
 `;
 const SpacerDiv = styled.div`
   height: calc(100vh-120px);
-  position: relative;
   flex: 1;
 `;
 
 const ShopDiv = styled.div`
-  min-height: 100vh;
+  height: calc(100vh - 140px);
   flex: 3;
   display: flex;
+  justify-content: center;
 `;
 
 const Title = styled.h1`
@@ -312,36 +336,35 @@ const FilterDiv = styled.div`
   display: flex;
   flex-direction: column;
   position: fixed;
-  /* width: calc(20% - 20px); */
-  /* justify-content: flex-start; */
+  flex: 2;
 `;
 
 const Category = styled.div`
   margin: 10px;
   padding: 10px;
   font-family: "Spartan";
-  color: #8080ff;
+  color: #006666;
 `;
 
 const BodyLocation = styled.div`
   margin: 10px;
   padding: 10px;
   font-family: "Spartan";
-  color: #8080ff;
+  color: #006666;
 `;
 
 const Company = styled.div`
   margin: 10px;
   padding: 10px;
   font-family: sans-serif;
-  color: #8080ff;
+  color: #006666;
 `;
 
 const Dropdown = styled.select`
   font-family: "Spartan";
   padding: 5px;
   margin: 10px;
-  background-color: #aa80ff;
+  background-color: #006666;
   color: white;
 `;
 
@@ -357,6 +380,10 @@ const ShopPageAll = styled.div`
   position: relative;
   margin: 0;
   padding: 0;
+`;
+
+const SorryMessage = styled.div`
+  color: #006666;
 `;
 
 export default Shop;

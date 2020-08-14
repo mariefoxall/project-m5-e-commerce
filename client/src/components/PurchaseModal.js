@@ -12,6 +12,7 @@ import {
   cancelPurchaseProcess,
   NumInStockUpdateSuccess,
   purchaseItemsSuccess,
+  clearCart,
 } from "../actions";
 import { getCartItemArray } from "./reducers/cart.reducer";
 import { getOrderConfirmed } from "./reducers/purchase.reducer";
@@ -80,17 +81,50 @@ const PurchaseModal = ({ handleItems }) => {
   const Alert = () => {
     return <MuiAlert elevation={6} variant="filled" />;
   };
+
+  const allFieldsCompleted =
+    firstName.length > 0 &&
+    lastName.length > 0 &&
+    email.length > 0 &&
+    creditCard.length > 0 &&
+    expiration.length > 0;
+
+  let purchaseButtonStyle = {};
+
+  if (allFieldsCompleted === false) {
+    purchaseButtonStyle = {
+      cursor: "auto",
+      color: "lightgrey",
+      backgroundColor: "grey",
+    };
+  }
+
   return (
     <div>
-      <Snackbar
-        open={purchaseStatus === "purchased"}
-        autoHideDuration={6000}
-        onClose={handleClose}
-      >
-        <Alert onClose={handleClose} severity="success">
-          Thanks for your purchase! The following items are coming your way:
-        </Alert>
-      </Snackbar>
+      {orderConfirmed && (
+        <Dialog
+          open={purchaseStatus === "purchased"}
+          onClose={handleClose}
+          autoHideDuration={6000}
+        >
+          <DialogContent>
+            <CloseDiv>
+              <CloseButton onClick={handleClose}>X</CloseButton>
+            </CloseDiv>
+            <ThankYou>
+              Thanks for your order, {orderConfirmed.firstName}!
+            </ThankYou>
+            <ConfirmText>We're looking forward to sending you:</ConfirmText>
+            {orderConfirmed.order.map((item) => {
+              return (
+                <ConfirmText>
+                  {item.name} ({item.quantity})
+                </ConfirmText>
+              );
+            })}
+          </DialogContent>
+        </Dialog>
+      )}
       <Dialog
         open={purchaseStatus === "begin-purchase"}
         onClose={handleClose}
@@ -114,10 +148,13 @@ const PurchaseModal = ({ handleItems }) => {
                   </ItemDiv>
                 );
               })}
-              <div>Total: ${total.toFixed(2)}</div>
             </ItemsList>
+            <TotalDiv>Total: ${total.toFixed(2)}</TotalDiv>
           </DialogContent>
           <DialogContent>
+            <CloseDiv>
+              <CloseButton onClick={handleClose}>X</CloseButton>
+            </CloseDiv>
             <h3>Enter Payment Details:</h3>
             <TextField
               autoComplete="on"
@@ -127,6 +164,7 @@ const PurchaseModal = ({ handleItems }) => {
               label="First Name"
               type="text"
               fullWidth
+              required
             />
             <TextField
               onChange={(ev) => setLastName(ev.target.value)}
@@ -135,6 +173,7 @@ const PurchaseModal = ({ handleItems }) => {
               label="Last Name"
               type="text"
               fullWidth
+              required
             />
             <TextField
               onChange={(ev) => setEmail(ev.target.value)}
@@ -143,6 +182,7 @@ const PurchaseModal = ({ handleItems }) => {
               label="Email"
               type="email"
               fullWidth
+              required
             />
             <TextField
               onChange={(ev) => setCreditCard(ev.target.value)}
@@ -151,6 +191,7 @@ const PurchaseModal = ({ handleItems }) => {
               label="Credit Card"
               type="text"
               fullWidth
+              required
             />
             <TextField
               onChange={(ev) => setExpiration(ev.target.value)}
@@ -159,10 +200,14 @@ const PurchaseModal = ({ handleItems }) => {
               label="Expiration"
               type="text"
               fullWidth
+              required
             />
             <DialogActions>
               <ConfirmButton
+                disabled={allFieldsCompleted ? false : true}
+                style={purchaseButtonStyle}
                 onClick={() => {
+                  dispatch(clearCart());
                   handleUpdateNumInStock(cartItems);
                   handleNewOrder(firstName, lastName, email, cartItems, total);
                   handleItems();
@@ -177,9 +222,37 @@ const PurchaseModal = ({ handleItems }) => {
     </div>
   );
 };
+const CloseButton = styled.button`
+  border: none;
+  outline: none;
+  width: 30px;
+  height: 20px;
+  background-color: #006666;
+  color: white;
+  &:hover {
+    cursor: pointer;
+    background-color: #28bbbd;
+  }
+`;
+const CloseDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  height: 20px;
+`;
 
 const All = styled.div`
   display: flex;
+`;
+
+const ThankYou = styled.p`
+  background-color: #8080ff;
+  margin: 10px;
+  padding: 10px;
+`;
+
+const ConfirmText = styled.p`
+  margin: 10px;
+  padding: 10px;
 `;
 
 const ConfirmButton = styled.button`
@@ -206,7 +279,12 @@ const ItemDiv = styled.div`
 `;
 
 const ItemsList = styled.div`
+  height: 260px;
   overflow-y: scroll;
+`;
+
+const TotalDiv = styled.div`
+  margin-top: 10px;
 `;
 
 export default PurchaseModal;

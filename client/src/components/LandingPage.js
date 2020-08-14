@@ -20,7 +20,9 @@ const LandingPage = () => {
           <NavSection>
             <Link to="/shop">SHOP</Link>
           </NavSection>
-          <NavSection>CONTACT</NavSection>
+          <NavSection>
+            <Link to="/contact">CONTACT</Link>
+          </NavSection>
         </WelcomeNav>
       </div>
     </LandingDiv>

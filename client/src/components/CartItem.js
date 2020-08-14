@@ -67,6 +67,7 @@ const QuantityInput = styled.input`
 const StockAlert = styled.div`
   color: red;
   margin-left: 10px;
+  font-size: 12px;
 `;
 
 const CloseButton = styled.button`
@@ -74,12 +75,11 @@ const CloseButton = styled.button`
   outline: none;
   width: 30px;
   height: 20px;
-  background-color: #8080ff;
+  background-color: #006666;
   color: white;
   &:hover {
     cursor: pointer;
-    background-color: white;
-    color: #8080ff;
+    background-color: #28bbbd;
   }
 `;
 
