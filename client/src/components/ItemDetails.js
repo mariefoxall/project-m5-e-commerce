@@ -14,6 +14,7 @@ import {
   receiveCompany,
   updateCategory,
   updateBodyLocation,
+  updateCompany,
 } from "../actions";
 
 const ItemDetails = () => {
@@ -66,6 +67,10 @@ const ItemDetails = () => {
     dispatch(updateBodyLocation(target));
   };
 
+  const toggleCompany = (target) => {
+    dispatch(updateCompany(target));
+  };
+
   if (item.status === "loading") {
     return <>LOADING</>;
   } else {
@@ -87,46 +92,65 @@ const ItemDetails = () => {
             />
           )}
           <ItemInfo>
-            <ItemName>{item.item.name}</ItemName>
-            <LinkDiv>
-              <StyledLink
-                key={item.item.category}
-                to="/shop"
-                onClick={() => {
-                  toggleCategory(item.item.category);
-                  toggleBodyLocation("All");
-                }}
-              >
-                {item.item.category}
-              </StyledLink>
-              <StyledLink
-                key={item.item.body_location}
-                to="/shop"
-                onClick={() => {
-                  toggleBodyLocation(item.item.body_location);
-                  toggleCategory("All");
-                }}
-              >
-                {item.item.body_location}
-              </StyledLink>
-            </LinkDiv>
-            <ItemPrice>{item.item.price}</ItemPrice>
-            <OriginDiv>
-              made by
-              {company.status === "idle" && (
-                <>
-                  <a target="_blank" href={company.company.url}>
+            <div>
+              <ItemName>{item.item.name}</ItemName>
+              <LinkDiv>
+                <span style={{ color: "grey" }}> tags: </span>
+                <StyledLink
+                  key={item.item.category}
+                  to="/shop"
+                  onClick={() => {
+                    toggleCategory(item.item.category);
+                    toggleBodyLocation("All");
+                    toggleCompany(0);
+                  }}
+                >
+                  {item.item.category}
+                </StyledLink>
+                <StyledLink
+                  key={item.item.body_location}
+                  to="/shop"
+                  onClick={() => {
+                    toggleBodyLocation(item.item.body_location);
+                    toggleCategory("All");
+                    toggleCompany(0);
+                  }}
+                >
+                  {item.item.body_location}
+                </StyledLink>
+                {company.status === "idle" && (
+                  <StyledLink
+                    key={company.company.id}
+                    to="/shop"
+                    onClick={() => {
+                      toggleCompany(company.company.id);
+                      toggleCategory("All");
+                      toggleBodyLocation("All");
+                    }}
+                  >
                     {company.company.name}
-                  </a>
-                  <span>in {company.company.country}</span>
-                </>
-              )}
-            </OriginDiv>
+                  </StyledLink>
+                )}
+              </LinkDiv>
+              <ItemPrice>{item.item.price}</ItemPrice>
+            </div>
             {item.item.numInStock === 0 ? null : (
               <PurchaseButton onClick={() => dispatch(addCart(item.item))}>
                 ADD TO CART
               </PurchaseButton>
             )}
+
+            <OriginDiv>
+              {company.status === "idle" && (
+                <>
+                  <span>made by </span>
+                  <a target="_blank" href={company.company.url}>
+                    {company.company.name}
+                  </a>
+                  <span> in {company.company.country}</span>
+                </>
+              )}
+            </OriginDiv>
           </ItemInfo>
         </ItemDiv>
       </Wrapper>
@@ -176,6 +200,7 @@ const ItemInfo = styled.div`
   width: 400px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   margin-left: 30px;
 `;
 
@@ -188,9 +213,10 @@ const LinkDiv = styled.div`
 `;
 
 const StyledLink = styled(Link)`
+  text-align: center;
+  width: 60px;
   font-size: 0.75em;
-  margin-bottom: 20px;
-  margin-right: 5px;
+  margin: 0px 10px 20px 10px;
   padding: 3px;
   text-decoration: none;
   border: solid 1px grey;
@@ -201,17 +227,21 @@ const StyledLink = styled(Link)`
 `;
 
 const ItemPrice = styled.p`
+  margin-top: 10px;
   margin-bottom: 20px;
+  font-size: 25px;
 `;
 
 const OriginDiv = styled.div``;
 
 const PurchaseButton = styled.button`
+  width: 350px;
   margin-top: 30px;
   background-color: #aa80ff;
   color: white;
   border: none;
   padding: 10px 20px;
+  margin-bottom: 30px;
   &:hover {
     cursor: pointer;
     background-color: #443366;
