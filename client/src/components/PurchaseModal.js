@@ -12,6 +12,7 @@ import {
   cancelPurchaseProcess,
   NumInStockUpdateSuccess,
   purchaseItemsSuccess,
+  clearCart,
 } from "../actions";
 import { getCartItemArray } from "./reducers/cart.reducer";
 import { getOrderConfirmed } from "./reducers/purchase.reducer";
@@ -206,6 +207,7 @@ const PurchaseModal = ({ handleItems }) => {
                 disabled={allFieldsCompleted ? false : true}
                 style={purchaseButtonStyle}
                 onClick={() => {
+                  dispatch(clearCart());
                   handleUpdateNumInStock(cartItems);
                   handleNewOrder(firstName, lastName, email, cartItems, total);
                   handleItems();
@@ -250,6 +252,7 @@ const ThankYou = styled.p`
 
 const ConfirmText = styled.p`
   margin: 10px;
+  padding: 10px;
 `;
 
 const ConfirmButton = styled.button`

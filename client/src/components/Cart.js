@@ -73,10 +73,7 @@ const Cart = () => {
             </ListDiv>
           </TopPart>
           <BottomPart>
-            <Total>
-              Total:
-              {/* ${total.toFixed(2)} */}
-            </Total>
+            <Total>Total: ${total.toFixed(2)}</Total>
             <PurchaseButton
               disabled={okayToPurchase ? false : true}
               onClick={() =>
@@ -169,7 +166,7 @@ const CartTitle = styled.div`
 
 const ListDiv = styled.div`
   overflow-y: auto;
-  height: calc(100vh - 270px);
+  height: calc(100vh - 280px);
 `;
 const ItemDiv = styled.div`
   border: 1px dashed white;
